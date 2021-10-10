@@ -8,8 +8,10 @@ function App() {
   return (
     <div className="App">
       <AppHeader/>
-      <BurgerConstructor/>
-      <BurgerIngredients/>
+      <main>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
+      </main>
     </div>
   );
 }

@@ -1,0 +1,4 @@
+.ingredientList {
+    display: flex;
+    flex-direction: column;
+}
