@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <AppHeader/>
       <BurgerConstructor/>
-      <<BurgerIngredients/>
+      <BurgerIngredients/>
     </div>
   );
 }
