@@ -3,11 +3,13 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 
 export class ChosenIngredient extends React.Component {
     render = () => 
-        <div style={{display: 'block', float: 'left', clear: 'both', marginBottom: "16px"}}><ConstructorElement
-            type={this.props.type}
-            isLocked={this.props.isLocked}
-            text={this.props.name}
-            price={this.props.price}
-            thumbnail={this.props.image}
-        /></div>
+        <div style={{marginBottom: "16px", width: "100%"}}>
+            <ConstructorElement
+                type={this.props.type}
+                isLocked={this.props.isLocked}
+                text={this.props.name}
+                price={this.props.price}
+                thumbnail={this.props.image}
+            />
+        </div>
 }
