@@ -1,5 +1,4 @@
 import React from 'react'
-import { ChosenIngredient } from './chosen-ingredient'
 
 import ingredientModel from '../../utils/data.json'
 import { TotalBar } from './total-bar';
@@ -23,8 +22,8 @@ export class BurgerConstructor extends React.Component {
     }
 
     render = () => 
-            <div style={{marginTop: "100px", marginLeft: "40px"}}>
+            <section style={{marginTop: "100px", marginLeft: "40px"}}>
                 <IngredientList ingredients={this.state.ingredients}/>
                 <TotalBar totalPrice={this.calcTotalPrice()}/>
-            </div>
+            </section>
 }
