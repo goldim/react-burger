@@ -21,24 +21,38 @@ export class BurgerIngredients extends React.Component {
     }
 
     renderItems = (category) => {
-        return this.getIngredientsByType(category)
-            .map(ingr =>
-                <BurgerIngredientItem
-                    key={ingr._id}
-                    image={ingr.image}
-                    price={ingr.price}
-                    name={ingr.name}
-                />
-            );
+        const result = [];
+        const modelElements = this.getIngredientsByType(category);
+
+        for (let i = 0; i < modelElements.length; i += 2){
+            const ingr = modelElements[i];
+            const nextIngr = modelElements[i + 1];
+
+            const element = <li key={i} style={{listStyleType: 'none'}}>
+                { this.renderItem(ingr) }
+                { nextIngr ? this.renderItem(nextIngr) : <p></p>}
+            </li>
+            result.push(element);
+
+        }
+        return result;
+    }
+
+    renderItem = (ingr) => {
+        return <BurgerIngredientItem
+            key={ingr._id}
+            image={ingr.image}
+            price={ingr.price}
+            name={ingr.name}/>
     }
 
     renderCategory = (code, title) => {
-        return <>
-            <p className="text text_type_main-large" style={{textAlign:'left'}}>{title}</p>
-            <div style={{display:'flex', flexWrap: 'wrap', flexDirection: 'row'}}>
+        return <div  style={{marginTop: '40px', marginBottom: '40px'}}>
+            <p id={title} className="text text_type_main-medium" style={{textAlign:'left'}}>{title}</p>
+            <ul style={{textAlign:'left', margin:0, padding: 0}}>
                 { this.renderItems(code) }
-            </div>
-        </>
+            </ul>
+        </div>
     }
 
     renderCategories = () => {
@@ -64,14 +78,18 @@ export class BurgerIngredients extends React.Component {
         return ["bun", "sauce", "main"];
     }
 
+    moveTo = (a) => {
+        document.getElementById(a).scrollIntoView();
+    }
+
     render = () => 
-        <div>
-            <div style={{ textAlign: 'left' }}>Соберите бургер</div>
-            <div>
+        <div style={{ marginTop: '40px' }}>
+            <p style={{ textAlign: 'left' }} className="text text text_type_main-large">Соберите бургер</p>
+            <div style={{ marginTop: '20px' }}>
                 <div style={{ display: 'flex' }}>
-                    { this.getCategoryTitles().map((title, i) => <Tab key={i}>{title}</Tab>)}
+                    { this.getCategoryTitles().map((title, i) => <Tab key={i} onClick={() => this.moveTo(title)}>{title}</Tab>)}
                 </div>
-                <div  style={{overflowY: 'auto', maxHeight: '700px', height: '100%', width: '600px'}}>
+                <div  style={{overflowY: 'auto', maxHeight: '700px', height: '100%'}}>
                     <div>
                     {this.renderCategories()}
                     </div>

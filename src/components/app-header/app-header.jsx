@@ -8,18 +8,26 @@ export class AppHeader extends React.Component {
 
     render = () => 
         <header>
-            <nav>
-                <Button type="secondary" size="medium">
-                    <BurgerIcon type="primary"/>Конструктор
+            {/* <nav style={{marginLeft: "0px"}}> */}
+                <Button type="secondary" size="medium" style={{marginTop: "16px", marginBottom: "16px"}}>
+                    <BurgerIcon type="primary" style={{marginRight: "8px"}}/>
+                    <div style={{float:"right", marginLeft: "13px"}} class="text text_type_main-default">
+                        Конструктор
+                    </div>
                 </Button>
-                <Button type="secondary" size="medium">
+                <Button type="secondary" size="medium" style={{marginLeft: "20px", marginRight: "8px"}}>
                     <MenuIcon type="primary" />
-                    Лента заказов
+                    <div style={{float:"right", marginLeft: "13px"}}>
+                        Лента заказов
+                    </div>
                 </Button>
-                <Logo/>
-                <Button type="secondary" size="medium" onClick={this.auth}>
-                    <ProfileIcon type="primary" />Личный кабинет
+                <div style={{display: "inline-block"}}><Logo class="text text_type_main-default"/></div>
+                <Button type="secondary" size="medium" onClick={this.auth} style={{marginLeft: "20px", marginRight: "8px"}}>
+                    <ProfileIcon type="primary" />
+                    <div style={{float:"right", marginLeft: "13px"}}>
+                        Личный кабинет
+                    </div>
                 </Button>
-            </nav>
+            {/* </nav> */}
         </header>
 }
