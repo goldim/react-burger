@@ -2,61 +2,19 @@ import React from 'react'
 import { ChosenIngredient } from './chosen-ingredient'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import ingredientModel from '../../utils/data.json'
+
 export class BurgerConstructor extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-            ingredients: [
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: false,
-                    price: 200
-                },
-    
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 300
-                },
-    
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                },
-
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                },
-
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                },
-
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                },
-
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                },
-
-                {
-                    name: "Краторная булка N-200i",
-                    isLocked: true,
-                    price: 500
-                }
-            ]
+            ingredients: []
         }
+    }
+
+    componentDidMount = () => {
+        this.setState({ingredients: [...ingredientModel]});
     }
 
     getTotal = () => {

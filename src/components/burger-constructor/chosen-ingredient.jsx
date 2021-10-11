@@ -1,6 +1,5 @@
 import React from 'react'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import ingredientImage from '../../images/ingredient.png'
 
 export class ChosenIngredient extends React.Component {
     render = () => 
@@ -8,6 +7,6 @@ export class ChosenIngredient extends React.Component {
             isLocked={this.props.isLocked}
             text={this.props.name}
             price={this.props.price}
-            thumbnail={ingredientImage}
+            thumbnail={this.props.image}
         /></div>
 }
