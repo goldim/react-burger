@@ -36,7 +36,7 @@ export class Category extends React.Component {
     render = () => 
         <div  style={{marginTop: '40px', marginBottom: '40px'}}>
             <p id={this.props.title} className="text text_type_main-medium" style={{textAlign:'left'}}>{this.props.title}</p>
-            <ul style={{textAlign:'left', margin:0, padding: 0}}>
+            <ul style={{textAlign:'left', paddingTop: '24px', paddingLeft: '16px'}}>
                 { this.renderItems() }
             </ul>
         </div>
