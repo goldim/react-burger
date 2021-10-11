@@ -22,10 +22,6 @@ export class BurgerConstructor extends React.Component {
         return this.state.ingredients.reduce((acc, current) => acc + current.price, 0);
     }
 
-    renderIngredient = (ingr, type) => {
-        return <li style={{listStyleType: 'none'}}><ChosenIngredient key={ingr._id} {...ingr} type={type}/></li>
-    }
-
     render = () => 
             <div style={{marginTop: "100px", marginLeft: "40px"}}>
                 <IngredientList ingredients={this.state.ingredients}/>
