@@ -1,6 +1,5 @@
 import React from 'react'
 
-import ingredientModel from '../../utils/data.json'
 import { TotalBar } from './total-bar';
 import { IngredientList } from './ingredient-list';
 
@@ -14,7 +13,7 @@ export class BurgerConstructor extends React.Component {
     }
 
     componentDidMount = () => {
-        this.setState({ingredients: [...ingredientModel]});
+        this.setState({ingredients: [...this.props.model]});
     }
 
     calcTotalPrice = () => {

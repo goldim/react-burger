@@ -1,6 +1,5 @@
 import React from 'react'
 
-import ingredientModel from '../../utils/data.json'
 import { Category } from './category';
 import { CategoryBar } from './category-bar';
 
@@ -13,7 +12,7 @@ export class BurgerIngredients extends React.Component {
     }
 
     componentDidMount = () => {
-        this.setState({data: [...ingredientModel]});
+        this.setState({data: [...this.props.model]});
     }
 
     getIngredientsByType = (type) => {

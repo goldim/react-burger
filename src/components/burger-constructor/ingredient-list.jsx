@@ -11,8 +11,8 @@ export class IngredientList extends React.Component {
     }
 
     renderItem = (data, type) =>
-        <li style={{listStyleType: 'none'}}>
-            <ChosenIngredient key={data._id} {...data} type={type}/>
+        <li key={data._id} style={{listStyleType: 'none'}}>
+            <ChosenIngredient {...data} type={type}/>
         </li>
 
     getListLength = () => {
