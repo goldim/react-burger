@@ -17,27 +17,27 @@ export class Category extends React.Component {
         return result;
     }
 
-    renderRow = (firstItem, secondItem, i) => {
-        return <li key={i} style={{listStyleType: 'none'}}>
+    renderRow = (firstItem, secondItem, i) => (
+        <li key={i} style={{listStyleType: 'none'}}>
             { this.renderItem(firstItem) }
             { secondItem ? this.renderItem(secondItem) : <p></p>}
-        </li>;
-    }
+        </li>
+    )
 
-    renderItem = (ingr) => {
-        return <Ingredient
+    renderItem = (ingr) => (
+        <Ingredient
             key={ingr._id}
             image={ingr.image}
             price={ingr.price}
             name={ingr.name}/>
-    }
+    )
 
-
-    render = () => 
+    render = () => (
         <div  style={{marginTop: '40px', marginBottom: '40px'}}>
             <p id={this.props.title} className="text text_type_main-medium" style={{textAlign:'left'}}>{this.props.title}</p>
             <ul style={{textAlign:'left', paddingTop: '24px', paddingLeft: '16px'}}>
                 { this.renderItems() }
             </ul>
         </div>
+    )
 }

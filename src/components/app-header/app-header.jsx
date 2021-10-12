@@ -6,7 +6,7 @@ export class AppHeader extends React.Component {
         alert("auth");
     }
 
-    render = () => 
+    render = () => (
         <header>
             {/* <nav style={{marginLeft: "0px"}}> */}
                 <Button type="secondary" size="medium" style={{marginTop: "16px", marginBottom: "16px"}}>
@@ -30,4 +30,5 @@ export class AppHeader extends React.Component {
                 </Button>
             {/* </nav> */}
         </header>
+    )
 }

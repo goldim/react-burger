@@ -11,9 +11,9 @@ export class IngredientList extends React.Component {
     }
 
     renderItem = (data, type) =>
-        <li key={data._id} style={{listStyleType: 'none'}}>
+        (<li key={data._id} style={{listStyleType: 'none'}}>
             <ChosenIngredient {...data} type={type}/>
-        </li>
+        </li>)
 
     getListLength = () => {
         return this.props.ingredients.length;
@@ -23,15 +23,17 @@ export class IngredientList extends React.Component {
         return this.props.ingredients.length !== 0;
     }
 
-    renderScrollablePart = () => 
+    renderScrollablePart = () => (
         <div style={{ height: '400px', overflowY: 'auto' }}>
             { this.props.ingredients.slice(1, this.getListLength() - 2).map(ingr => this.renderItem(ingr)) }
         </div>
+        )
 
-    render = () => 
+    render = () => (
         <ul style={{ height: '600px' }}>
             { this.isNotEmpty() ? this.renderTopItem(this.props.ingredients[0]) : ""}
             { this.renderScrollablePart() }
             { this.isNotEmpty() ? this.renderBottomItem(this.props.ingredients.pop()) : "" }
         </ul>
+    )
 }

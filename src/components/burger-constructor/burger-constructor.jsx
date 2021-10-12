@@ -8,9 +8,10 @@ export class BurgerConstructor extends React.Component {
         return this.props.model.reduce((acc, current) => acc + current.price, 0);
     }
 
-    render = () => 
+    render = () => (
             <section style={{marginTop: "100px", marginLeft: "40px"}}>
                 <IngredientList ingredients={this.props.model}/>
                 <TotalBar totalPrice={this.calcTotalPrice()}/>
             </section>
+    )
 }

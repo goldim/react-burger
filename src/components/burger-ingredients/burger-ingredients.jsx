@@ -9,20 +9,25 @@ export class BurgerIngredients extends React.Component {
     }
 
 
-    renderCategoriesBlock = () => 
+    renderCategoriesBlock = () => (
         <div  style={{overflowY: 'auto', maxHeight: '700px', height: '100%'}}>
             {this.renderCategories()}
         </div>
+    )
 
     renderCategories = () => {
         const result = [];
         this.getCategoryDescriptions().forEach(desc => {
-            result.push(<Category key={desc.code} title={desc.title}>
-                {this.getIngredientsByType(desc.code)}
-            </Category>);
+            result.push(this.renderCategory(desc.code, desc.title));
         });
         return result;
     }
+
+    renderCategory = (code, title) => (
+        <Category key={code} title={title}>
+            {this.getIngredientsByType(code)}
+        </Category>
+    )
 
     getCategoryDescriptions = () => {
         return [
@@ -53,12 +58,13 @@ export class BurgerIngredients extends React.Component {
         document.getElementById(a).scrollIntoView();
     }
 
-    renderCombineBurgerTitle = () => 
+    renderCombineBurgerTitle = () => (
         <p style={{ textAlign: 'left' }} className="text text text_type_main-large">
             Соберите бургер
         </p>
+    )
 
-    render = () => 
+    render = () => (
         <section style={{ marginTop: '40px' }}>
             { this.renderCombineBurgerTitle() }
             <div style={{ marginTop: '20px' }}>
@@ -66,4 +72,5 @@ export class BurgerIngredients extends React.Component {
                 { this.renderCategoriesBlock() }
             </div>
         </section>
+    )
 }
