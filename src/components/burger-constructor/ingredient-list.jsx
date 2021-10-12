@@ -10,10 +10,11 @@ export class IngredientList extends React.Component {
         return this.renderItem(data, 'bottom');
     }
 
-    renderItem = (data, type) =>
-        (<li key={data._id} style={{listStyleType: 'none'}}>
+    renderItem = (data, type) => (
+        <li key={data._id} style={{listStyleType: 'none'}}>
             <ChosenIngredient {...data} type={type}/>
-        </li>)
+        </li>
+    )
 
     getListLength = () => {
         return this.props.ingredients.length;
@@ -27,7 +28,7 @@ export class IngredientList extends React.Component {
         <div style={{ height: '400px', overflowY: 'auto' }}>
             { this.props.ingredients.slice(1, this.getListLength() - 2).map(ingr => this.renderItem(ingr)) }
         </div>
-        )
+    )
 
     render = () => (
         <ul style={{ height: '600px' }}>
