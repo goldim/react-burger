@@ -28,7 +28,7 @@ export class BurgerIngredients extends React.Component {
     renderCategories = () => {
         const result = [];
         this.getCategoryDescriptions().forEach(desc => {
-            result.push(<Category title={desc.title}>
+            result.push(<Category key={desc.code} title={desc.title}>
                 {this.getIngredientsByType(desc.code)}
             </Category>);
         });
