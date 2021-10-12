@@ -4,19 +4,8 @@ import { Category } from './category';
 import { CategoryBar } from './category-bar';
 
 export class BurgerIngredients extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            data: []
-        }
-    }
-
-    componentDidMount = () => {
-        this.setState({data: [...this.props.model]});
-    }
-
     getIngredientsByType = (type) => {
-        return this.state.data.filter(ingr => ingr.type === type)
+        return this.props.model.filter(ingr => ingr.type === type)
     }
 
 
