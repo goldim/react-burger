@@ -45,9 +45,9 @@ export class IngredientList extends React.Component {
 
     render = () => (
         <ul className={constructorStyles.ingredientList}>
-            { this.isNotEmpty() ? this.renderTopItemLocked(this.props.ingredients[0]) : ""}
+            { this.isNotEmpty() ? this.renderTopItemLocked({...this.props.ingredients[0], _id: 0 }) : ""}
             { this.renderScrollablePart() }
-            { this.isNotEmpty() ? this.renderBottomItemLocked(this.props.ingredients[0]) : "" }
+            { this.isNotEmpty() ? this.renderBottomItemLocked({...this.props.ingredients[0], _id: 1 }) : "" }
         </ul>
     )
 }
