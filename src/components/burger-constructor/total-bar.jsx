@@ -1,14 +1,15 @@
 import React from 'react'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './burger-constructor.module.css'
 
 export class TotalBar extends React.Component {
     render = () => (
-        <p style={{marginTop: "40px", textAlign: "right"}}>
+        <p className={styles.totalBar}>
             <span className="text text_type_digits-medium">
                 { this.props.totalPrice }
             </span>
             <CurrencyIcon/>
-            <Button size="large" style={{marginLeft: "40px"}}>Оформить заказ</Button>
+            <Button className={styles.makeOrderBtn} size="large">Оформить заказ</Button>
         </p>
     )
 }

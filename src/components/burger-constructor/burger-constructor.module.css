@@ -2,3 +2,35 @@
     display: flex;
     flex-direction: column;
 }
+
+.chosenItem {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+li {
+    list-style-type: none;
+}
+
+.dynamicPart {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.ingredientList {
+    height: 600px;
+}
+
+.burgerConstructor {
+    margin-top: 100px;
+    margin-left: 40px;
+}
+
+.totalBar {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.makeOrderBtn {
+    margin-left: 40px;
+}

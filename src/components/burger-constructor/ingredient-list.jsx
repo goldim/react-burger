@@ -1,4 +1,5 @@
 import React from 'react'
+import constructorStyles from './burger-constructor.module.css'
 import { ChosenIngredient } from './chosen-ingredient'
 
 export class IngredientList extends React.Component {
@@ -11,7 +12,7 @@ export class IngredientList extends React.Component {
     }
 
     renderItem = (data, type) => (
-        <li key={data._id} style={{listStyleType: 'none'}}>
+        <li key={data._id}>
             <ChosenIngredient {...data} type={type}/>
         </li>
     )
@@ -25,13 +26,13 @@ export class IngredientList extends React.Component {
     }
 
     renderScrollablePart = () => (
-        <div style={{ height: '400px', overflowY: 'auto' }}>
+        <div className={constructorStyles.dynamicPart}>
             { this.props.ingredients.slice(1, this.getListLength() - 2).map(ingr => this.renderItem(ingr)) }
         </div>
     )
 
     render = () => (
-        <ul style={{ height: '600px' }}>
+        <ul className={constructorStyles.ingredientList}>
             { this.isNotEmpty() ? this.renderTopItem(this.props.ingredients[0]) : ""}
             { this.renderScrollablePart() }
             { this.isNotEmpty() ? this.renderBottomItem(this.props.ingredients.pop()) : "" }

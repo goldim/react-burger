@@ -1,9 +1,10 @@
 import React from 'react'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './burger-constructor.module.css'
 
 export class ChosenIngredient extends React.Component {
     render = () => (
-        <div style={{marginBottom: "16px", width: "100%"}}>
+        <div className={styles.chosenItem}>
             <ConstructorElement
                 type={this.props.type}
                 isLocked={this.props.isLocked}

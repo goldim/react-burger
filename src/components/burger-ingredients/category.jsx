@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { Ingredient } from './ingredient'
+import ingredientsStyles from './burger-ingredients.module.css';
 
 export class Category extends React.Component {
     renderItems = () => {
@@ -18,7 +18,7 @@ export class Category extends React.Component {
     }
 
     renderRow = (firstItem, secondItem, i) => (
-        <li key={i} style={{listStyleType: 'none'}}>
+        <li key={i} className={ingredientsStyles.noPointList}>
             { this.renderItem(firstItem) }
             { secondItem ? this.renderItem(secondItem) : <p></p>}
         </li>
@@ -33,9 +33,11 @@ export class Category extends React.Component {
     )
 
     render = () => (
-        <div  style={{marginTop: '40px', marginBottom: '40px'}}>
-            <p id={this.props.title} className="text text_type_main-medium" style={{textAlign:'left'}}>{this.props.title}</p>
-            <ul style={{textAlign:'left', paddingTop: '24px', paddingLeft: '16px'}}>
+        <div className={ingredientsStyles.category}>
+            <p id={this.props.title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
+                {this.props.title}
+            </p>
+            <ul className={ingredientsStyles.categoryList}>
                 { this.renderItems() }
             </ul>
         </div>

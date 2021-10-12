@@ -59,15 +59,15 @@ export class BurgerIngredients extends React.Component {
     }
 
     renderCombineBurgerTitle = () => (
-        <p className={ingredientsStyles.combineBurgerTitle} className="text text_type_main-large">
+        <p className={`${ingredientsStyles.title} text text_type_main-large`}>
             Соберите бургер
         </p>
     )
 
     render = () => (
-        <section style={{ marginTop: '40px' }}>
+        <section className={ingredientsStyles.ingredientsMenu}>
             { this.renderCombineBurgerTitle() }
-            <div style={{ marginTop: '20px' }}>
+            <div className={ingredientsStyles.menuContent}>
                 <CategoryBar titles={this.getCategoryTitles()} clickTab={this.moveTo}/>
                 { this.renderCategoriesBlock() }
             </div>

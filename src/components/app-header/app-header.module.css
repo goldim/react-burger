@@ -1,0 +1,13 @@
+.navButton {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.navButtonIcon {
+    margin-right: 8px;
+}
+
+.navButtonTitle {
+    float: right;
+    margin-left: 13px;
+}
