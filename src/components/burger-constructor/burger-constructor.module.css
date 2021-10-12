@@ -1,11 +1,9 @@
 .ingredientList {
-    display: flex;
-    flex-direction: column;
+    height: 600px;
 }
 
 .chosenItem {
     margin-bottom: 16px;
-    width: 100%;
 }
 
 li {
@@ -15,10 +13,6 @@ li {
 .dynamicPart {
     height: 400px;
     overflow-y: auto;
-}
-
-.ingredientList {
-    height: 600px;
 }
 
 .burgerConstructor {
