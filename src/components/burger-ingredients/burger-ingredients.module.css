@@ -1,0 +1,13 @@
+.categoryBar {
+    display: flex;
+}
+
+.categoryBlock {
+    overflow-y: auto;
+    max-height: 700px;
+    height: 100%;
+}
+
+.combineBurgerTitle {
+    text-align: left
+}

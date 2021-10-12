@@ -2,15 +2,15 @@ import React from 'react'
 
 import { Category } from './category';
 import { CategoryBar } from './category-bar';
+import ingredientsStyles from './burger-ingredients.module.css';
 
 export class BurgerIngredients extends React.Component {
     getIngredientsByType = (type) => {
         return this.props.model.filter(ingr => ingr.type === type)
     }
 
-
     renderCategoriesBlock = () => (
-        <div  style={{overflowY: 'auto', maxHeight: '700px', height: '100%'}}>
+        <div className={ingredientsStyles.categoryBlock}>
             {this.renderCategories()}
         </div>
     )
@@ -59,7 +59,7 @@ export class BurgerIngredients extends React.Component {
     }
 
     renderCombineBurgerTitle = () => (
-        <p style={{ textAlign: 'left' }} className="text text text_type_main-large">
+        <p className={ingredientsStyles.combineBurgerTitle} className="text text_type_main-large">
             Соберите бургер
         </p>
     )
