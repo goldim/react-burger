@@ -11,9 +11,21 @@ export class IngredientList extends React.Component {
         return this.renderItem(data, 'bottom');
     }
 
-    renderItem = (data, type) => (
+    renderTopItemLocked = (data) => {
+        return this.renderLockedItem(data, 'top');
+    }
+
+    renderBottomItemLocked = (data) => {
+        return this.renderLockedItem(data, 'bottom');
+    }
+
+    renderLockedItem = (data, type) => (
+        this.renderItem(data, type, true)
+    )
+
+    renderItem = (data, type, locked = false) => (
         <li key={data._id}>
-            <ChosenIngredient {...data} type={type}/>
+            <ChosenIngredient {...data} type={type} isLocked={locked}/>
         </li>
     )
 
@@ -33,9 +45,9 @@ export class IngredientList extends React.Component {
 
     render = () => (
         <ul className={constructorStyles.ingredientList}>
-            { this.isNotEmpty() ? this.renderTopItem(this.props.ingredients[0]) : ""}
+            { this.isNotEmpty() ? this.renderTopItemLocked(this.props.ingredients[0]) : ""}
             { this.renderScrollablePart() }
-            { this.isNotEmpty() ? this.renderBottomItem(this.props.ingredients.pop()) : "" }
+            { this.isNotEmpty() ? this.renderBottomItemLocked(this.props.ingredients[0]) : "" }
         </ul>
     )
 }
