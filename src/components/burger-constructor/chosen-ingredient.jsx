@@ -1,5 +1,5 @@
 import React from 'react'
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
 
 export class ChosenIngredient extends React.Component {

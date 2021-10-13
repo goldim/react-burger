@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, CurrencyIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
 
 export class TotalBar extends React.Component {

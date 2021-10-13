@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuIcon, ProfileIcon, BurgerIcon, Logo, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { MenuIcon, ProfileIcon, BurgerIcon, Logo, Button } from '../../utils/yandex-components'
 import styles from './app-header.module.css'
 
 const NavButton = (props) => {

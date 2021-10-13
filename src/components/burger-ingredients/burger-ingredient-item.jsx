@@ -1,5 +1,5 @@
 import React from 'react'
-import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon, Counter } from '../../utils/yandex-components'
 import styles from './burger-ingredients.module.css'
 
 export class BurgerIngredientItem extends React.Component {

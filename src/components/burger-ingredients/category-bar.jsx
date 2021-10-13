@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab } from '../../utils/yandex-components'
 import ingredientsStyles from './burger-ingredients.module.css';
 
 export class CategoryBar extends React.Component {
