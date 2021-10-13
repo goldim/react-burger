@@ -4,7 +4,7 @@ import styles from './burger-constructor.module.css'
 
 export class TotalBar extends React.Component {
     render = () => (
-        <p className={styles.totalBar}>
+        <div className={styles.totalBar}>
             <div className={styles.priceCurrency}>
                 <span className="text text_type_digits-medium">
                     { this.props.totalPrice }
@@ -12,6 +12,6 @@ export class TotalBar extends React.Component {
                 <CurrencyIcon/>
             </div>
             <Button size="large">Оформить заказ</Button>
-        </p>
+        </div>
     )
 }
