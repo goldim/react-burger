@@ -27,6 +27,7 @@ li {
     text-align: right;
 }
 
-.makeOrderBtn {
-    margin-left: 40px;
+.priceCurrency {
+    display: inline-block;
+    margin-right: 40px;
 }
