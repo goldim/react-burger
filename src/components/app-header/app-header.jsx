@@ -5,9 +5,9 @@ import styles from './app-header.module.css'
 const NavButton = (props) => {
     const Icon = props.icon;
     return (
-        <Button type="secondary" size="medium" className={styles.navButton} onClick={props.onClick}>
-            <Icon type="primary" className={styles.navButtonIcon}/>
-            <div className={`${styles.navButtonTitle} text text_type_main-default`}>
+        <Button type="secondary" size="medium" className={styles.NavButton} onClick={props.onClick}>
+            <Icon type="primary" className={styles.NavButtonIcon}/>
+            <div className={`${styles.NavButtonTitle} text text_type_main-default`}>
                 {props.title}
             </div>
         </Button>
