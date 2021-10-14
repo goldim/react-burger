@@ -1,0 +1,50 @@
+.categoryBar {
+    display: flex;
+}
+
+.categoryBlock {
+    overflow-y: auto;
+    max-height: 700px;
+    height: 100%;
+}
+
+.title {
+    text-align: left
+}
+
+.category {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.noPointList {
+    list-style-type: none;
+}
+
+.categoryList {
+    text-align: left;
+    padding-top: 24px;
+    padding-left: 16px
+}
+
+.ingredientsMenu {
+    margin-top: 40px;
+}
+
+.menuContent {
+    margin-top: 20px;
+}
+
+.menuItem {
+    display: inline-block;
+    text-align: center;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    position: relative;
+}
+
+.menuItemCounter {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}

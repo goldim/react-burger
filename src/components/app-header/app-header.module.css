@@ -1,0 +1,13 @@
+.NavButton {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.NavButtonIcon {
+    margin-right: 8px;
+}
+
+.NavButtonTitle {
+    float: right;
+    margin-left: 13px;
+}

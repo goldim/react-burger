@@ -1,0 +1,33 @@
+.ingredientList {
+    height: 600px;
+}
+
+.chosenItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.dynamicPart {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.burgerConstructor {
+    margin-top: 100px;
+    margin-left: 40px;
+}
+
+.totalBar {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.priceCurrency {
+    display: inline-block;
+    margin-right: 40px;
+}
