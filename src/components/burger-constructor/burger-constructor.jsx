@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TotalBar } from './total-bar';
+import TotalBar from './total-bar';
 import { IngredientList } from './ingredient-list';
 import constructorStyles from './burger-constructor.module.css';
 
@@ -10,9 +10,9 @@ export class BurgerConstructor extends React.Component {
     }
 
     render = () => (
-            <section className={constructorStyles.burgerConstructor}>
-                <IngredientList ingredients={this.props.model}/>
-                <TotalBar totalPrice={this.calcTotalPrice()}/>
-            </section>
+        <section className={constructorStyles.burgerConstructor}>
+            <IngredientList ingredients={this.props.model}/>
+            <TotalBar totalPrice={this.calcTotalPrice()}/>
+        </section>
     )
 }
