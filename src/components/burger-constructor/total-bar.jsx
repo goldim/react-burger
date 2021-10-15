@@ -1,22 +1,33 @@
+import React from 'react'
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
+import Modal from '../modal/modal';
 import styles from './burger-constructor.module.css'
 
-const makeOrder = () => {
-    alert("hello");
-}
+const TotalBar = (props) => {
+    const [modalShow, setModalShow] = React.useState(false);
 
-const TotalBar = (props) => (
-    <div className={styles.totalBar}>
-        <div className={styles.priceCurrency}>
-            <span className="text text_type_digits-medium">
-                { props.totalPrice }
-            </span>
-            <CurrencyIcon/>
+    const makeOrder = () => {
+        setModalShow(true);
+    }
+
+    const closeModal = () => {
+        setModalShow(false);
+    }
+
+    return (
+        <div className={styles.totalBar}>
+            <div className={styles.priceCurrency}>
+                <span className="text text_type_digits-medium">
+                    { props.totalPrice }
+                </span>
+                <CurrencyIcon/>
+            </div>
+            <Button size="large" onClick={makeOrder}>
+                Оформить заказ
+            </Button>
+            <Modal show={modalShow} closeHandler={closeModal}></Modal>
         </div>
-        <Button size="large" onClick={makeOrder}>
-            Оформить заказ
-        </Button>
-    </div>
-)
+    )
+}
 
 export default TotalBar;
