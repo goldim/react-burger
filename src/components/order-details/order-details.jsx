@@ -2,7 +2,7 @@ import styles from './order-details.module.css'
 import {} from '@ya.praktikum/react-developer-burger-ui-components';
 import orderSuccessImage from '../../images/ingredient.png'
 
-const OrderDetails = (props) => (
+const OrderDetails = () => (
     <div className={styles.OrderDetails}>
         <p className={`${styles.OrderNumber} text text_type_digits-large`}>034536</p>
         <p className="text text_type_main-medium">идентификатор заказа</p>

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import TotalBar from './total-bar';
 import { IngredientList } from './ingredient-list';
@@ -15,4 +16,8 @@ export class BurgerConstructor extends React.Component {
             <TotalBar totalPrice={this.calcTotalPrice()}/>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    model: PropTypes.array
 }

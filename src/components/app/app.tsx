@@ -9,14 +9,13 @@ function App() {
 
   const onIngredientsLoaded = async (response: any) => {
     const parsed = await response.json();
-    console.log(parsed);
     if (parsed.success){
       setIngredients(parsed.data);
     }
   }
   
   const onIngredientsLoadingFailed = () => {
-    console.log('failed');
+    throw Error("loading of data failed");
   }
   
   const loadIngredients = () => {

@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Category } from './category';
-import { CategoryBar } from './category-bar';
+import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
@@ -104,4 +105,8 @@ export class BurgerIngredients extends React.Component {
             </Modal>
         </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+    model: PropTypes.array
 }

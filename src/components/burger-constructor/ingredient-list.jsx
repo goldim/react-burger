@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import constructorStyles from './burger-constructor.module.css'
-import { ChosenIngredient } from './chosen-ingredient'
+import ChosenIngredient from './chosen-ingredient'
 
 export class IngredientList extends React.Component {
     renderTopItem = (data) => {
@@ -50,4 +52,8 @@ export class IngredientList extends React.Component {
             { this.isNotEmpty() ? this.renderBottomItemLocked({...this.props.ingredients[0], _id: 1 }) : "" }
         </ul>
     )
+}
+
+IngredientList.propTypes = {
+    ingredients: PropTypes.array
 }

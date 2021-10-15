@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import styles from './ingredient-details.module.css'
 
 const SmallText = React.memo((props) => (
@@ -31,5 +33,14 @@ const IngredientDetails = (props) => (
         </div>
     </div>
 )
+
+IngredientDetails.propTypes = {
+    name: PropTypes.string,
+    image: PropTypes.string,
+    calories: PropTypes.number,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number
+}
 
 export default IngredientDetails;

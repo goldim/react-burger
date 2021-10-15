@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 
@@ -42,4 +44,10 @@ export class Category extends React.Component {
             </ul>
         </div>
     )
+}
+
+Category.propTypes = {
+    title: PropTypes.string,
+    onItemClick: PropTypes.func,
+    children: PropTypes.arrayOf(PropTypes.object)
 }

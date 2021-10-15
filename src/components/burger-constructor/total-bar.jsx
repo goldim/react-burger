@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -31,6 +33,10 @@ const TotalBar = (props) => {
             </Modal>
         </div>
     )
+}
+
+TotalBar.propTypes = {
+    totalPrice: PropTypes.number
 }
 
 export default TotalBar;
