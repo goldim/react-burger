@@ -1,11 +1,12 @@
-import React from 'react'
 import { BurgerIngredientItem } from './burger-ingredient-item'
 
-export class Ingredient extends React.Component {
-    render = () => (
-        <BurgerIngredientItem
-            image={this.props.image}
-            price={this.props.price}
-            name={this.props.name}/>
-    )
-}
+const Ingredient = (props) => (
+    <span onClick={() => props.onClick(props)}>
+    <BurgerIngredientItem
+        image={props.image}
+        price={props.price}
+        name={props.name}/>
+    </span>
+)
+
+export default Ingredient;

@@ -1,0 +1,19 @@
+.OrderDetails {
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 120px;
+}
+
+.OrderSuccessImage {
+    width: 100px;
+    height: 100px;
+}
+
+.ImageContainer {
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
+
+.OrderNumber {
+    margin-bottom: 32px;
+}

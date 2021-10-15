@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
 import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import styles from './burger-constructor.module.css'
 
 const TotalBar = (props) => {
@@ -25,7 +26,9 @@ const TotalBar = (props) => {
             <Button size="large" onClick={makeOrder}>
                 Оформить заказ
             </Button>
-            <Modal show={modalShow} closeHandler={closeModal}></Modal>
+            <Modal show={modalShow} closeHandler={closeModal}>
+                <OrderDetails/>
+            </Modal>
         </div>
     )
 }

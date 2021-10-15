@@ -9,6 +9,7 @@ function App() {
 
   const onIngredientsLoaded = async (response: any) => {
     const parsed = await response.json();
+    console.log(parsed);
     if (parsed.success){
       setIngredients(parsed.data);
     }

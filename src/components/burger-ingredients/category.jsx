@@ -1,5 +1,5 @@
 import React from 'react'
-import { Ingredient } from './ingredient'
+import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 
 export class Category extends React.Component {
@@ -27,9 +27,9 @@ export class Category extends React.Component {
     renderItem = (ingr) => (
         <Ingredient
             key={ingr._id}
-            image={ingr.image}
-            price={ingr.price}
-            name={ingr.name}/>
+            {...ingr}
+            onClick={this.props.onItemClick}
+            />
     )
 
     render = () => (

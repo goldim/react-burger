@@ -20,7 +20,7 @@ export class AppHeader extends React.Component {
     }
 
     render = () => (
-        <header>
+        <header className={styles.AppHeader}>
             <NavButton title="Конструктор" icon={BurgerIcon}/>
             <NavButton title="Лента заказов" icon={MenuIcon}/>
             <Logo/>
