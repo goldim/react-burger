@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
 import styles from './burger-constructor.module.css'
 
 const TotalBar = (props) => {
@@ -35,8 +35,12 @@ const TotalBar = (props) => {
     )
 }
 
+TotalBar.defaultProps = {
+    totalPrice: 0
+}
+
 TotalBar.propTypes = {
-    totalPrice: PropTypes.number
+    totalPrice: PropTypes.number.isRequired
 }
 
 export default TotalBar;
