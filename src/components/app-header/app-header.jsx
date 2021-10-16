@@ -17,8 +17,8 @@ const NavButton = ({title, icon, clickHandler}) => {
 }
 
 NavButton.propTypes = {
-    title: PropTypes.string,
-    icon: PropTypes.func,
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.func.isRequired,
     clickHandler: PropTypes.func
 }
 
