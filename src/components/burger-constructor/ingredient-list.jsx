@@ -13,20 +13,20 @@ export class IngredientList extends React.Component {
         return this.renderItem(data, 'bottom');
     }
 
-    renderTopItemLocked = (data) => {
-        return this.renderLockedItem(data, 'top');
+    renderTopItemLocked = (id, data) => {
+        return this.renderLockedItem(id, data, 'top');
     }
 
-    renderBottomItemLocked = (data) => {
-        return this.renderLockedItem(data, 'bottom');
+    renderBottomItemLocked = (id, data) => {
+        return this.renderLockedItem(id, data, 'bottom');
     }
 
-    renderLockedItem = (data, type) => (
-        this.renderItem(data, type, true)
+    renderLockedItem = (id, data, type) => (
+        this.renderItem(id, data, type, true)
     )
 
-    renderItem = (data, type, locked = false) => (
-        <li key={data._id}>
+    renderItem = (id, data, type, locked = false) => (
+        <li key={id}>
             <ChosenIngredient {...data} type={type} isLocked={locked}/>
         </li>
     )
@@ -41,15 +41,15 @@ export class IngredientList extends React.Component {
 
     renderScrollablePart = () => (
         <div className={constructorStyles.dynamicPart}>
-            { this.props.ingredients.slice(1, this.getListLength() - 2).map(ingr => this.renderItem(ingr)) }
+            { this.props.ingredients.slice(1, this.getListLength() - 2).map((ingr, index) => this.renderItem(index, ingr)) }
         </div>
     )
 
     render = () => (
         <ul className={constructorStyles.ingredientList}>
-            { this.isNotEmpty() ? this.renderTopItemLocked({...this.props.ingredients[0], _id: 0 }) : ""}
+            { this.isNotEmpty() ? this.renderTopItemLocked(0, {...this.props.ingredients[0]}) : ""}
             { this.renderScrollablePart() }
-            { this.isNotEmpty() ? this.renderBottomItemLocked({...this.props.ingredients[0], _id: 1 }) : "" }
+            { this.isNotEmpty() ? this.renderBottomItemLocked(this.props.ingredients.length - 1, {...this.props.ingredients[0]}) : "" }
         </ul>
     )
 }
