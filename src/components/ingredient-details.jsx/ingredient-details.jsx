@@ -34,13 +34,22 @@ const IngredientDetails = (props) => (
     </div>
 )
 
+IngredientDetails.defaultProps = {
+    name: "",
+    image: "",
+    calories: 0,
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0
+}
+
 IngredientDetails.propTypes = {
-    name: PropTypes.string,
-    image: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired
 }
 
 export default IngredientDetails;
