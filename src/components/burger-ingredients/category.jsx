@@ -27,10 +27,18 @@ export class Category extends React.Component {
         </li>
     )
 
-    renderItem = (ingr) => (
+    renderItem = (item) => (
         <Ingredient
-            key={ingr._id}
-            {...ingr}
+            key={item._id}
+            name={item.name}
+            image={item.image}
+            price={item.price}
+            extraDetails = {{
+                fat: item.fat,
+                calories: item.calories,
+                carbohydrates: item.carbohydrates,
+                proteins: item.proteins
+            }}
             onClick={this.props.onItemClick}
             />
     )

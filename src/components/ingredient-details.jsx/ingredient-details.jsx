@@ -19,7 +19,7 @@ InactiveNumber.propTypes = {
     children: PropTypes.number.isRequired
 }
 
-const IngredientDetails = ({name, image, calories, proteins, fat, carbohydrates}) => (
+const IngredientDetails = ({name, image, extraDetails: {calories, proteins, fat, carbohydrates}}) => (
     <div className={styles.container}>
         <div>
             <div>
