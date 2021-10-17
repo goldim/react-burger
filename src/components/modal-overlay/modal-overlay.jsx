@@ -8,7 +8,7 @@ const ModalOverlay = React.forwardRef((props, ref) => (
 ))
 
 ModalOverlay.propTypes = {
-    onClick: PropTypes.func
+    onClick: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;

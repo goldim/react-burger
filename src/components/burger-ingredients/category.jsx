@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
+import DataItemPropTypes from '../../utils/data-item-format';
 
 export class Category extends React.Component {
     renderItems = () => {
         const result = [];
-        const items = this.props.children;
+        const items = this.props.data;
 
         for (let i = 0; i < items.length; i += 2){
             const ingr = items[i];
@@ -47,7 +48,7 @@ export class Category extends React.Component {
 }
 
 Category.propTypes = {
-    title: PropTypes.string,
-    onItemClick: PropTypes.func,
-    children: PropTypes.arrayOf(PropTypes.object)
+    title: PropTypes.string.isRequired,
+    onItemClick: PropTypes.func.isRequired,
+    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }

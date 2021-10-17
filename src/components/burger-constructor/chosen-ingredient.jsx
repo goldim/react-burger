@@ -17,25 +17,24 @@ const isCenter = (type) => {
     return !["bottom", "top"].includes(type);
 }
 
-const ChosenIngredient = (props) => (
+const ChosenIngredient = ({name, type, price, image, isLocked}) => (
     <div className={styles.chosenItem}>
-        { isCenter(props.type) && <DragIcon/> }
+        { isCenter(type) && <DragIcon/> }
         <ConstructorElement
-            type={props.type}
-            isLocked={props.isLocked}
-            text={makeAlignmentLabel(props.name, props.type)}
-            price={props.price}
-            thumbnail={props.image}
+            type={type}
+            isLocked={isLocked}
+            text={makeAlignmentLabel(name, type)}
+            price={price}
+            thumbnail={image}
         />
     </div>
 )
 
 ChosenIngredient.propTypes = {
     type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    thumbnail: PropTypes.string
+    isLocked: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
 }
 
 export default ChosenIngredient;

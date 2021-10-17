@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient from './chosen-ingredient'
+import DataItemPropTypes from '../../utils/data-item-format'
 
 export class IngredientList extends React.Component {
     renderTopItem = (data) => {
@@ -55,5 +56,5 @@ export class IngredientList extends React.Component {
 }
 
 IngredientList.propTypes = {
-    ingredients: PropTypes.array
+    ingredients: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
