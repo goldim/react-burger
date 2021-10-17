@@ -38,7 +38,7 @@ function App() {
       <div className={ appStyles.App }>
         <AppHeader/>
         <main>
-          <BurgerIngredients model={ingredients}/>
+          <BurgerIngredients data={ingredients}/>
           <BurgerConstructor data={ingredients}/>
         </main>
       </div>
