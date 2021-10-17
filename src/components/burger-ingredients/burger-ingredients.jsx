@@ -13,13 +13,12 @@ export class BurgerIngredients extends React.Component {
         super(props);
         this.state = {
             showDetails: false,
-            chosenItem: {
-            }
+            chosenItem: {}
         }
     }
 
     getIngredientsByType = (type) => {
-        return this.props.model.filter(ingr => ingr.type === type)
+        return this.props.data.filter(ingr => ingr.type === type)
     }
 
     renderCategoriesBlock = () => (
@@ -107,5 +106,5 @@ export class BurgerIngredients extends React.Component {
 }
 
 BurgerIngredients.propTypes = {
-    model: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
+    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
