@@ -1,0 +1,22 @@
+.container {
+    padding-bottom: 60px;
+    text-align: center;
+}
+
+.title {
+    text-align: left;
+}
+
+.name {
+    margin-bottom: 32px;
+}
+
+.photo {
+    margin-bottom: 16px;
+}
+
+.subInfo {
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+}

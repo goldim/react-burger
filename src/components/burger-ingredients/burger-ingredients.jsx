@@ -1,12 +1,24 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Category } from './category';
-import { CategoryBar } from './category-bar';
+import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
+import DataItemPropTypes from '../../utils/data-item-format';
 
 export class BurgerIngredients extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showDetails: false,
+            chosenItem: {}
+        }
+    }
+
     getIngredientsByType = (type) => {
-        return this.props.model.filter(ingr => ingr.type === type)
+        return this.props.data.filter(ingr => ingr.type === type)
     }
 
     renderCategoriesBlock = () => (
@@ -23,10 +35,25 @@ export class BurgerIngredients extends React.Component {
         return result;
     }
 
+    onCloseItem = () => {
+        this.setState({
+            ...this.state,
+            showDetails: false
+        });
+    }
+
+    onItemClick = (props) => {
+        this.setState({
+            ...this.state,
+            showDetails: true,
+            chosenItem: {
+                ...props
+            }
+        });
+    }
+
     renderCategory = (code, title) => (
-        <Category key={code} title={title}>
-            {this.getIngredientsByType(code)}
-        </Category>
+        <Category key={code} title={title} data={this.getIngredientsByType(code)} onItemClick={this.onItemClick}/>
     )
 
     getCategoryDescriptions = () => {
@@ -68,9 +95,16 @@ export class BurgerIngredients extends React.Component {
         <section className={ingredientsStyles.ingredientsMenu}>
             { this.renderCombineBurgerTitle() }
             <div className={ingredientsStyles.menuContent}>
-                <CategoryBar titles={this.getCategoryTitles()} clickTab={this.moveTo}/>
+                <CategoryBar titles={this.getCategoryTitles()} onTabHandler={this.moveTo}/>
                 { this.renderCategoriesBlock() }
             </div>
+            <Modal caption="Детали ингредиента" show={this.state.showDetails} closeHandler={this.onCloseItem}>
+                <IngredientDetails {...this.state.chosenItem}/>
+            </Modal>
         </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }

@@ -1,11 +1,14 @@
 import React from 'react'
-import { Ingredient } from './ingredient'
+import PropTypes from 'prop-types'
+
+import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
+import DataItemPropTypes from '../../utils/data-item-format';
 
 export class Category extends React.Component {
     renderItems = () => {
         const result = [];
-        const items = this.props.children;
+        const items = this.props.data;
 
         for (let i = 0; i < items.length; i += 2){
             const ingr = items[i];
@@ -24,12 +27,20 @@ export class Category extends React.Component {
         </li>
     )
 
-    renderItem = (ingr) => (
+    renderItem = (item) => (
         <Ingredient
-            key={ingr._id}
-            image={ingr.image}
-            price={ingr.price}
-            name={ingr.name}/>
+            key={item._id}
+            name={item.name}
+            image={item.image}
+            price={item.price}
+            extraDetails = {{
+                fat: item.fat,
+                calories: item.calories,
+                carbohydrates: item.carbohydrates,
+                proteins: item.proteins
+            }}
+            onClick={this.props.onItemClick}
+            />
     )
 
     render = () => (
@@ -42,4 +53,10 @@ export class Category extends React.Component {
             </ul>
         </div>
     )
+}
+
+Category.propTypes = {
+    title: PropTypes.string.isRequired,
+    onItemClick: PropTypes.func.isRequired,
+    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }

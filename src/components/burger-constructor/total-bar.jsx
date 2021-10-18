@@ -1,17 +1,46 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
 import styles from './burger-constructor.module.css'
 
-export class TotalBar extends React.Component {
-    render = () => (
+const TotalBar = (props) => {
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const makeOrder = () => {
+        setModalShow(true);
+    }
+
+    const closeModal = () => {
+        setModalShow(false);
+    }
+
+    return (
         <div className={styles.totalBar}>
             <div className={styles.priceCurrency}>
                 <span className="text text_type_digits-medium">
-                    { this.props.totalPrice }
+                    { props.totalPrice }
                 </span>
                 <CurrencyIcon/>
             </div>
-            <Button size="large">Оформить заказ</Button>
+            <Button size="large" onClick={makeOrder}>
+                Оформить заказ
+            </Button>
+            <Modal show={modalShow} closeHandler={closeModal}>
+                <OrderDetails/>
+            </Modal>
         </div>
     )
 }
+
+TotalBar.defaultProps = {
+    totalPrice: 0
+}
+
+TotalBar.propTypes = {
+    totalPrice: PropTypes.number.isRequired
+}
+
+export default TotalBar;

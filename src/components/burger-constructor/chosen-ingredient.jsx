@@ -1,32 +1,40 @@
-import React from 'react'
+import PropTypes from 'prop-types'
+
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
 
-export class ChosenIngredient extends React.Component {
-    makeAlignmentLabel = (baseLabel, type) => {
-        let result = "";
-        if (type === "bottom") {
-            result = "(низ)";
-        } else if (type === "top") {
-            result = "(верх)"
-        }
-        return (<>{baseLabel}<br/>{result}</>);
+const makeAlignmentLabel = (baseLabel, type) => {
+    let result = "";
+    if (type === "bottom") {
+        result = "(низ)";
+    } else if (type === "top") {
+        result = "(верх)"
     }
-
-    isCenter = (type) => {
-        return !["bottom", "top"].includes(type);
-    }
-
-    render = () => (
-        <div className={styles.chosenItem}>
-            { this.isCenter(this.props.type) && <DragIcon/> }
-            <ConstructorElement
-                type={this.props.type}
-                isLocked={this.props.isLocked}
-                text={this.makeAlignmentLabel(this.props.name, this.props.type)}
-                price={this.props.price}
-                thumbnail={this.props.image}
-            />
-        </div>
-    )
+    return (<>{baseLabel}<br/>{result}</>);
 }
+
+const isCenter = (type) => {
+    return !["bottom", "top"].includes(type);
+}
+
+const ChosenIngredient = ({name, type, price, image, isLocked}) => (
+    <div className={styles.chosenItem}>
+        { isCenter(type) && <DragIcon/> }
+        <ConstructorElement
+            type={type}
+            isLocked={isLocked}
+            text={makeAlignmentLabel(name, type)}
+            price={price}
+            thumbnail={image}
+        />
+    </div>
+)
+
+ChosenIngredient.propTypes = {
+    type: PropTypes.string,
+    isLocked: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+}
+
+export default ChosenIngredient;

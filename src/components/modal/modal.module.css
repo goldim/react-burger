@@ -1,0 +1,36 @@
+.Modal {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    background-color: #1c1c21;
+    z-index: 99999;
+    border-radius: 5%;
+}
+
+.ModalContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.TopPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 40px 40px 40px;
+}
+
+.Caption {
+    float: left;
+}
+
+.CloseButton {
+    float: right;
+    cursor: pointer;
+}
