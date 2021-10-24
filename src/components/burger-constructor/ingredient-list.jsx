@@ -1,56 +1,47 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import DataItemPropTypes from '../../utils/data-item-format'
 
 import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient from './chosen-ingredient'
-import DataItemPropTypes from '../../utils/data-item-format'
 
-export class IngredientList extends React.Component {
-    renderTopItem = (data) => {
-        return this.renderItem(data, 'top');
+const IngredientList = ({ingredients}) => {
+    const renderTopItemLocked = (id, data) => {
+        return renderLockedItem(id, data, 'top');
     }
 
-    renderBottomItem = (data) => {
-        return this.renderItem(data, 'bottom');
+    const renderBottomItemLocked = (id, data) => {
+        return renderLockedItem(id, data, 'bottom');
     }
 
-    renderTopItemLocked = (id, data) => {
-        return this.renderLockedItem(id, data, 'top');
-    }
-
-    renderBottomItemLocked = (id, data) => {
-        return this.renderLockedItem(id, data, 'bottom');
-    }
-
-    renderLockedItem = (id, data, type) => (
-        this.renderItem(id, data, type, true)
+    const renderLockedItem = (id, data, type) => (
+        renderItem(id, data, type, true)
     )
 
-    renderItem = (id, data, type, locked = false) => (
+    const renderItem = (id, data, type, locked = false) => (
         <li key={id}>
             <ChosenIngredient {...data} type={type} isLocked={locked}/>
         </li>
     )
 
-    getListLength = () => {
-        return this.props.ingredients.length;
+    const getListLength = () => {
+        return ingredients.length;
     }
 
-    isNotEmpty = () => {
-        return this.props.ingredients.length !== 0;
+    const isNotEmpty = () => {
+        return ingredients.length !== 0;
     }
 
-    renderScrollablePart = () => (
+    const renderScrollablePart = () => (
         <div className={constructorStyles.dynamicPart}>
-            { this.props.ingredients.slice(1, this.getListLength() - 2).map((ingr, index) => this.renderItem(index, ingr)) }
+            { ingredients.slice(1, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
         </div>
     )
 
-    render = () => (
+    return (
         <ul className={constructorStyles.ingredientList}>
-            { this.isNotEmpty() ? this.renderTopItemLocked(0, {...this.props.ingredients[0]}) : ""}
-            { this.renderScrollablePart() }
-            { this.isNotEmpty() ? this.renderBottomItemLocked(this.props.ingredients.length - 1, {...this.props.ingredients[0]}) : "" }
+            { isNotEmpty() ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
+            { renderScrollablePart() }
+            { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
         </ul>
     )
 }
@@ -58,3 +49,5 @@ export class IngredientList extends React.Component {
 IngredientList.propTypes = {
     ingredients: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
+
+export default IngredientList;

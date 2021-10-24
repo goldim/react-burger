@@ -1,14 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { Category } from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
-import DataItemPropTypes from '../../utils/data-item-format';
+import { IngredientsContext } from '../app/ingredients-context';
 
 export class BurgerIngredients extends React.Component {
+    static contextType = IngredientsContext
+
     constructor(props){
         super(props);
         this.state = {
@@ -18,7 +19,8 @@ export class BurgerIngredients extends React.Component {
     }
 
     getIngredientsByType = (type) => {
-        return this.props.data.filter(ingr => ingr.type === type)
+        const ingredients = this.context;
+        return ingredients.filter(ingr => ingr.type === type)
     }
 
     renderCategoriesBlock = () => (
@@ -91,7 +93,8 @@ export class BurgerIngredients extends React.Component {
         </p>
     )
 
-    render = () => (
+    render = () => {
+        return (
         <section className={ingredientsStyles.ingredientsMenu}>
             { this.renderCombineBurgerTitle() }
             <div className={ingredientsStyles.menuContent}>
@@ -102,9 +105,5 @@ export class BurgerIngredients extends React.Component {
                 <IngredientDetails {...this.state.chosenItem}/>
             </Modal>
         </section>
-    )
-}
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
+    )}
 }
