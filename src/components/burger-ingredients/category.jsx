@@ -1,33 +1,32 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 import DataItemPropTypes from '../../utils/data-item-format';
 
-export class Category extends React.Component {
-    renderItems = () => {
+const Category = (props) => {
+    const renderItems = () => {
         const result = [];
-        const items = this.props.data;
+        const items = props.data;
 
         for (let i = 0; i < items.length; i += 2){
             const ingr = items[i];
             const nextIngr = items[i + 1];
-            const element = this.renderRow(ingr, nextIngr, i);
+            const element = renderRow(ingr, nextIngr, i);
             result.push(element);
 
         }
         return result;
     }
 
-    renderRow = (firstItem, secondItem, i) => (
+    const renderRow = (firstItem, secondItem, i) => (
         <li key={i} className={ingredientsStyles.noPointList}>
-            { this.renderItem(firstItem) }
-            { secondItem ? this.renderItem(secondItem) : <p></p>}
+            { renderItem(firstItem) }
+            { secondItem ? renderItem(secondItem) : <p></p>}
         </li>
     )
 
-    renderItem = (item) => (
+    const renderItem = (item) => (
         <Ingredient
             key={item._id}
             name={item.name}
@@ -39,17 +38,17 @@ export class Category extends React.Component {
                 carbohydrates: item.carbohydrates,
                 proteins: item.proteins
             }}
-            onClick={this.props.onItemClick}
+            onClick={props.onItemClick}
             />
     )
 
-    render = () => (
+    return (
         <div className={ingredientsStyles.category}>
-            <p id={this.props.title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
-                {this.props.title}
+            <p id={props.title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
+                {props.title}
             </p>
             <ul className={ingredientsStyles.categoryList}>
-                { this.renderItems() }
+                { renderItems() }
             </ul>
         </div>
     )
@@ -60,3 +59,5 @@ Category.propTypes = {
     onItemClick: PropTypes.func.isRequired,
     data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
+
+export default Category;

@@ -1,52 +1,48 @@
-import React from 'react'
+import {useContext, useState} from 'react'
 
-import { Category } from './category';
+import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
 import { IngredientsContext } from '../app/ingredients-context';
 
-export class BurgerIngredients extends React.Component {
-    static contextType = IngredientsContext
+const BurgerIngredients = (props) => {
+    const [state, setState] = useState({
+        showDetails: false,
+        chosenItem: {}
+    });
+    const data = useContext(IngredientsContext);
 
-    constructor(props){
-        super(props);
-        this.state = {
-            showDetails: false,
-            chosenItem: {}
-        }
-    }
-
-    getIngredientsByType = (type) => {
-        const ingredients = this.context;
+    const getIngredientsByType = (type) => {
+        const ingredients = data;
         return ingredients.filter(ingr => ingr.type === type)
     }
 
-    renderCategoriesBlock = () => (
+    const renderCategoriesBlock = () => (
         <div className={ingredientsStyles.categoryBlock}>
-            {this.renderCategories()}
+            {renderCategories()}
         </div>
     )
 
-    renderCategories = () => {
+    const renderCategories = () => {
         const result = [];
-        this.getCategoryDescriptions().forEach(desc => {
-            result.push(this.renderCategory(desc.code, desc.title));
+        getCategoryDescriptions().forEach(desc => {
+            result.push(renderCategory(desc.code, desc.title));
         });
         return result;
     }
 
-    onCloseItem = () => {
-        this.setState({
-            ...this.state,
+    const onCloseItem = () => {
+        setState({
+            ...state,
             showDetails: false
         });
     }
 
-    onItemClick = (props) => {
-        this.setState({
-            ...this.state,
+    const onItemClick = (props) => {
+        setState({
+            ...state,
             showDetails: true,
             chosenItem: {
                 ...props
@@ -54,11 +50,11 @@ export class BurgerIngredients extends React.Component {
         });
     }
 
-    renderCategory = (code, title) => (
-        <Category key={code} title={title} data={this.getIngredientsByType(code)} onItemClick={this.onItemClick}/>
+    const renderCategory = (code, title) => (
+        <Category key={code} title={title} data={getIngredientsByType(code)} onItemClick={onItemClick}/>
     )
 
-    getCategoryDescriptions = () => {
+    const getCategoryDescriptions = () => {
         return [
             {
                 code: "bun",
@@ -75,35 +71,32 @@ export class BurgerIngredients extends React.Component {
         ];
     }
 
-    getCategoryTitles = () => {
-        return this.getCategoryDescriptions().map(cat => cat.title);
+    const getCategoryTitles = () => {
+        return getCategoryDescriptions().map(cat => cat.title);
     }
 
-    getCategoryCodes = () => {
-        return this.getCategoryDescriptions().map(cat => cat.code);
-    }
-
-    moveTo = (a) => {
+    const moveTo = (a) => {
         document.getElementById(a).scrollIntoView();
     }
 
-    renderCombineBurgerTitle = () => (
+    const renderCombineBurgerTitle = () => (
         <p className={`${ingredientsStyles.title} text text_type_main-large`}>
             Соберите бургер
         </p>
     )
 
-    render = () => {
-        return (
+    return (
         <section className={ingredientsStyles.ingredientsMenu}>
-            { this.renderCombineBurgerTitle() }
+            { renderCombineBurgerTitle() }
             <div className={ingredientsStyles.menuContent}>
-                <CategoryBar titles={this.getCategoryTitles()} onTabHandler={this.moveTo}/>
-                { this.renderCategoriesBlock() }
+                <CategoryBar titles={getCategoryTitles()} onTabHandler={moveTo}/>
+                { renderCategoriesBlock() }
             </div>
-            <Modal caption="Детали ингредиента" show={this.state.showDetails} closeHandler={this.onCloseItem}>
-                <IngredientDetails {...this.state.chosenItem}/>
+            <Modal caption="Детали ингредиента" show={state.showDetails} closeHandler={onCloseItem}>
+                <IngredientDetails {...state.chosenItem}/>
             </Modal>
         </section>
-    )}
+    )
 }
+
+export default BurgerIngredients;
