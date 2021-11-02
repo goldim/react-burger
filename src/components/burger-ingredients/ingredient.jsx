@@ -4,7 +4,7 @@ import { CHANGE_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredi
 
 import BurgerIngredientItem from './burger-ingredient-item'
 
-const Ingredient = ({id, name, image, price}) => {
+const Ingredient = ({id, name, image, price, isBun = false}) => {
     const dispatch = useDispatch();
 
     const showIngredientsDetails = () => {
@@ -20,7 +20,8 @@ const Ingredient = ({id, name, image, price}) => {
                 id={id}
                 image={image}
                 price={price}
-                name={name}/>
+                name={name}
+                isBun={isBun}/>
         </span>
     )
 }

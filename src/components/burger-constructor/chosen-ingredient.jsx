@@ -23,7 +23,7 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
     const dispatch = useDispatch();
 
     const onRemoveItem = () =>{
-        dispatch({id, type: REMOVE_INGREDIENT});
+        dispatch({index: id, type: REMOVE_INGREDIENT});
     }
 
     return (
@@ -42,7 +42,7 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
 }
 
 ChosenIngredient.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     type: PropTypes.string,
     isLocked: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

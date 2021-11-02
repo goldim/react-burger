@@ -19,7 +19,7 @@ const IngredientList = ({ingredients}) => {
 
     const renderItem = (id, data, type, locked = false) => (
         <li key={id}>
-            <ChosenIngredient id={data._id} {...data} type={type} isLocked={locked}/>
+            <ChosenIngredient id={id} {...data} type={type} isLocked={locked}/>
         </li>
     )
 
@@ -40,8 +40,8 @@ const IngredientList = ({ingredients}) => {
     return (
         <ul className={constructorStyles.ingredientList}>
             { isNotEmpty() ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
-            { renderScrollablePart() }
-            { isNotEmpty() ? renderBottomItemLocked(ingredients.length, {...ingredients[0]}) : "" }
+            { isNotEmpty() ? renderScrollablePart() : "" }
+            { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
         </ul>
     )
 }

@@ -1,18 +1,24 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ADD_INGREDIENT } from '../../services/actions/burger-constructor'
+import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-constructor'
 
 import { CurrencyIcon, Counter } from '../../utils/yandex-components'
 import styles from './burger-ingredients.module.css'
 
-const BurgerIngredientItem = ({id, name, image, price}) => {
+const BurgerIngredientItem = ({id, name, image, price, isBun = false}) => {
     const [counter, setCounter] = useState(0);
     
     const dispatch = useDispatch();
 
     const addItem = () => {
-        dispatch({id, type: ADD_INGREDIENT});
+        console.log(name, id, isBun);
+        if (isBun){
+            dispatch({id, type: ADD_BUN});
+        } else {
+            dispatch({id, type: ADD_INGREDIENT});
+        }
+        
         setCounter(counter + 1);
     };
 

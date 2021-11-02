@@ -27,10 +27,10 @@ const BurgerConstructor = () => {
     );
 
     const ingredientsInBurger = [];
+    
     ids.forEach(id => {
         ingredientsInBurger.push(allIngredients.find(ingr => ingr._id === id));
     });
-    addBunToEnds(extractBuns(ingredientsInBurger), getBun(ingredientsInBurger));
 
     return (
         <section className={constructorStyles.burgerConstructor}>

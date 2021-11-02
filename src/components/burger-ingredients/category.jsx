@@ -45,6 +45,7 @@ const Category = (props) => {
             name={item.name}
             image={item.image}
             price={item.price}
+            isBun={item.type === "bun"}
             />
     )
 
