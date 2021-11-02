@@ -19,7 +19,7 @@ const IngredientList = ({ingredients}) => {
 
     const renderItem = (id, data, type, locked = false) => (
         <li key={id}>
-            <ChosenIngredient {...data} type={type} isLocked={locked}/>
+            <ChosenIngredient id={data._id} {...data} type={type} isLocked={locked}/>
         </li>
     )
 
@@ -33,7 +33,7 @@ const IngredientList = ({ingredients}) => {
 
     const renderScrollablePart = () => (
         <div className={constructorStyles.dynamicPart}>
-            { ingredients.slice(0, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
+            { ingredients.slice(1, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
         </div>
     )
 
@@ -41,7 +41,7 @@ const IngredientList = ({ingredients}) => {
         <ul className={constructorStyles.ingredientList}>
             { isNotEmpty() ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
             { renderScrollablePart() }
-            { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
+            { isNotEmpty() ? renderBottomItemLocked(ingredients.length, {...ingredients[0]}) : "" }
         </ul>
     )
 }

@@ -33,7 +33,7 @@ BurgerIngredientItem.defaultProps = {
 }
 
 BurgerIngredientItem.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired

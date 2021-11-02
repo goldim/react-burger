@@ -1,4 +1,4 @@
-import { LOAD_INGREDIENTS_FROM_SERVER } from '../actions/load-ingredients'
+import { LOAD_INGREDIENTS } from '../actions/load-ingredients'
 import data from '../../utils/data.json'
 
 const fetchIngredients = async (url) => {
@@ -30,7 +30,7 @@ export const loadFake = () => {
 
 export const LoadIngredientsReducer = (state = {ingredients: []}, action) => {
     switch (action.type){
-        case LOAD_INGREDIENTS_FROM_SERVER:
+        case LOAD_INGREDIENTS:
             return {
                 ...state,
                 ingredients: loadFake()

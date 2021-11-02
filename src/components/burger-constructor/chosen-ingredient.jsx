@@ -19,11 +19,11 @@ const isCenter = (type) => {
     return !["bottom", "top"].includes(type);
 }
 
-const ChosenIngredient = ({id, _id, name, type, price, image, isLocked}) => {
+const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
     const dispatch = useDispatch();
 
     const onRemoveItem = () =>{
-        dispatch({id: _id, type: REMOVE_INGREDIENT});
+        dispatch({id, type: REMOVE_INGREDIENT});
     }
 
     return (
@@ -42,7 +42,7 @@ const ChosenIngredient = ({id, _id, name, type, price, image, isLocked}) => {
 }
 
 ChosenIngredient.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     type: PropTypes.string,
     isLocked: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

@@ -4,6 +4,18 @@ import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 import DataItemPropTypes from '../../utils/data-item-format';
 
+const CategoryTitle = ({title}) => (
+    <p id={title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
+        {title}
+    </p>
+);
+
+const IngredientGrid = (props) => (
+    <ul className={ingredientsStyles.categoryList}>
+        { props.children }
+    </ul>
+);
+
 const Category = (props) => {
     const renderItems = () => {
         const result = [];
@@ -38,12 +50,10 @@ const Category = (props) => {
 
     return (
         <div className={ingredientsStyles.category}>
-            <p id={props.title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
-                {props.title}
-            </p>
-            <ul className={ingredientsStyles.categoryList}>
+            <CategoryTitle title={props.title}/>
+            <IngredientGrid>
                 { renderItems() }
-            </ul>
+            </IngredientGrid>
         </div>
     )
 }
