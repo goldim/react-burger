@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import BurgerIngredientItem from './burger-ingredient-item'
 
 const Ingredient = ({name, image, price, onClick, extraDetails}) => (
-    <span onClick={() => onClick({name, image, price, extraDetails})}>
+    <span onDoubleClick={() => onClick({name, image, price, extraDetails})}>
         <BurgerIngredientItem
             image={image}
             price={price}
