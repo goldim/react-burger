@@ -22,7 +22,7 @@ const BurgerConstructor = () => {
     const {ids, allIngredients} = useSelector(
         store => { return {
             ids: store.burgerConstruct.chosenIngredients,
-            allIngredients: store.loadAPI.ingredients
+            allIngredients: store.ingredientsReducer.ingredients
         }}
     );
 

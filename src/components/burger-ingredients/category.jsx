@@ -33,13 +33,6 @@ const Category = (props) => {
             name={item.name}
             image={item.image}
             price={item.price}
-            extraDetails = {{
-                fat: item.fat,
-                calories: item.calories,
-                carbohydrates: item.carbohydrates,
-                proteins: item.proteins
-            }}
-            onClick={props.onItemClick}
             />
     )
 
@@ -57,7 +50,6 @@ const Category = (props) => {
 
 Category.propTypes = {
     title: PropTypes.string.isRequired,
-    onItemClick: PropTypes.func.isRequired,
     data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
 

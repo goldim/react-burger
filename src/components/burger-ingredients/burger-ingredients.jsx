@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
@@ -10,6 +8,7 @@ import { LOAD_INGREDIENTS_FROM_SERVER } from '../../services/actions/load-ingred
 import { useDispatch, useSelector } from 'react-redux';
 
 import dictionary from '../../utils/dictionary.json'
+import { CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
 
 const getCategoryDescriptions = (ingredients) => {
     const categories = [...new Set(ingredients.map(ingr => ingr.type))];
@@ -32,16 +31,11 @@ const getCategoryDescriptions = (ingredients) => {
 
 const BurgerIngredients = () => {
     const newIngredients = useSelector(store => {
-        return store.loadAPI.ingredients;
+        return store.ingredientsReducer.ingredients;
     });
 
     const dispatch = useDispatch();
     dispatch({ type: LOAD_INGREDIENTS_FROM_SERVER });
-
-    const [state, setState] = useState({
-        showDetails: false,
-        chosenItem: {}
-    });
 
     const getIngredientsByType = (type) => {
         return newIngredients.filter(ingr => ingr.type === type)
@@ -57,26 +51,9 @@ const BurgerIngredients = () => {
         return getCategoryDescriptions(newIngredients).map(desc => renderCategory(desc.code, desc.title));
     }
 
-    const onCloseItem = () => {
-        setState({
-            ...state,
-            showDetails: false
-        });
-    }
-
-    const onItemClick = (props) => {
-        setState({
-            ...state,
-            showDetails: true,
-            chosenItem: {
-                ...props
-            }
-        });
-    }
-
     const renderCategory = (code, title) => {
         return (
-            <Category key={code} title={title} data={getIngredientsByType(code)} onItemClick={onItemClick}/>
+            <Category key={code} title={title} data={getIngredientsByType(code)}/>
         )
     }
 
@@ -88,6 +65,13 @@ const BurgerIngredients = () => {
         document.getElementById(a).scrollIntoView();
     }
 
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);    
+    const onCloseItem = () => {
+        dispatch({
+            type: CLEAR_CURRENT_INGREDIENT
+        });
+    }
+
     return (
         <section className={ingredientsStyles.ingredientsMenu}>
             <CombineBurgerTitle/>
@@ -95,8 +79,8 @@ const BurgerIngredients = () => {
                 <CategoryBar titles={getCategoryTitles()} onTabHandler={moveTo}/>
                 { renderCategoriesBlock() }
             </div>
-            <Modal caption="Детали ингредиента" show={state.showDetails} closeHandler={onCloseItem}>
-                <IngredientDetails {...state.chosenItem}/>
+            <Modal caption="Детали ингредиента" show={!!current._id} closeHandler={onCloseItem}>
+                <IngredientDetails/>
             </Modal>
         </section>
     )
