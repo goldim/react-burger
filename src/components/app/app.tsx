@@ -1,17 +1,18 @@
-import React from 'react';
 import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import { IngredientsContext } from './ingredients-context'
 
-import ReduxStorage from '../../services/storage'
+import { ReduxStore } from '../../services/storage'
 import { Provider } from 'react-redux'
+
+import { useEffect, useState } from 'react';
 
 const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-  const [ingredients, setIngredients] = React.useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
   const fetchIngredients = async (url: string) => {
     const response = await fetch(url);
@@ -24,7 +25,7 @@ function App() {
     }
   }
 
-  React.useEffect(() => { 
+  useEffect(() => { 
     const loadIngredients = async () => {
       try {
         await fetchIngredients(INGREDIENTS_SOURCE);
@@ -34,7 +35,7 @@ function App() {
       }
     }
 
-    loadIngredients() 
+    loadIngredients();
   }, []);
 
   return (
@@ -42,7 +43,7 @@ function App() {
       <div className={ appStyles.App }>
         <AppHeader/>
         <main>
-          <Provider store={ ReduxStorage }>
+          <Provider store={ ReduxStore }>
             <IngredientsContext.Provider value={ingredients}>
               <BurgerIngredients/>
               <BurgerConstructor/>
