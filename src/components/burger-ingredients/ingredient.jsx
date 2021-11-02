@@ -2,9 +2,10 @@ import PropTypes from 'prop-types'
 
 import BurgerIngredientItem from './burger-ingredient-item'
 
-const Ingredient = ({name, image, price, onClick, extraDetails}) => (
+const Ingredient = ({id, name, image, price, onClick, extraDetails}) => (
     <span onDoubleClick={() => onClick({name, image, price, extraDetails})}>
         <BurgerIngredientItem
+            id={id}
             image={image}
             price={price}
             name={name}/>

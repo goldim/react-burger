@@ -33,7 +33,7 @@ const IngredientList = ({ingredients}) => {
 
     const renderScrollablePart = () => (
         <div className={constructorStyles.dynamicPart}>
-            { ingredients.slice(1, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
+            { ingredients.slice(0, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
         </div>
     )
 

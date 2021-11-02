@@ -1,4 +1,4 @@
-import {useLayoutEffect, useState} from 'react'
+import { useState } from 'react'
 
 import Category from './category';
 import CategoryBar from './category-bar';
@@ -36,10 +36,7 @@ const BurgerIngredients = () => {
     });
 
     const dispatch = useDispatch();
-
-    useLayoutEffect(() => {
-        dispatch({ type: LOAD_INGREDIENTS_FROM_SERVER });
-    }, []);
+    dispatch({ type: LOAD_INGREDIENTS_FROM_SERVER });
 
     const [state, setState] = useState({
         showDetails: false,

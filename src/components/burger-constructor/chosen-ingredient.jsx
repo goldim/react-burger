@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux';
+import { REMOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
@@ -17,20 +19,30 @@ const isCenter = (type) => {
     return !["bottom", "top"].includes(type);
 }
 
-const ChosenIngredient = ({name, type, price, image, isLocked}) => (
-    <div className={styles.chosenItem}>
-        { isCenter(type) && <DragIcon/> }
-        <ConstructorElement
-            type={type}
-            isLocked={isLocked}
-            text={makeAlignmentLabel(name, type)}
-            price={price}
-            thumbnail={image}
-        />
-    </div>
-)
+const ChosenIngredient = ({id, _id, name, type, price, image, isLocked}) => {
+    const dispatch = useDispatch();
+
+    const onRemoveItem = () =>{
+        dispatch({id: _id, type: REMOVE_INGREDIENT});
+    }
+
+    return (
+        <div className={styles.chosenItem}>
+            { isCenter(type) && <DragIcon/> }
+            <ConstructorElement
+                type={type}
+                isLocked={isLocked}
+                text={makeAlignmentLabel(name, type)}
+                price={price}
+                thumbnail={image}
+                handleClose={onRemoveItem}
+            />
+        </div>
+    )
+}
 
 ChosenIngredient.propTypes = {
+    id: PropTypes.number.isRequired,
     type: PropTypes.string,
     isLocked: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
