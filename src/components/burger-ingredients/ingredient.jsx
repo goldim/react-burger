@@ -15,7 +15,7 @@ const Ingredient = ({id, name, image, price, isBun = false}) => {
     }
 
     return (
-        <span onDoubleClick={() => showIngredientsDetails()}>
+        <span onClick={() => showIngredientsDetails()}>
             <BurgerIngredientItem
                 id={id}
                 image={image}

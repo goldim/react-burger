@@ -1,9 +1,4 @@
-import data from '../../utils/data.json'
 import { CHANGE_CURRENT_INGREDIENT, LOAD_INGREDIENTS, CLEAR_CURRENT_INGREDIENT, CHANGE_CURRENT_CATEGORY_BY_DISTANCE, ADD_CATEGORY_ID, CHANGE_CURRENT_CATEGORY_BY_ID } from '../actions/burger-ingredients';
-
-export const loadFake = () => {
-    return data;
-}
 
 const initialState = {
     ingredients: [],
@@ -30,7 +25,7 @@ export const BurgerIngredientsReducer = (state = initialState, action) => {
         case LOAD_INGREDIENTS:
             return {
                 ...state,
-                ingredients: loadFake()
+                ingredients: action.ingredients
             };
         case CHANGE_CURRENT_INGREDIENT:
             return {

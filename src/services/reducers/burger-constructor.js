@@ -37,7 +37,6 @@ export const BurgerConstructorReducer = (state = {chosenIngredients: [], hasBun:
             }
         case REMOVE_INGREDIENT:
             const newIngredients = [...state.chosenIngredients];
-            console.log(action.index);
             newIngredients.splice(action.index + 1, 1);
             return {
                 ...state,

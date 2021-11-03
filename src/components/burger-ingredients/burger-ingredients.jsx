@@ -12,6 +12,7 @@ import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '.
 import { useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
+import { getIngredients } from '../../services/middleware';
 
 const getCategoryDescriptions = (ingredients) => {
     const categories = [...new Set(ingredients.map(ingr => ingr.type))];
@@ -38,7 +39,7 @@ const BurgerIngredients = () => {
     });
 
     const dispatch = useDispatch();
-    dispatch({ type: LOAD_INGREDIENTS });
+    dispatch(getIngredients());
 
     const getIngredientsByType = (type) => {
         return newIngredients.filter(ingr => ingr.type === type)
