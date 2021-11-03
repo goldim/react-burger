@@ -4,7 +4,6 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
 
-import { LOAD_INGREDIENTS } from '../../services/actions/load-ingredients'
 import { useDispatch, useSelector } from 'react-redux';
 
 import dictionary from '../../utils/dictionary.json'
@@ -12,7 +11,7 @@ import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '.
 import { useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
-import { getIngredients } from '../../services/middleware';
+
 
 const getCategoryDescriptions = (ingredients) => {
     const categories = [...new Set(ingredients.map(ingr => ingr.type))];
@@ -33,52 +32,35 @@ const getCategoryDescriptions = (ingredients) => {
     return result;
 }
 
-const BurgerIngredients = () => {
-    const newIngredients = useSelector(store => {
-        return store.ingredientsReducer.ingredients;
-    });
-
-    const dispatch = useDispatch();
-    dispatch(getIngredients());
-
-    const getIngredientsByType = (type) => {
-        return newIngredients.filter(ingr => ingr.type === type)
-    }
-
-    const renderCategories = () => {
-        return getCategoryDescriptions(newIngredients).map(desc => renderCategory(desc.code, desc.title));
-    }
-
-    const renderCategory = (code, title) => {
+const onIngredientsRendered = (descriptions, dispatch) => {
+    descriptions.forEach(desc => {
         dispatch({
             type: ADD_CATEGORY_ID,
-            id: title
+            id: desc.title
         });
+    });
+};
 
-        return (
-            <Category key={code} title={title} data={getIngredientsByType(code)}/>
-        )
-    }
-
-    const getCategoryTitles = () => {
-        return getCategoryDescriptions(newIngredients).map(cat => cat.title);
-    }
-
+const BurgerIngredients = () => {
+    const dispatch = useDispatch();
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
     const current = useSelector(store => store.ingredientsReducer.currentIngredient);
-    const onCloseItem = () => {
-        dispatch({
-            type: CLEAR_CURRENT_INGREDIENT
-        });
-    }
+    const categoryDescriptions = getCategoryDescriptions(newIngredients);
+    const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
+    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
+    
 
     return (
         <section className={ingredientsStyles.ingredientsMenu}>
             <CombineBurgerTitle/>
             <div className={ingredientsStyles.menuContent}>
                 <CategoryBar titles={getCategoryTitles()}/>
-                <CategoriesBlock>
-                    { renderCategories() }
-                </CategoriesBlock>
+                <CategoriesContainer>
+                    {
+                        categoryDescriptions.map(desc => <Category key={desc.code} code={desc.code} title={desc.title}/>)
+                    }
+                </CategoriesContainer>
             </div>
             <Modal caption="Детали ингредиента" show={!!current._id} closeHandler={onCloseItem}>
                 <IngredientDetails/>
@@ -87,7 +69,7 @@ const BurgerIngredients = () => {
     )
 }
 
-const CategoriesBlock = (props) => {
+const CategoriesContainer = (props) => {
     const scrollableList = useRef();
     const dispatch = useDispatch();
     useEffect(() => {

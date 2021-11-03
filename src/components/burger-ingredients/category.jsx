@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
-import DataItemPropTypes from '../../utils/data-item-format';
+import { useSelector } from 'react-redux';
 
 const CategoryTitle = ({title}) => (
     <p id={title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
@@ -16,10 +16,13 @@ const IngredientGrid = (props) => (
     </ul>
 );
 
-const Category = (props) => {
+const Category = ({code, title}) => {
+    const allIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const ingredientsInCategory = allIngredients.filter(ingr => ingr.type === code);
+
     const renderItems = () => {
         const result = [];
-        const items = props.data;
+        const items = ingredientsInCategory;
 
         for (let i = 0; i < items.length; i += 2){
             const ingr = items[i];
@@ -51,7 +54,7 @@ const Category = (props) => {
 
     return (
         <div className={ingredientsStyles.category}>
-            <CategoryTitle title={props.title}/>
+            <CategoryTitle title={title}/>
             <IngredientGrid>
                 { renderItems() }
             </IngredientGrid>
@@ -60,8 +63,7 @@ const Category = (props) => {
 }
 
 Category.propTypes = {
-    title: PropTypes.string.isRequired,
-    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
+    title: PropTypes.string.isRequired
 }
 
 export default Category;

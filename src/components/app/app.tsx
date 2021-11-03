@@ -4,10 +4,11 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 
 import { ReduxStore } from '../../services/storage'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { getIngredients } from '../../services/middleware';
 
 function App() {
   return (
@@ -17,13 +18,24 @@ function App() {
         <main>
           <Provider store={ ReduxStore }>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients/>
-              <BurgerConstructor/>
+              <BurgerCafe/>
             </DndProvider>
           </Provider>
         </main>
       </div>
       <div id="react-modals"/>
+    </>
+  );
+}
+
+const BurgerCafe = () => {
+  const dispatch = useDispatch();
+  dispatch(getIngredients());
+
+  return (
+    <>
+      <BurgerIngredients/>
+      <BurgerConstructor/>
     </>
   );
 }
