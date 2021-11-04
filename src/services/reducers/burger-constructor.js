@@ -1,6 +1,12 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, ADD_BUN, MOVE_INGREDIENT } from '../actions/burger-constructor'
+import { NEW_ORDER, ORDER_MADE, ADD_INGREDIENT, REMOVE_INGREDIENT, ADD_BUN, MOVE_INGREDIENT } from '../actions/burger-constructor'
 
-export const BurgerConstructorReducer = (state = {chosenIngredients: [], hasBun: false }, action) => {
+const initialState = {
+    chosenIngredients: [],
+    hasBun: false,
+    currentOrder: {}
+}
+
+export const BurgerConstructorReducer = (state = initialState, action) => {
     switch (action.type){
         case ADD_BUN:
             if (state.hasBun){
@@ -51,6 +57,19 @@ export const BurgerConstructorReducer = (state = {chosenIngredients: [], hasBun:
             return {
                 ...state,
                 chosenIngredients: newIngredients
+            };
+        case ORDER_MADE:
+            return {
+                ...state,
+                currentOrder: {
+                    No: action.No,
+                    success: action.success
+                }
+            };
+        case NEW_ORDER:
+            return {
+                ...state,
+                currentOrder: {}
             };
         default:
             return state;
