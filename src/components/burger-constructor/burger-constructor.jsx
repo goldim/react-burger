@@ -2,7 +2,6 @@ import TotalBar from './total-bar'
 import IngredientList from './ingredient-list'
 import constructorStyles from './burger-constructor.module.css'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 const BurgerConstructor = () => {
     const {ids, allIngredients} = useSelector(
@@ -13,11 +12,6 @@ const BurgerConstructor = () => {
     );
 
     const ingredientsInBurger = [];
-
-    useEffect(() => {
-
-    }, []);
-    
     ids.forEach(id => {
         ingredientsInBurger.push(allIngredients.find(ingr => ingr._id === id));
     });

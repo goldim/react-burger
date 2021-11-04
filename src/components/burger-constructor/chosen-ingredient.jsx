@@ -44,7 +44,6 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
 ChosenIngredient.propTypes = {
     id: PropTypes.number.isRequired,
     type: PropTypes.string,
-    isLocked: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired
 }

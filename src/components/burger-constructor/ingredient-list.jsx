@@ -4,8 +4,8 @@ import DataItemPropTypes from '../../utils/data-item-format'
 import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient from './chosen-ingredient'
 
-import { useDrop } from 'react-dnd'
-import { ADD_BUN, ADD_INGREDIENT } from '../../services/actions/burger-constructor'
+import { useDrag, useDrop } from 'react-dnd'
+import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 import { useDispatch } from 'react-redux'
 
 const IngredientList = ({ingredients}) => {
@@ -18,14 +18,12 @@ const IngredientList = ({ingredients}) => {
     }
 
     const renderLockedItem = (id, data, type) => (
-        renderItem(id, data, type, true)
+        <Bun id={id} data={data} type={type}/>
     )
 
-    const renderItem = (id, data, type, locked = false) => (
-        <li key={id}>
-            <ChosenIngredient id={id} {...data} type={type} isLocked={locked}/>
-        </li>
-    )
+    const renderItem = (id, data) => {
+        return (<DraggableIngredient key={id} id={id} data={data}/>)
+    };
 
     const getListLength = () => {
         return ingredients.length;
@@ -55,7 +53,7 @@ const IngredientList = ({ingredients}) => {
         accept: "ingredient",
         drop(item) {
             onDropHandler(item);
-        },
+        }
     });
 
     return (
@@ -65,6 +63,36 @@ const IngredientList = ({ingredients}) => {
             { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
         </ul>
     )
+}
+
+const Bun = ({id, data, type}) => (
+    <li key={id}>
+        <ChosenIngredient id={id} {...data} type={type} isLocked={true}/>
+    </li>
+);
+
+const DraggableIngredient = ({id, data}) => {
+    const [, dragRef] = useDrag({
+        type: "ingredientInBurger",
+        item: {id}
+    });
+
+    const dispatch = useDispatch();
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredientInBurger",
+        drop(item) {
+            dispatch({type: MOVE_INGREDIENT, whatIndex: item.id, whereIndex: id});
+        }
+    });
+
+    return (
+        <li key={id} ref={dragRef}>
+            <span ref={dropTarget}>
+                <ChosenIngredient id={id} {...data}/>
+            </span>
+        </li>
+    );
 }
 
 IngredientList.propTypes = {
