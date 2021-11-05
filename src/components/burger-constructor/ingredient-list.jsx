@@ -7,6 +7,7 @@ import ChosenIngredient from './chosen-ingredient'
 import { useDrag, useDrop } from 'react-dnd'
 import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 import { useDispatch } from 'react-redux'
+import { useRef } from 'react'
 
 const IngredientList = ({ingredients}) => {
     const renderTopItemLocked = (id, data) => {
@@ -72,25 +73,26 @@ const Bun = ({id, data, type}) => (
 );
 
 const DraggableIngredient = ({id, data}) => {
-    const [, dragRef] = useDrag({
+    const ref = useRef(null);
+    const dispatch = useDispatch();
+
+    const [, drag] = useDrag({
         type: "ingredientInBurger",
         item: {id}
     });
 
-    const dispatch = useDispatch();
-
-    const [, dropTarget] = useDrop({
+    const [, drop] = useDrop({
         accept: "ingredientInBurger",
         drop(item) {
             dispatch({type: MOVE_INGREDIENT, whatIndex: item.id, whereIndex: id});
         }
     });
 
+    drag(drop(ref));
+
     return (
-        <li key={id} ref={dragRef}>
-            <span ref={dropTarget}>
-                <ChosenIngredient id={id} {...data}/>
-            </span>
+        <li key={id} ref={ref}>
+            <ChosenIngredient id={id} {...data}/>
         </li>
     );
 }

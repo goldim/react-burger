@@ -44,8 +44,8 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
         case MOVE_INGREDIENT: {
             const newIngredients = [...state.chosenIngredients];
             let tmp = newIngredients[action.whatIndex + 1];
-            newIngredients[action.whatIndex + 1] = newIngredients[action.whereIndex + 1];
-            newIngredients[action.whereIndex + 1] = tmp;
+            newIngredients.splice(action.whatIndex + 1, 1);
+            newIngredients.splice(action.whereIndex + 1, 0, tmp);
             return {
                 ...state,
                 chosenIngredients: newIngredients

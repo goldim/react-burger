@@ -18,9 +18,9 @@ const fetchIngredients = async (url, dispatch) => {
     }
 }
 
-export const getIngredients = () => (dispatch) => {
+export const getIngredients = () => async (dispatch) => {
     try {
-        fetchIngredients(INGREDIENTS_SOURCE, dispatch)
+        await fetchIngredients(INGREDIENTS_SOURCE, dispatch)
     }
     catch (e){
         console.log(e);
@@ -55,9 +55,9 @@ const sentData = async (url, items, dispatch) => {
     }
 }
 
-export const makeOrder = (ingredients) => (dispatch)  => {
+export const makeOrder = (ingredients) => async (dispatch)  => {
     try {
-        sentData(MAKING_ORDER_URL, ingredients, dispatch);
+        await sentData(MAKING_ORDER_URL, ingredients, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
