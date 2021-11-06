@@ -16,7 +16,8 @@ const CategoryBar = ({titles}) => {
                 id: titles[0]
             });
         }
-    }, [dispatch, titles]);
+    // eslint-disable-next-line 
+    }, [dispatch]);
 
     const renderTab = (title, id) => {
         return (<MyTab key={id} title={title}/>);

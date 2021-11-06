@@ -12,7 +12,6 @@ import { useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
 
-
 const getCategoryDescriptions = (ingredients) => {
     const categories = [...new Set(ingredients.map(ingr => ingr.type))];
 
@@ -49,7 +48,6 @@ const BurgerIngredients = () => {
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
-    
 
     return (
         <section className={ingredientsStyles.ingredientsMenu}>
@@ -70,7 +68,7 @@ const BurgerIngredients = () => {
 }
 
 const CategoriesContainer = (props) => {
-    const scrollableList = useRef();
+    const scrollableList = useRef(null);
     const dispatch = useDispatch();
     useEffect(() => {
         function handleNavigation(e) {

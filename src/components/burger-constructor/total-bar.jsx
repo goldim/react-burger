@@ -6,6 +6,7 @@ import { Button, CurrencyIcon } from '../../utils/yandex-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import styles from './burger-constructor.module.css'
+import detailsWindowStyles from '../order-details/order-details.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeOrder } from '../../services/middleware'
 import { NEW_ORDER } from '../../services/actions/burger-constructor'
@@ -22,7 +23,7 @@ const calcTotalPriceReducer = (state, action) => {
 }
 
 const TotalBar = ({ingredients}) => {
-    const order =  useSelector(store => store.burgerConstruct.currentOrder);
+    const currentOrder = useSelector(store => store.burgerConstruct.currentOrder);
     const reduxDispatch = useDispatch();
 
     const closeModal = () => {
@@ -34,6 +35,7 @@ const TotalBar = ({ingredients}) => {
     useLayoutEffect(() => {
         dispatch({type: 'CALC_TOTAL_PRICE', ingredients});
     }, [ingredients]);
+
     const onMakeOrderClick = () => {
         reduxDispatch(makeOrder(ingredients))
     }
@@ -49,11 +51,29 @@ const TotalBar = ({ingredients}) => {
             <Button size="large" onClick={onMakeOrderClick}>
                 Оформить заказ
             </Button>
-            <Modal show={!!order.No} closeHandler={closeModal}>
-                <OrderDetails No={order.No} success={order.success}/>
+            <StatusModal/>
+            <Modal show={!!currentOrder.No} closeHandler={closeModal}>
+                <OrderDetails No={currentOrder.No} success={currentOrder.success}/>
             </Modal>
         </div>
     )
+}
+
+const StatusModal = () => {
+    const {currentOrderIsLoading, currentOrderFailed} = useSelector(store => store.burgerConstruct);
+    const reduxDispatch = useDispatch();
+    const closeProgressOrFailedModal = () => {
+        reduxDispatch({type: NEW_ORDER})
+    }
+    return (
+        <Modal show={currentOrderFailed || currentOrderIsLoading} closeHandler={closeProgressOrFailedModal}>
+            <div className={detailsWindowStyles.OrderDetails}>
+                <p className="text text_type_main-medium">
+                    {(currentOrderIsLoading) ? "Загрузка...": "Произошел сбой в выполнении заказа"}
+                </p>
+            </div>
+        </Modal>
+    );
 }
 
 TotalBar.propTypes = {

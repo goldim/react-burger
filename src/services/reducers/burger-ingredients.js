@@ -1,10 +1,21 @@
-import { CHANGE_CURRENT_INGREDIENT, LOAD_INGREDIENTS, CLEAR_CURRENT_INGREDIENT, CHANGE_CURRENT_CATEGORY_BY_DISTANCE, ADD_CATEGORY_ID, CHANGE_CURRENT_CATEGORY_BY_ID } from '../actions/burger-ingredients';
+import { 
+    CHANGE_CURRENT_INGREDIENT,
+    LOAD_INGREDIENTS,
+    LOAD_INGREDIENTS_FAILED,
+    LOAD_INGREDIENTS_SUCCESS,
+    CLEAR_CURRENT_INGREDIENT,
+    CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+    ADD_CATEGORY_ID,
+    CHANGE_CURRENT_CATEGORY_BY_ID
+} from '../actions/burger-ingredients';
 
 const initialState = {
     ingredients: [],
     currentIngredient: {},
     currentCategory: undefined,
-    categoryIds: []
+    categoryIds: [],
+    isLoading: false,
+    loadingFailed: false
 }
 
 const getCategoryByDistance = (ids, distance) => {
@@ -25,7 +36,21 @@ export const BurgerIngredientsReducer = (state = initialState, action) => {
         case LOAD_INGREDIENTS:
             return {
                 ...state,
-                ingredients: action.ingredients
+                isLoading: true,
+                loadingFailed: false
+            }
+        case LOAD_INGREDIENTS_FAILED:
+            return {
+                ...state,
+                isLoading: false,
+                loadingFailed: true
+            }
+        case LOAD_INGREDIENTS_SUCCESS:
+            return {
+                ...state,
+                ingredients: action.ingredients,
+                isLoading: false,
+                loadingFailed: false
             };
         case CHANGE_CURRENT_INGREDIENT:
             return {

@@ -1,9 +1,20 @@
-import { NEW_ORDER, ORDER_MADE, ADD_INGREDIENT, REMOVE_INGREDIENT, ADD_BUN, MOVE_INGREDIENT } from '../actions/burger-constructor'
+import {
+    NEW_ORDER,
+    MAKE_ORDER,
+    MAKE_ORDER_FAILED,
+    ADD_INGREDIENT,
+    REMOVE_INGREDIENT,
+    ADD_BUN,
+    MOVE_INGREDIENT,
+    MAKE_ORDER_SUCCESS
+} from '../actions/burger-constructor'
 
 const initialState = {
     chosenIngredients: [],
     hasBun: false,
-    currentOrder: {}
+    currentOrder: {},
+    currentOrderFailed: false,
+    currentOrderIsLoading: false
 }
 
 export const BurgerConstructorReducer = (state = initialState, action) => {
@@ -58,18 +69,35 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                 ...state,
                 chosenIngredients: newIngredients
             };
-        case ORDER_MADE:
+        case MAKE_ORDER:
+            return {
+                ...state,
+                currentOrderIsLoading: true,
+                currentOrderFailed: false
+            };
+        case MAKE_ORDER_SUCCESS:
             return {
                 ...state,
                 currentOrder: {
                     No: action.No,
                     success: action.success
-                }
+                },
+                currentOrderIsLoading: false,
+                currentOrderFailed: false
+            };
+        case MAKE_ORDER_FAILED:
+            return {
+                ...state,
+                currentOrderIsLoading: false,
+                currentOrderFailed: true
             };
         case NEW_ORDER:
             return {
                 ...state,
-                currentOrder: {}
+                currentOrder: {
+                },
+                currentOrderFailed: false,
+                currentOrderIsLoading: false
             };
         default:
             return state;

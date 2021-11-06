@@ -4,11 +4,12 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 
 import { ReduxStore } from '../../services/storage'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from '../../services/middleware';
+import { useEffect } from 'react';
 
 function App() {
   return (
@@ -30,14 +31,29 @@ function App() {
 
 const BurgerCafe = () => {
   const dispatch = useDispatch();
-  dispatch(getIngredients());
+  const {loadingFailed, isLoading} = useSelector(
+    (store: any) => (store.ingredientsReducer));
 
-  return (
-    <>
-      <BurgerIngredients/>
-      <BurgerConstructor/>
-    </>
-  );
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  if (loadingFailed){
+    return (<InformMessage>Произошла ошибка при получении данных</InformMessage>);
+  }
+  else if (isLoading){
+      return (<InformMessage>Загрузка...</InformMessage>);
+  }
+  else {
+    return (
+      <>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
+      </>
+    );
+  }
 }
+
+const InformMessage = (props: any) => <p className="text text_type_main-medium">{props.children}</p>
 
 export default App;
