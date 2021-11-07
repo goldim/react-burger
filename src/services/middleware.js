@@ -5,22 +5,17 @@ const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
 
 const fetchIngredients = async (url, dispatch) => {
+    dispatch({ type: LOAD_INGREDIENTS });
     const response = await fetch(url);
 
     if (response.ok) {
-        dispatch({
-            type: LOAD_INGREDIENTS
-        });
         const json = await response.json();
         dispatch({
             type: LOAD_INGREDIENTS_SUCCESS,
             ingredients: json.data
         });
     } else {
-        dispatch({
-            type: LOAD_INGREDIENTS_FAILED
-        });
-        throw new Error(response.status.toString());
+        dispatch({ type: LOAD_INGREDIENTS_FAILED });
     }
 }
 
@@ -30,10 +25,12 @@ export const getIngredients = () => async (dispatch) => {
     }
     catch (e){
         console.log(e);
+        dispatch({ type: LOAD_INGREDIENTS_FAILED });
     }
 }
 
 const sentData = async (url, items, dispatch) => {
+    dispatch({ type: MAKE_ORDER });
     const data = {"ingredients": items.map(item => item._id)};
 
     const response = await fetch(url, {
@@ -46,9 +43,6 @@ const sentData = async (url, items, dispatch) => {
     });
 
     if (response.ok) {
-        dispatch({
-            type: MAKE_ORDER
-        });
         const data = await response.json();
         if (data.success){
             dispatch({
@@ -68,7 +62,6 @@ const sentData = async (url, items, dispatch) => {
             type: MAKE_ORDER_FAILED,
             message: response.status.toString()
         });
-        throw new Error(response.status.toString());
     }
 }
 
@@ -77,5 +70,9 @@ export const makeOrder = (ingredients) => async (dispatch)  => {
         await sentData(MAKING_ORDER_URL, ingredients, dispatch);
     } catch(ex){
         console.log(ex.message);
+        dispatch({
+            type: MAKE_ORDER_FAILED,
+            message: ex.message
+        });
     }
 }
