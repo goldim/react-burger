@@ -1,109 +1,96 @@
-import React from 'react'
-
-import { Category } from './category';
+import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
-import { IngredientsContext } from '../app/ingredients-context';
 
-export class BurgerIngredients extends React.Component {
-    static contextType = IngredientsContext
+import { useDispatch, useSelector } from 'react-redux';
 
-    constructor(props){
-        super(props);
-        this.state = {
-            showDetails: false,
-            chosenItem: {}
+import dictionary from '../../utils/dictionary.json'
+import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
+import { useEffect, useRef } from 'react';
+
+import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
+
+const getCategoryDescriptions = (ingredients) => {
+    const categories = [...new Set(ingredients.map(ingr => ingr.type))];
+
+    const result = categories.map(type => {
+        if (dictionary[type]){
+            return {
+                code: type,
+                title: dictionary[type].ru
+            }
         }
-    }
+        return {
+            code: type,
+            title: type
+        }
+    });
 
-    getIngredientsByType = (type) => {
-        const ingredients = this.context;
-        return ingredients.filter(ingr => ingr.type === type)
-    }
+    return result;
+}
 
-    renderCategoriesBlock = () => (
-        <div className={ingredientsStyles.categoryBlock}>
-            {this.renderCategories()}
-        </div>
-    )
-
-    renderCategories = () => {
-        const result = [];
-        this.getCategoryDescriptions().forEach(desc => {
-            result.push(this.renderCategory(desc.code, desc.title));
+const onIngredientsRendered = (descriptions, dispatch) => {
+    descriptions.forEach(desc => {
+        dispatch({
+            type: ADD_CATEGORY_ID,
+            id: desc.title
         });
-        return result;
-    }
+    });
+};
 
-    onCloseItem = () => {
-        this.setState({
-            ...this.state,
-            showDetails: false
-        });
-    }
+const BurgerIngredients = () => {
+    const dispatch = useDispatch();
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    const categoryDescriptions = getCategoryDescriptions(newIngredients);
+    const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
+    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
-    onItemClick = (props) => {
-        this.setState({
-            ...this.state,
-            showDetails: true,
-            chosenItem: {
-                ...props
-            }
-        });
-    }
-
-    renderCategory = (code, title) => (
-        <Category key={code} title={title} data={this.getIngredientsByType(code)} onItemClick={this.onItemClick}/>
-    )
-
-    getCategoryDescriptions = () => {
-        return [
-            {
-                code: "bun",
-                title: "Булки"
-            },
-            {
-                code: "sauce",
-                title: "Соусы"
-            },
-            {
-                code: "main",
-                title: "Начинки"
-            }
-        ];
-    }
-
-    getCategoryTitles = () => {
-        return this.getCategoryDescriptions().map(cat => cat.title);
-    }
-
-    getCategoryCodes = () => {
-        return this.getCategoryDescriptions().map(cat => cat.code);
-    }
-
-    moveTo = (a) => {
-        document.getElementById(a).scrollIntoView();
-    }
-
-    renderCombineBurgerTitle = () => (
-        <p className={`${ingredientsStyles.title} text text_type_main-large`}>
-            Соберите бургер
-        </p>
-    )
-
-    render = () => {
-        return (
+    return (
         <section className={ingredientsStyles.ingredientsMenu}>
-            { this.renderCombineBurgerTitle() }
+            <CombineBurgerTitle/>
             <div className={ingredientsStyles.menuContent}>
-                <CategoryBar titles={this.getCategoryTitles()} onTabHandler={this.moveTo}/>
-                { this.renderCategoriesBlock() }
+                <CategoryBar titles={getCategoryTitles()}/>
+                <CategoriesContainer>
+                    {
+                        categoryDescriptions.map(desc => <Category key={desc.code} code={desc.code} title={desc.title}/>)
+                    }
+                </CategoriesContainer>
             </div>
-            <Modal caption="Детали ингредиента" show={this.state.showDetails} closeHandler={this.onCloseItem}>
-                <IngredientDetails {...this.state.chosenItem}/>
+            <Modal caption="Детали ингредиента" show={!!current._id} closeHandler={onCloseItem}>
+                <IngredientDetails/>
             </Modal>
         </section>
-    )}
+    )
 }
+
+const CategoriesContainer = (props) => {
+    const scrollableList = useRef(null);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        function handleNavigation(e) {
+            dispatch({
+                type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+                distance: scrollableList.current.getBoundingClientRect().y
+            });
+        }
+        scrollableList.current.addEventListener("scroll", handleNavigation);
+    }, [scrollableList, dispatch]);
+
+    return (
+        <div className={ingredientsStyles.categoryBlock} ref={scrollableList}>
+            { props.children }
+        </div>
+    );
+}
+
+const CombineBurgerTitle = () => (
+    <p className={`${ingredientsStyles.title} text text_type_main-large`}>
+        Соберите бургер
+    </p>
+);
+
+export default BurgerIngredients;

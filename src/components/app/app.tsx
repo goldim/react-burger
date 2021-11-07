@@ -1,53 +1,59 @@
-import React from 'react';
 import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients'
-import { IngredientsContext } from './ingredients-context'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 
-const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
+import { ReduxStore } from '../../services/storage'
+import { Provider, useDispatch, useSelector } from 'react-redux'
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { getIngredients } from '../../services/middleware';
+import { useEffect } from 'react';
 
 function App() {
-  const [ingredients, setIngredients] = React.useState([]);
-
-  const fetchIngredients = async (url: string) => {
-    const response = await fetch(url);
-
-    if (response.ok) {
-      const json = await response.json();
-      setIngredients(json.data);
-    } else {
-      throw new Error(response.status.toString());
-    }
-  }
-
-  React.useEffect(() => { 
-    const loadIngredients = async () => {
-      try {
-        await fetchIngredients(INGREDIENTS_SOURCE);
-      }
-      catch (e){
-        console.log(e);
-      }
-    }
-
-    loadIngredients() 
-  }, []);
-
   return (
     <>
       <div className={ appStyles.App }>
         <AppHeader/>
         <main>
-          <IngredientsContext.Provider value={ingredients}>
-            <BurgerIngredients/>
-            <BurgerConstructor/>
-          </IngredientsContext.Provider>
+          <Provider store={ ReduxStore }>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerCafe/>
+            </DndProvider>
+          </Provider>
         </main>
       </div>
       <div id="react-modals"/>
     </>
   );
 }
+
+const BurgerCafe = () => {
+  const dispatch = useDispatch();
+  const {loadingFailed, isLoading} = useSelector(
+    (store: any) => (store.ingredientsReducer));
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  if (loadingFailed){
+    return (<InformMessage>Произошла ошибка при получении данных</InformMessage>);
+  }
+  else if (isLoading){
+      return (<InformMessage>Загрузка...</InformMessage>);
+  }
+  else {
+    return (
+      <>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
+      </>
+    );
+  }
+}
+
+const InformMessage = (props: any) => <p className="text text_type_main-medium">{props.children}</p>
 
 export default App;

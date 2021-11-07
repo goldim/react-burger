@@ -1,29 +1,35 @@
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { CHANGE_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients'
 
 import BurgerIngredientItem from './burger-ingredient-item'
 
-const Ingredient = ({name, image, price, onClick, extraDetails}) => (
-    <span onClick={() => onClick({name, image, price, extraDetails})}>
-        <BurgerIngredientItem
-            image={image}
-            price={price}
-            name={name}/>
-    </span>
-)
+const Ingredient = ({id, name, image, price, isBun = false}) => {
+    const dispatch = useDispatch();
 
-const ExtraDetails = PropTypes.shape({
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired
-});
+    const showIngredientsDetails = () => {
+        dispatch({
+            id,
+            type: CHANGE_CURRENT_INGREDIENT
+        });
+    }
+
+    return (
+        <span onClick={showIngredientsDetails}>
+            <BurgerIngredientItem
+                id={id}
+                image={image}
+                price={price}
+                name={name}
+                isBun={isBun}/>
+        </span>
+    )
+}
 
 Ingredient.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    extraDetails: ExtraDetails.isRequired
+    image: PropTypes.string.isRequired
 }
 
 export default Ingredient;

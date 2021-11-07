@@ -1,62 +1,69 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
-import DataItemPropTypes from '../../utils/data-item-format';
+import { useSelector } from 'react-redux';
 
-export class Category extends React.Component {
-    renderItems = () => {
+const CategoryTitle = ({title}) => (
+    <p id={title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
+        {title}
+    </p>
+);
+
+const IngredientGrid = (props) => (
+    <ul className={ingredientsStyles.categoryList}>
+        { props.children }
+    </ul>
+);
+
+const Category = ({code, title}) => {
+    const allIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const ingredientsInCategory = allIngredients.filter(ingr => ingr.type === code);
+
+    const renderItems = () => {
         const result = [];
-        const items = this.props.data;
+        const items = ingredientsInCategory;
 
         for (let i = 0; i < items.length; i += 2){
             const ingr = items[i];
             const nextIngr = items[i + 1];
-            const element = this.renderRow(ingr, nextIngr, i);
+            const element = renderRow(ingr, nextIngr, i);
             result.push(element);
 
         }
         return result;
     }
 
-    renderRow = (firstItem, secondItem, i) => (
+    const renderRow = (firstItem, secondItem, i) => (
         <li key={i} className={ingredientsStyles.noPointList}>
-            { this.renderItem(firstItem) }
-            { secondItem ? this.renderItem(secondItem) : <p></p>}
+            { renderItem(firstItem) }
+            { secondItem ? renderItem(secondItem) : <p></p>}
         </li>
     )
 
-    renderItem = (item) => (
+    const renderItem = (item) => (
         <Ingredient
             key={item._id}
+            id={item._id}
             name={item.name}
             image={item.image}
             price={item.price}
-            extraDetails = {{
-                fat: item.fat,
-                calories: item.calories,
-                carbohydrates: item.carbohydrates,
-                proteins: item.proteins
-            }}
-            onClick={this.props.onItemClick}
+            isBun={item.type === "bun"}
             />
     )
 
-    render = () => (
+    return (
         <div className={ingredientsStyles.category}>
-            <p id={this.props.title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
-                {this.props.title}
-            </p>
-            <ul className={ingredientsStyles.categoryList}>
-                { this.renderItems() }
-            </ul>
+            <CategoryTitle title={title}/>
+            <IngredientGrid>
+                { renderItems() }
+            </IngredientGrid>
         </div>
     )
 }
 
 Category.propTypes = {
-    title: PropTypes.string.isRequired,
-    onItemClick: PropTypes.func.isRequired,
-    data: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
+    title: PropTypes.string.isRequired
 }
+
+export default Category;
