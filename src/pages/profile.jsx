@@ -23,9 +23,9 @@ const ProfilePage = (props) => (
     <PageWithAppHeader>
       <NavList/>
       <aside>
-        <Input type="text" placeholder="Имя" value="Dmitry"/>
-        <Input type="email" placeholder="e-mail" value="zolotovdy@yandex.ru"/>
-        <Input type="password" placeholder="Пароль" icon="ShowIcon" value="1111"/>
+        <Input type="text" placeholder="Имя" value="Dmitry" icon="EditIcon"/>
+        <Input type="email" placeholder="e-mail" value="zolotovdy@yandex.ru" icon="EditIcon"/>
+        <Input type="password" placeholder="Пароль" icon="EditIcon" value="1111"/>
       </aside>
     </PageWithAppHeader>
     <footer align="center">
