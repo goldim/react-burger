@@ -1,4 +1,4 @@
-import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, EmailInput, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import PageWithAppHeader from '../components/page-with-app-header';
 
@@ -9,8 +9,8 @@ const LoginPage = (props) => {
         <p><Logo/></p>
         <p>Вход</p>
         <form>
-            <Input type="email" placeholder="e-mail"/>
-            <Input type="password" placeholder="Пароль" icon="ShowIcon"/>
+            <EmailInput placeholder="e-mail"/>
+            <PasswordInput placeholder="Пароль"/>
             <Button type="primary" size="medium">Войти</Button>
         </form>
         <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
