@@ -1,9 +1,11 @@
 import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
+import PageWithAppHeader from '../components/page-with-app-header';
 
 const LoginPage = (props) => {
   return (
-    <div>
+    <PageWithAppHeader>
+      <div>
         <p><Logo/></p>
         <p>Вход</p>
         <form>
@@ -13,7 +15,8 @@ const LoginPage = (props) => {
         </form>
         <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
         <p>Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link></p>
-    </div>
+      </div>
+    </PageWithAppHeader>
   );
 }
 

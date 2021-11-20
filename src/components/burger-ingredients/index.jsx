@@ -1,8 +1,8 @@
 import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
+import Modal from '../modal';
+import IngredientDetails from '../ingredient-details.jsx';
 
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -4,22 +4,18 @@ import { Provider } from 'react-redux'
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import AppHeader from '../components/app-header/app-header';
 import BurgerCafe from '../components/app/burger-cafe';
+import PageWithAppHeader from '../components/page-with-app-header';
 
-const MainPage = () => {
-  return (
-    <>
-        <AppHeader/>
-        <main>
-            <Provider store={ ReduxStore }>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerCafe/>
-                </DndProvider>
-            </Provider>
-        </main>
-    </>
-  );
-}
+const MainPage = () => (
+  <PageWithAppHeader>
+    <Provider store={ ReduxStore }>
+        <DndProvider backend={HTML5Backend}>
+            <BurgerCafe/>
+        </DndProvider>
+    </Provider>
+  </PageWithAppHeader>
+);
+
 
 export default MainPage;
