@@ -2,6 +2,7 @@ import { MenuIcon, ProfileIcon, BurgerIcon, Logo, Button } from '../../utils/yan
 import styles from './app-header.module.css'
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const NavButton = ({title, icon}) => {
     const Icon = icon;
@@ -25,7 +26,7 @@ const AppHeader = () => (
         <NavButton title="Конструктор" icon={BurgerIcon}/>
         <NavButton title="Лента заказов" icon={MenuIcon}/>
         <Logo/>
-        <NavButton title="Личный кабинет" icon={ProfileIcon}/>
+        <Link to="/profile"><NavButton title="Личный кабинет" icon={ProfileIcon}/></Link>
     </header>
 )
 
