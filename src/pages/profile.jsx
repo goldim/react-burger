@@ -1,9 +1,9 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PageWithAppHeader from '../components/page-with-app-header';
-import { updateProfile } from '../services/middleware/auth';
+import { getProfile, updateProfile } from '../services/middleware/auth';
 
 const NavList = () => {
   return (
@@ -36,17 +36,18 @@ const ProfilePage = () => {
   const passwordRef = useRef(null);
   const emailRef = useRef(null);
 
-  useEffect(() => {
-    onCancel();
-  }, []);
+  const reduxDispatch = useDispatch();
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     nameRef.current.value = name;
     emailRef.current.value = email;
     passwordRef.current.value = password;
-  }
+  }, [name, password, email]);
 
-  const reduxDispatch = useDispatch();
+  useEffect(() => {
+    reduxDispatch(getProfile());
+    onCancel();
+  }, [onCancel, reduxDispatch]);
 
   const onSaveProfile = () => {
     reduxDispatch(updateProfile(nameRef.current.value, passwordRef.current.value, emailRef.current.value));

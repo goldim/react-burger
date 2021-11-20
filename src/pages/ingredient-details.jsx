@@ -18,14 +18,14 @@ const IngredientDetailsPage = () => {
                 type: CHANGE_CURRENT_INGREDIENT
             });
         }
-    }, [ingredients]);
+    }, [ingredients, dispatch, id]);
 
     useLayoutEffect(() => {
         dispatch(getIngredients());
-    }, []);
+    }, [dispatch]);
 
     useLayoutEffect(() => {
-    }, [currentIngredient]);
+    }, [currentIngredient, dispatch]);
 
     const hasId = (id) => {
         return ingredients.some(ingredient => ingredient._id === id);

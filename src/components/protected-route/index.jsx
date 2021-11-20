@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router";
+import { Navigate } from "react-router";
 
 const ProtectedRoute = (props) => {
     const name = useSelector(store => store.authReducer.currentUser.name);

@@ -66,6 +66,7 @@ export const AuthReducer = (state = initialState, action) => {
                     ...state.currentUser,
                     name: action.user.name,
                     email: action.user.email,
+                    password: action.user.password
                 }
             };
         case TOKEN:

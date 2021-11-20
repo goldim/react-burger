@@ -1,7 +1,7 @@
 import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PageWithAppHeader from '../components/page-with-app-header';
 import { login } from '../services/middleware/auth';
 
@@ -16,7 +16,7 @@ const LoginPage = (props) => {
     if (name){
       navigate("/");
     }
-  }, [name]);
+  }, [name, navigate]);
 
   const reduxDispatch = useDispatch();
 

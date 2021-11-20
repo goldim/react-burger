@@ -1,17 +1,25 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { logout } from "../services/middleware/auth";
 
 const LogoutPage = () => {
     const reduxDispatch = useDispatch();
+    const navigate = useNavigate();
+    const name = useSelector(store => store.authReducer.currentUser.name);
 
     useLayoutEffect(() => {
         reduxDispatch(logout());
-    }, []);
+    }, [reduxDispatch]);
+
+    useLayoutEffect(() => {
+        if (name === ""){
+            navigate("/login", {replace: true});
+        }
+    }, [name, navigate]);
 
     return (
-        <Navigate to="/login"/>
+        <p>Выход...</p>
     );
 }
 
