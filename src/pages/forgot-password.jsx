@@ -7,9 +7,8 @@ const ForgotPasswordPage = (props) => {
         <p><Logo/></p>
         <p>Восстановление пароля</p>
         <form>
-            <Input type="password" placeholder="Введите новый пароль" icon="ShowIcon"/>
-            <Input type="text" placeholder="Введите код из письма"/>
-            <Button type="primary" size="medium">Сохранить</Button>
+            <Input type="email" placeholder="e-mail"/>
+            <Button type="primary" size="medium">Восстановить</Button>
         </form>
         <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
