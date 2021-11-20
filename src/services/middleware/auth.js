@@ -177,7 +177,7 @@ export const login = (email, password) => async (dispatch)  => {
 }
 
 const updateProfileInternal = async (url, name, password, email, dispatch) => {
-    const data = { user: {name, password, email} };
+    const data = { name, password, email };
     const accessToken = localStorage.getItem("accessToken");
 
     const response = await fetch(url, {

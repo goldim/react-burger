@@ -49,7 +49,7 @@ const ProfilePage = () => {
   const reduxDispatch = useDispatch();
 
   const onSaveProfile = () => {
-    reduxDispatch(updateProfile(nameRef.current.value, emailRef.current.value, passwordRef.current.value));
+    reduxDispatch(updateProfile(nameRef.current.value, passwordRef.current.value, emailRef.current.value));
   }
 
   return (

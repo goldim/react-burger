@@ -23,27 +23,27 @@ InactiveNumber.propTypes = {
 const IngredientDetails = () => {
     const current = useSelector(store => store.ingredientsReducer.currentIngredient);
     return (
-    <div className={styles.container}>
-        <div>
+        <div className={styles.container}>
             <div>
-                <img src={current.image} alt={current.name}/>
-                <p className={`${styles.name} text text_type_main-medium`}>
-                    {current.name}
-                </p>
-                <div className={styles.subInfo}>
-                    <SmallText>Калории, ккал</SmallText>
-                    <SmallText>Белки, г</SmallText>
-                    <SmallText>Жиры, г</SmallText>
-                    <SmallText>Углеводы, г</SmallText>
-                    <InactiveNumber>{current.calories}</InactiveNumber>
-                    <InactiveNumber>{current.proteins}</InactiveNumber>
-                    <InactiveNumber>{current.fat}</InactiveNumber>
-                    <InactiveNumber>{current.carbohydrates}</InactiveNumber>
+                <div>
+                    <img src={current.image} alt={current.name}/>
+                    <p className={`${styles.name} text text_type_main-medium`}>
+                        {current.name}
+                    </p>
+                    <div className={styles.subInfo}>
+                        <SmallText>Калории, ккал</SmallText>
+                        <SmallText>Белки, г</SmallText>
+                        <SmallText>Жиры, г</SmallText>
+                        <SmallText>Углеводы, г</SmallText>
+                        <InactiveNumber>{current.calories}</InactiveNumber>
+                        <InactiveNumber>{current.proteins}</InactiveNumber>
+                        <InactiveNumber>{current.fat}</InactiveNumber>
+                        <InactiveNumber>{current.carbohydrates}</InactiveNumber>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-)
+    )
 }
 
 export default IngredientDetails;

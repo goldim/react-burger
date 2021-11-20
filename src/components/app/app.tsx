@@ -12,6 +12,7 @@ import { ReduxStore } from '../../services/storage'
 import ResetPasswordPage from '../../pages/reset-password';
 import ProtectedRoute from '../protected-route';
 import LogoutPage from '../../pages/logout';
+import IngredientDetailsPage from '../../pages/ingredient-details';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Router>
                     <Routes>
                         <Route path="/" element={<MainPage/>} />
+                        <Route path="/ingredients/:id" element={<IngredientDetailsPage/>} />
                         <Route path="/constructor" element={<MainPage/>} />
                         <Route path="register" element={<RegisterPage/>} />
                         <Route path="login" element={<LoginPage/>} />
