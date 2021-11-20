@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import PageWithAppHeader from '../components/page-with-app-header';
-import { resetPassword } from '../services/middleware';
+import { resetPassword } from '../services/middleware/auth';
 
 const ForgotPasswordPage = () => {
   const reduxDispatch = useDispatch();
