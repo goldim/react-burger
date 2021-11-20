@@ -7,9 +7,13 @@ import Page404 from '../../pages/not-found';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ProfilePage from '../../pages/profile';
 
+import { Provider } from 'react-redux';
+import { ReduxStore } from '../../services/storage'
+import ResetPasswordPage from '../../pages/reset-password';
+
 function App() {
     return (
-        <>
+        <Provider store={ ReduxStore }>
             <div className={ appStyles.App }>
                 <Router>
                     <Routes>
@@ -18,12 +22,13 @@ function App() {
                         <Route path="login" element={<LoginPage/>} />
                         <Route path="profile" element={<ProfilePage/>} />
                         <Route path="forgot-password" element={<ForgotPasswordPage/>} />
+                        <Route path="reset-password" element={<ResetPasswordPage/>} />
                         <Route path="*" element={<Page404/>} />
                     </Routes>
                 </Router>
             </div>
             <div id="react-modals"/>
-        </>
+        </Provider>
     );
 }
 
