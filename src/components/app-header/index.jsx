@@ -4,15 +4,17 @@ import styles from './app-header.module.css'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const NavButton = ({title, icon}) => {
+const NavButton = ({title, icon, to}) => {
     const Icon = icon;
     return (
-        <Button type="secondary" size="medium" className={styles.NavButton}>
-            <Icon type="primary" className={styles.NavButtonIcon}/>
-            <div className={`${styles.NavButtonTitle} text text_type_main-default`}>
-                {title}
-            </div>
-        </Button>
+        <Link to={to}>
+            <Button type="secondary" size="medium" className={styles.NavButton}>
+                <Icon type="primary" className={styles.NavButtonIcon}/>
+                <div className={`${styles.NavButtonTitle} text text_type_main-default`}>
+                    {title}
+                </div>
+            </Button>
+        </Link>
     )
 }
 
@@ -23,10 +25,10 @@ NavButton.propTypes = {
 
 const AppHeader = () => (
     <header className={styles.AppHeader}>
-        <NavButton title="Конструктор" icon={BurgerIcon}/>
-        <NavButton title="Лента заказов" icon={MenuIcon}/>
+        <NavButton title="Конструктор" icon={BurgerIcon} to="/constructor"/>
+        <NavButton title="Лента заказов" icon={MenuIcon} to="/orders"/>
         <Logo/>
-        <Link to="/profile"><NavButton title="Личный кабинет" icon={ProfileIcon}/></Link>
+        <NavButton title="Личный кабинет" icon={ProfileIcon} to="/profile"/>
     </header>
 )
 

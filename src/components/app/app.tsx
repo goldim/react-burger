@@ -10,6 +10,8 @@ import ProfilePage from '../../pages/profile';
 import { Provider } from 'react-redux';
 import { ReduxStore } from '../../services/storage'
 import ResetPasswordPage from '../../pages/reset-password';
+import ProtectedRoute from '../protected-route';
+import LogoutPage from '../../pages/logout';
 
 function App() {
     return (
@@ -18,9 +20,11 @@ function App() {
                 <Router>
                     <Routes>
                         <Route path="/" element={<MainPage/>} />
+                        <Route path="/constructor" element={<MainPage/>} />
                         <Route path="register" element={<RegisterPage/>} />
                         <Route path="login" element={<LoginPage/>} />
-                        <Route path="profile" element={<ProfilePage/>} />
+                        <Route path="logout" element={<LogoutPage/>} />
+                        <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
                         <Route path="forgot-password" element={<ForgotPasswordPage/>} />
                         <Route path="reset-password" element={<ResetPasswordPage/>} />
                         <Route path="*" element={<Page404/>} />

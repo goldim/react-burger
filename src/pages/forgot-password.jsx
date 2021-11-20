@@ -11,7 +11,6 @@ const ForgotPasswordPage = () => {
   const resetSuccess = useSelector(store => store.authReducer.resetSuccess);
 
   const onResetPassword = () => {
-    console.log(emailRef.current.value);
     reduxDispatch(resetPassword(emailRef.current.value))
   }
 
@@ -20,7 +19,7 @@ const ForgotPasswordPage = () => {
   useEffect(() => {
     console.log(resetSuccess);
     if (resetSuccess){
-      navigate('/reset-password', { replace: true });
+      navigate('/reset-password');
     }
   }, [resetSuccess, navigate]);
 
@@ -29,7 +28,7 @@ const ForgotPasswordPage = () => {
         <div>
             <p><Logo/></p>
             <p>Восстановление пароля</p>
-            <Input type="email" placeholder="e-mail" ref={emailRef} value="hello@yandex.ru" onChange={(e) => console.log(e)}/>
+            <Input type="email" placeholder="e-mail" ref={emailRef}/>
             <Button type="primary" size="medium" onClick={onResetPassword}>Восстановить</Button>
             <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
         </div>
