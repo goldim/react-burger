@@ -28,7 +28,7 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
 
     return (
         <div className={styles.chosenItem}>
-            { isCenter(type) && <DragIcon/> }
+            { isCenter(type) && <div style={{alignItems: "center", display: "flex"}}><DragIcon style={{display: "inline-block"}}/></div> }
             <ConstructorElement
                 type={type}
                 isLocked={isLocked}
