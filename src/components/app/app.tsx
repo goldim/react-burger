@@ -37,7 +37,6 @@ function App() {
                     </main>
                 </Router>
             </div>
-            <div id="react-modals"/>
         </Provider>
     );
 }
