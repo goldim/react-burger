@@ -25,7 +25,7 @@ const LoginPage = (props) => {
 
   return (
     <div>
-      <p><Logo/></p>
+      <p><Link to="/"><Logo/></Link></p>
       <p>Вход</p>
       <Input type="email" placeholder="e-mail" ref={emailRef}/>
       <Input type="password" placeholder="Пароль" ref={passwordRef}/>

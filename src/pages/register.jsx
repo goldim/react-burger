@@ -29,7 +29,7 @@ const RegisterPage = (props) => {
 
   return (
     <div>
-        <p><Logo/></p>
+        <p><Link to="/"><Logo/></Link></p>
         <p>Регистрация</p>
         <Input type="text" placeholder="Имя" ref={nameRef}/>
         <Input type="email" placeholder="e-mail" ref={emailRef}/>

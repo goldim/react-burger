@@ -27,7 +27,7 @@ const AppHeader = () => (
     <header className={styles.AppHeader}>
         <NavButton title="Конструктор" icon={BurgerIcon} to="/constructor"/>
         <NavButton title="Лента заказов" icon={MenuIcon} to="/orders"/>
-        <Logo/>
+        <Link to="/"><Logo/></Link>
         <NavButton title="Личный кабинет" icon={ProfileIcon} to="/profile"/>
     </header>
 )

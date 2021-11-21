@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div>
-        <p><Logo/></p>
+        <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
         <Input type="email" placeholder="e-mail" ref={emailRef}/>
         <Button type="primary" size="medium" onClick={onResetPassword}>Восстановить</Button>

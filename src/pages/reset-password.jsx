@@ -25,7 +25,7 @@ const ResetPasswordPage = (props) => {
 
   return (
     <div>
-        <p><Logo/></p>
+        <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
         <Input type="password" placeholder="Введите новый пароль" icon="ShowIcon" ref={passwordRef}/>
         <Input type="text" placeholder="Введите код из письма" ref={tokenRef}/>
