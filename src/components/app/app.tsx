@@ -13,12 +13,15 @@ import ResetPasswordPage from '../../pages/reset-password';
 import ProtectedRoute from '../protected-route';
 import LogoutPage from '../../pages/logout';
 import IngredientDetailsPage from '../../pages/ingredient-details';
+import AppHeader from '../app-header';
 
 function App() {
     return (
         <Provider store={ ReduxStore }>
             <div className={ appStyles.App }>
                 <Router>
+                    <AppHeader/>
+                    <main>
                     <Routes>
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/ingredients/:id" element={<IngredientDetailsPage/>} />
@@ -31,6 +34,7 @@ function App() {
                         <Route path="reset-password" element={<ResetPasswordPage/>} />
                         <Route path="*" element={<Page404/>} />
                     </Routes>
+                    </main>
                 </Router>
             </div>
             <div id="react-modals"/>

@@ -2,7 +2,6 @@ import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-com
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import PageWithAppHeader from '../components/page-with-app-header';
 import { resetPassword } from '../services/middleware/auth';
 
 const ForgotPasswordPage = () => {
@@ -24,15 +23,13 @@ const ForgotPasswordPage = () => {
   }, [resetSuccess, navigate]);
 
   return (
-      <PageWithAppHeader>
-        <div>
-            <p><Logo/></p>
-            <p>Восстановление пароля</p>
-            <Input type="email" placeholder="e-mail" ref={emailRef}/>
-            <Button type="primary" size="medium" onClick={onResetPassword}>Восстановить</Button>
-            <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
-        </div>
-      </PageWithAppHeader>
+    <div>
+        <p><Logo/></p>
+        <p>Восстановление пароля</p>
+        <Input type="email" placeholder="e-mail" ref={emailRef}/>
+        <Button type="primary" size="medium" onClick={onResetPassword}>Восстановить</Button>
+        <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
+    </div>
   );
 }
 

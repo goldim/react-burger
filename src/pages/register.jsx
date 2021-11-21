@@ -2,7 +2,6 @@ import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-com
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import PageWithAppHeader from '../components/page-with-app-header';
 import { registerNewUser } from '../services/middleware/auth';
 
 const RegisterPage = (props) => {
@@ -29,19 +28,17 @@ const RegisterPage = (props) => {
   }
 
   return (
-    <PageWithAppHeader>
-      <div>
-          <p><Logo/></p>
-          <p>Регистрация</p>
-          <Input type="text" placeholder="Имя" ref={nameRef}/>
-          <Input type="email" placeholder="e-mail" ref={emailRef}/>
-          <Input type="password" placeholder="Пароль" icon="ShowIcon" ref={passwordRef}/>
-          <Button type="primary" size="medium" onClick={onRegister}>
-            Зарегистрироваться
-          </Button>
-          <p>Уже зарегистрированы? <Link to="/login">Войти</Link></p>
-      </div>
-    </PageWithAppHeader>
+    <div>
+        <p><Logo/></p>
+        <p>Регистрация</p>
+        <Input type="text" placeholder="Имя" ref={nameRef}/>
+        <Input type="email" placeholder="e-mail" ref={emailRef}/>
+        <Input type="password" placeholder="Пароль" icon="ShowIcon" ref={passwordRef}/>
+        <Button type="primary" size="medium" onClick={onRegister}>
+          Зарегистрироваться
+        </Button>
+        <p>Уже зарегистрированы? <Link to="/login">Войти</Link></p>
+    </div>
   );
 }
 

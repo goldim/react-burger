@@ -2,7 +2,6 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageWithAppHeader from '../components/page-with-app-header';
 import { getProfile, updateProfile } from '../services/middleware/auth';
 
 const NavList = () => {
@@ -55,16 +54,14 @@ const ProfilePage = () => {
 
   return (
     <>
-      <PageWithAppHeader>
-        <NavList/>
-        <aside>
-          <Input type="text" placeholder="Имя" icon="EditIcon" ref={nameRef}/>
-          <Input type="email" placeholder="e-mail" icon="EditIcon" ref={emailRef}/>
-          <Input type="password" placeholder="Пароль" icon="EditIcon" ref={passwordRef}/>
-          <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
-          <Button type="primary" size="medium" onClick={onSaveProfile}>Сохранить</Button>
-        </aside>
-      </PageWithAppHeader>
+      <NavList/>
+      <aside>
+        <Input type="text" placeholder="Имя" icon="EditIcon" ref={nameRef}/>
+        <Input type="email" placeholder="e-mail" icon="EditIcon" ref={emailRef}/>
+        <Input type="password" placeholder="Пароль" icon="EditIcon" ref={passwordRef}/>
+        <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
+        <Button type="primary" size="medium" onClick={onSaveProfile}>Сохранить</Button>
+      </aside>
       <footer align="center">
         <p>В этом разделе вы можете изменить ваши персональные данные</p>
       </footer>
