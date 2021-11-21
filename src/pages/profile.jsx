@@ -1,5 +1,5 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
@@ -29,38 +29,63 @@ const NavList = () => {
 }
 
 const ProfilePage = () => {
-  const { name, password, email } = useSelector(store => store.authReducer.currentUser);
-
-  const nameRef = useRef(null);
-  const passwordRef = useRef(null);
-  const emailRef = useRef(null);
-
+  const { name: savedName, password: savedPassword, email: savedEmail } = useSelector(store => store.authReducer.currentUser);
   const reduxDispatch = useDispatch();
 
-  const onCancel = useCallback(() => {
-    nameRef.current.value = name;
-    emailRef.current.value = email;
-    passwordRef.current.value = password;
-  }, [name, password, email]);
+  const [name, setName] = useState(savedName);
+  const onChangeName = e => {
+    setName(e.target.value)
+  }
+
+  const [password, setPassword] = useState(savedPassword);
+  const onChangePassword = e => {
+    setPassword(e.target.value)
+  }
+
+  const [email, setEmail] = useState(savedEmail);
+  const onChangeEmail = e => {
+    setEmail(e.target.value)
+  }
+
+  const setupFields = useCallback(() => {
+    setName(name);
+    setPassword(password);
+    setEmail(email);
+  }, [name, password, email])
+  
+  const resetFields = useCallback(() => {
+    setName(savedName);
+    setPassword(savedPassword);
+    setEmail(savedEmail);
+  }, [savedName, savedPassword, savedEmail])
+
+  const onCancel = useCallback((e) => {
+    e.preventDefault();
+    resetFields();
+  }, [resetFields]);
 
   useEffect(() => {
     reduxDispatch(getProfile());
-    onCancel();
-  }, [onCancel, reduxDispatch]);
+    setupFields();
+    // eslint-disable-next-line
+  }, []);
 
-  const onSaveProfile = () => {
-    reduxDispatch(updateProfile(nameRef.current.value, passwordRef.current.value, emailRef.current.value));
+  const onSubmit = (e) => {
+    e.preventDefault();
+    reduxDispatch(updateProfile(name, password, email));
   }
 
   return (
     <>
       <NavList/>
       <aside>
-        <Input type="text" placeholder="Имя" icon="EditIcon" ref={nameRef}/>
-        <Input type="email" placeholder="e-mail" icon="EditIcon" ref={emailRef}/>
-        <Input type="password" placeholder="Пароль" icon="EditIcon" ref={passwordRef}/>
-        <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
-        <Button type="primary" size="medium" onClick={onSaveProfile}>Сохранить</Button>
+        <form onSubmit={onSubmit}>
+          <Input type="text" placeholder="Имя" icon="EditIcon" onChange={onChangeName} value={name}/>
+          <Input type="email" placeholder="e-mail" icon="EditIcon" onChange={onChangeEmail} value={email}/>
+          <Input type="password" placeholder="Пароль" icon="EditIcon" onChange={onChangePassword} value={password}/>
+          <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
+          <Button type="primary" size="medium">Сохранить</Button>
+        </form>
       </aside>
       <footer align="center">
         <p>В этом разделе вы можете изменить ваши персональные данные</p>

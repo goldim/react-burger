@@ -1,29 +1,37 @@
-import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useRef } from 'react';
+import { Button, EmailInput, Input, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect, useState,  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerNewUser } from '../services/middleware/auth';
 
-const RegisterPage = (props) => {
+const RegisterPage = () => {
   const reduxDispatch = useDispatch();
-  const name = useSelector(store => store.authReducer.currentUser.name);
-
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
+  const savedName = useSelector(store => store.authReducer.currentUser.name);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (name){
+    if (savedName){
       navigate('/');
     }
-  }, [name, navigate]);
+  }, [savedName, navigate]);
 
-  const onRegister = () => {
-    const name = nameRef.current.value;
-    const password = passwordRef.current.value;
-    const email = emailRef.current.value;
+  const [name, setName] = useState("");
+  const onChangeName = e => {
+    setName(e.target.value)
+  }
+
+  const [password, setPassword] = useState("");
+  const onChangePassword = e => {
+    setPassword(e.target.value)
+  }
+
+  const [email, setEmail] = useState("");
+  const onChangeEmail = e => {
+    setEmail(e.target.value)
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
     reduxDispatch(registerNewUser(name, password, email))
   }
 
@@ -31,12 +39,14 @@ const RegisterPage = (props) => {
     <div>
         <p><Link to="/"><Logo/></Link></p>
         <p>Регистрация</p>
-        <Input type="text" placeholder="Имя" ref={nameRef}/>
-        <Input type="email" placeholder="e-mail" ref={emailRef}/>
-        <Input type="password" placeholder="Пароль" icon="ShowIcon" ref={passwordRef}/>
-        <Button type="primary" size="medium" onClick={onRegister}>
-          Зарегистрироваться
-        </Button>
+        <form onSubmit={onSubmit}>
+          <Input type="text" placeholder="Имя" onChange={onChangeName} value={name}/>
+          <EmailInput placeholder="e-mail" onChange={onChangeEmail} value={email}/>
+          <PasswordInput placeholder="Пароль" onChange={onChangePassword} value={password}/>
+          <Button type="primary" size="medium">
+            Зарегистрироваться
+          </Button>
+        </form>
         <p>Уже зарегистрированы? <Link to="/login">Войти</Link></p>
     </div>
   );

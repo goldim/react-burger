@@ -1,23 +1,31 @@
-import { Button, Input, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useRef } from 'react';
+import { Button, Input, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
 
-const ResetPasswordPage = (props) => {
+const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
-  const tokenRef = useRef(null);
-  const passwordRef = useRef(null);
   const savePasswordSuccess = useSelector(store => store.authReducer.savePasswordSuccess);
 
-  const onSavePassword = () => {
-    reduxDispatch(savePassword(passwordRef.current.value, tokenRef.current.value))
+  const [password, setPassword] = useState("");
+  const onChangePassword = e => {
+    setPassword(e.target.value)
+  }
+
+  const [token, setToken] = useState("");
+  const onChangeToken = e => {
+    setToken(e.target.value)
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    reduxDispatch(savePassword(password, token))
   }
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(savePasswordSuccess);
     if (savePasswordSuccess){
       navigate('/profile');
     }
@@ -27,11 +35,13 @@ const ResetPasswordPage = (props) => {
     <div>
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
-        <Input type="password" placeholder="Введите новый пароль" icon="ShowIcon" ref={passwordRef}/>
-        <Input type="text" placeholder="Введите код из письма" ref={tokenRef}/>
-        <Button type="primary" size="medium" onClick={onSavePassword}>
-          Сохранить
-        </Button>
+        <form onSubmit={onSubmit}>
+          <PasswordInput placeholder="Введите новый пароль" onChange={onChangePassword} value={password}/>
+          <Input type="text" placeholder="Введите код из письма" onChange={onChangeToken} value={token}/>
+          <Button type="primary" size="medium">
+            Сохранить
+          </Button>
+        </form>
         <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
