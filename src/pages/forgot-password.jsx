@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
     }
   }, [resetSuccess, navigate]);
 
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const onChangeEmail = e => {
     setEmail(e.target.value)
   }
@@ -32,7 +32,7 @@ const ForgotPasswordPage = () => {
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
         <form onSubmit={onSubmit}>
-          <EmailInput placeholder="e-mail" name="email" value={email} onChange={onChangeEmail}/>
+          <EmailInput placeholder="e-mail" value={email} onChange={onChangeEmail}/>
           <Button type="primary" size="medium">Восстановить</Button>
         </form>
         <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
