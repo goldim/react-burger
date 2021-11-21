@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
 
+import "./styles.css"
+
 const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
   const savePasswordSuccess = useSelector(store => store.authReducer.savePasswordSuccess);

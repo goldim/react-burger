@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../services/middleware/auth';
 
+import "./styles.css"
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const name = useSelector(store => store.authReducer.currentUser.name);

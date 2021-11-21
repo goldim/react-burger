@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
 
+import "./styles.css"
+
 const NavList = () => {
   return (
     <section>
