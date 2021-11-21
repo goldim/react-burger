@@ -9,7 +9,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 const Modal = ({caption, closeHandler, show, children}) => {
     const root = document.getElementById("react-modals");
 
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         function onEscape(e) {
             if (e.key === "Escape") {
                 closeHandler();
