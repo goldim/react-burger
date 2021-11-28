@@ -1,13 +1,12 @@
 import { Button, EmailInput, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { login } from '../services/middleware/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../services/auth';
 
 import "./styles.css"
 
 const LoginPage = () => {
-  const reduxDispatch = useDispatch();
+  const {signIn} = useAuth();
 
   const [password, setPassword] = useState("");
   const onChangePassword = e => {
@@ -19,9 +18,13 @@ const LoginPage = () => {
     setEmail(e.target.value)
   }
 
+  const navigate = useNavigate();
+
   const onSubmit = (e) => {
     e.preventDefault();
-    reduxDispatch(login(email, password));
+    signIn(email, password).then(function(){
+      navigate(-1);
+    });
   }
 
   return (

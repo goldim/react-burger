@@ -1,49 +1,23 @@
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
-import { getProfile } from "../../services/middleware/auth";
+import { useLayoutEffect, useState } from "react";
+import { Navigate } from "react-router";
+import { useAuth } from "../../services/auth";
 
 const ProtectedFromAuthedRoute = (props) => {
-    const navigate = useNavigate();
-    const name = useSelector(store => store.authReducer.currentUser.name);
+    const {getUser, user} = useAuth();
+    const [userLoaded, setUserLoaded] = useState(false);
   
-    const loaded = useSelector(store => store.authReducer.currentUser.loaded);
-    const authed = name !== "";
-    
-    const reduxDispatch = useDispatch();
-  
-    const init = useCallback(() => {
-      reduxDispatch(getProfile());
-    }, [reduxDispatch]);
+    useLayoutEffect(() => {
+        getUser().then(function() {
+            setUserLoaded(true);
+        });
+        // eslint-disable-next-line
+    }, []);
 
-    const location = useLocation();
-  
-    useEffect(() => {
-        init();
-    }, [init]);
+    if (!userLoaded){
+        return null;
+    }
 
-    const checkAuthed = useCallback((loaded, authed) => {
-        if (loaded && authed){
-            if (location.state && location.state.resetPassed){
-                navigate("/profile");
-            }
-            else {
-                navigate(-1);
-            }
-        }
-    }, [location, navigate]);
-  
-    useEffect(() => {
-        checkAuthed(loaded, authed);
-    }, [authed, loaded, checkAuthed]);
-
-    return (
-        <>
-            { 
-                loaded && !authed ? props.children: "" 
-            }
-        </>
-    );
+    return (<>{ !user ? props.children: <Navigate to="/"/> }</>);
 }
 
 export default ProtectedFromAuthedRoute;

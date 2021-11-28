@@ -1,24 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../services/middleware/auth";
+import { useLayoutEffect } from "react";
+import { useAuth } from "../services/auth";
+import { Navigate } from 'react-router-dom';
 
 const LogoutPage = () => {
-    const reduxDispatch = useDispatch();
-    const logoutSuccess = useSelector(store => store.authReducer.logoutSuccess);
+    const {user, signOut} = useAuth();
 
-    useEffect(() => {
-        reduxDispatch(logout());
-    }, [reduxDispatch]);
+    useLayoutEffect(() => {
+        signOut().then(function(){});
+        // eslint-disable-next-line
+    }, []);
 
-    useEffect(() => {
-        if (logoutSuccess){
-            // navigate("/login", {state: {logoutPassed: true}});
-        }
-    }, [logoutSuccess]);
-
-    return (
-        <p>Выход...</p>
-    );
+    return (<>{ user ? (<p>Выход...</p>) : <Navigate to="/login"/>}</>);
 }
 
 export default LogoutPage;

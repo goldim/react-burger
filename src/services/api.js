@@ -28,7 +28,7 @@ const fetchGet = async (url, headers) => {
     });
 }
 
-export const getUserRequest = async () => {
+export const getUserRequest = () => {
     const fetchFunc = () => fetchGet(GET_USER_URL, getCommonHeadersWithAuth());
     return fetchProcess(fetchFunc);
 }
@@ -64,9 +64,9 @@ const fetchProcess = async requestFunc => {
     }
 }
 
-const fetchData = (url, data) => {
+const fetchData = async (url, data) => {
     const fetchFunc = () => fetchPost(url, data, getCommonHeaders());
-    return fetchProcess(fetchFunc);
+    return await fetchProcess(fetchFunc);
 }
 
 const LOGOUT_URL = ENDPOINT_URL +  'auth/logout';
@@ -78,7 +78,7 @@ export const logoutRequest = async () => {
 const LOGIN_URL = ENDPOINT_URL + 'auth/login';
 
 export const loginRequest = async (email, password) => {
-    return fetchData(LOGIN_URL, {email, password});
+    return await fetchData(LOGIN_URL, {email, password});
 }
 
 const REGISTER_URL = ENDPOINT_URL + 'auth/register';

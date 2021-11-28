@@ -20,6 +20,7 @@ export function useProvideAuth() {
   const getUser = async () => {
     try {
         const data = await getUserRequest();
+        console.log("user", data);
         setUser({ name: data.user.name, email: data.user.email });
     }
     catch (ex){
@@ -30,11 +31,13 @@ export function useProvideAuth() {
   const signIn = async (email, password) => {
     try {
       const data = await loginRequest(email, password);
+      console.log("signIn", data);
 
       setCookie("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
     }
     catch (ex){
+      console.log(ex.message);
     }
   };
 
@@ -46,7 +49,7 @@ export function useProvideAuth() {
       localStorage.removeItem("refreshToken");
       setUser(null);
     } catch (ex){
-
+      console.log(ex.message);
     }
   };
 

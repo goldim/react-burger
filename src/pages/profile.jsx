@@ -1,11 +1,12 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
 
 import "./styles.css"
 import "./profile.css"
+import { useAuth } from '../services/auth';
 
 const NavList = () => {
   return (
@@ -32,7 +33,9 @@ const NavList = () => {
 }
 
 const ProfilePage = () => {
-  const { name: savedName, email: savedEmail } = useSelector(store => store.authReducer.currentUser);
+  const auth = useAuth();
+  const savedName = auth.user.name;
+  const savedEmail = auth.user.email;
   const reduxDispatch = useDispatch();
 
   const [name, setName] = useState(savedName);
