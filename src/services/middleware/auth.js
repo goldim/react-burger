@@ -3,138 +3,67 @@ import { changeUserRequest, getUserRequest, loginRequest, logoutRequest, registe
 import { deleteCookie, setCookie } from '../cookies';
 
 const resetPasswordInternal = async (email, dispatch) => {
-    const response = await sendRecoveryCodeRequest(email);
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            dispatch({ type: RESET_PASSWORD });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed");
-    }
+    await sendRecoveryCodeRequest(email);
+    dispatch({ type: RESET_PASSWORD });
 }
 
 const resetPasswordInternal2 = async (password, token, dispatch) => {
-    const response = await resetPasswordRequest(password, token);
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            console.log(data.message);
-            dispatch({ type: SAVE_PASSWORD });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed");
-    }
+    await resetPasswordRequest(password, token);
+    dispatch({ type: SAVE_PASSWORD });
 }
 
 export const resetPassword = (email) => async (dispatch)  => {
-    try {
-        await resetPasswordInternal(email, dispatch);
-    } catch(ex){
-        console.log(ex.message);
-    }
+    handleErrors(() => resetPasswordInternal(email, dispatch));
 }
 
 export const savePassword = (password, token) => async (dispatch)  => {
-    try {
-        await resetPasswordInternal2(password, token, dispatch);
-    } catch(ex){
-        console.log(ex.message);
-    }
+    handleErrors(() => resetPasswordInternal2(password, token, dispatch));
 }
 
 const registerNewUserInternal = async (name, password, email, dispatch) => {
-    const response = await registerRequest(name, password, email);
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            dispatch({ type: REGISTER, data });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed", response.statusText);
-    }
+    const data = await registerRequest(name, password, email);
+    dispatch({ type: REGISTER, data });
 }
 
-export const registerNewUser = (name, password, email) => async (dispatch)  => {
-    try {
-        await registerNewUserInternal(name, password, email, dispatch);
-    } catch(ex){
-        console.log(ex.message);
-    }
+export const registerNewUser = (name, password, email) => async (dispatch) => {
+    handleErrors(() => registerNewUserInternal(name, password, email, dispatch));
 }
 
 const logoutInternal = async (dispatch) => {
-    const response = await logoutRequest();
+    await logoutRequest();
+    
+    deleteCookie("accessToken");
+    localStorage.removeItem("refreshToken");
+    dispatch({ type: LOGOUT });
+}
 
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            deleteCookie("accessToken");
-            localStorage.removeItem("refreshToken");
-            dispatch({ type: LOGOUT });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed");
+const handleErrors = async func => {
+    try{
+        await func();
+    } catch (ex) {
+        console.log(ex.message)
     }
 }
 
 export const logout = () => async (dispatch)  => {
-    try {
-        await logoutInternal(dispatch);
-    } catch(ex){
-        console.log(ex.message);
-    }
+    handleErrors(() => logoutInternal(dispatch));
 }
 
 const loginInternal = async (email, password, dispatch) => {
-    const response = await loginRequest(email, password);
+    const data = await loginRequest(email, password);
 
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            setCookie("accessToken", data.accessToken);
-            localStorage.setItem("refreshToken", data.refreshToken);
-            dispatch({ type: LOGIN, data });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed");
-    }
+    setCookie("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    dispatch({ type: LOGIN, data });
 }
 
 export const login = (email, password) => async (dispatch)  => {
-    try {
-        await loginInternal(email, password, dispatch);
-    } catch(ex){
-        console.log(ex.message);
-    }
+    handleErrors(() => loginInternal(email, password, dispatch));
 }
 
 const updateProfileInternal = async (name, password, email, dispatch) => {
-    const response = await changeUserRequest(name, password, email);
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            dispatch({ type: UPDATE_PROFILE, data });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        console.log("response failed");
-    }
+    const data = await changeUserRequest(name, password, email);
+    dispatch({ type: UPDATE_PROFILE, data });
 }
 
 export const updateProfile = (name, password, email) => async (dispatch)  => {
@@ -146,25 +75,15 @@ export const updateProfile = (name, password, email) => async (dispatch)  => {
 }
 
 const getUser = async (dispatch) => {
-    const response = await getUserRequest();
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.success){
-            dispatch({ type: UPDATE_PROFILE, ...data });
-        } else {
-            console.log(data.message);
-        }
-    } else {
-        dispatch({ type: LOAD_PROFILE_FAILED});
-        console.log("response failed", response.statusText);
-    }
+    const data = await getUserRequest();
+    dispatch({ type: UPDATE_PROFILE, ...data });
 }
 
 export const getProfile = () => async (dispatch)  => {
     try {
         await getUser(dispatch);
-    } catch(ex){
-        console.log(ex.message);
+    } catch (ex){
+        console.log("profile failed", ex.message);
+        dispatch({ type: LOAD_PROFILE_FAILED});
     }
 }
