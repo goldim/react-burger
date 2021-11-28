@@ -1,4 +1,4 @@
-import { useReducer, useLayoutEffect, useEffect } from 'react'
+import { useReducer, useLayoutEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import DataItemPropTypes from '../../utils/data-item-format'
 
@@ -34,13 +34,13 @@ const TotalBar = ({ingredients}) => {
         reduxDispatch({type: NEW_ORDER})
     }
 
-    const init = () => {
+    const init = useCallback(() => {
         reduxDispatch(getProfile());
-    };
+    }, [reduxDispatch]);
 
     useLayoutEffect(() => {
         init();
-    }, []);
+    }, [init]);
 
     const [totalPrice, dispatch] = useReducer(calcTotalPriceReducer, 0);
     

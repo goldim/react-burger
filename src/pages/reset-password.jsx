@@ -20,7 +20,7 @@ const ResetPasswordPage = () => {
         navigate('/login', {state: {resetPassed: true}});
       }
     }
-  }, [savePasswordSuccess]);
+  }, [savePasswordSuccess, navigate, location.state]);
 
   const [password, setPassword] = useState("");
   const onChangePassword = e => {

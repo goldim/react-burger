@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './ingredient-details.module.css'
@@ -22,6 +22,9 @@ InactiveNumber.propTypes = {
 
 const IngredientDetails = () => {
     const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    useEffect(() => {
+        window.history.replaceState(null, null, "/ingredients/" + current._id);
+    }, [current._id]);
     return (
         <div className={styles.container}>
             <div>

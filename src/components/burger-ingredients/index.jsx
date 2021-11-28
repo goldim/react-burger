@@ -46,7 +46,10 @@ const BurgerIngredients = () => {
     const current = useSelector(store => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
-    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    const onCloseItem = () => {
+        window.history.replaceState(null, null, "/constructor");
+        dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    }
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
     return (

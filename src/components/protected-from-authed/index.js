@@ -12,15 +12,15 @@ const ProtectedFromAuthedRoute = (props) => {
     
     const reduxDispatch = useDispatch();
   
-    const init = () => {
+    const init = useCallback(() => {
       reduxDispatch(getProfile());
-    };
+    }, [reduxDispatch]);
 
     const location = useLocation();
   
     useEffect(() => {
         init();
-    }, []);
+    }, [init]);
 
     const checkAuthed = useCallback((loaded, authed) => {
         if (loaded && authed){
@@ -31,11 +31,11 @@ const ProtectedFromAuthedRoute = (props) => {
                 navigate(-1);
             }
         }
-    }, [location]);
+    }, [location, navigate]);
   
     useEffect(() => {
         checkAuthed(loaded, authed);
-    }, [authed, loaded]);
+    }, [authed, loaded, checkAuthed]);
 
     return (
         <>
