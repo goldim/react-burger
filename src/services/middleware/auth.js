@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, RESET_PASSWORD, SAVE_PASSWORD, UPDATE_PROFILE } from '../actions/auth';
+import { LOGIN, LOGOUT, REGISTER, RESET_PASSWORD, SAVE_PASSWORD, UPDATE_PROFILE, LOAD_PROFILE_FAILED } from '../actions/auth';
 
 const ENDPOINT_URL = 'https://norma.nomoreparties.space/api/';
 const LOGIN_URL = ENDPOINT_URL + 'auth/login';
@@ -105,7 +105,6 @@ export const savePassword = (password, token) => async (dispatch)  => {
 
 const registerNewUserInternal = async (url, name, password, email, dispatch) => {
     const data = { email, password, name };
-    console.log(data, JSON.stringify(data));
 
     const response = await fetch(url, {
         method: 'POST',
@@ -151,8 +150,11 @@ const logoutInternal = async (url, dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
+        console.log("LOGIT INTERN", data.success);
         if (data.success){
             console.log(data.message);
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             dispatch({ type: LOGOUT });
         } else {
             console.log(data.message);
@@ -185,8 +187,8 @@ const loginInternal = async (url, email, password, dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.success){
-            console.log("success", data);
-            setCookie("accessToken", data.accessToken);
+            localStorage.setItem("accessToken", data.accessToken);
+            // setCookie("accessToken", data.accessToken);
             localStorage.setItem("refreshToken", data.refreshToken);
             dispatch({ type: LOGIN, data });
         } else {
@@ -207,7 +209,7 @@ export const login = (email, password) => async (dispatch)  => {
 
 const updateProfileInternal = async (url, name, password, email, dispatch) => {
     const data = { name, password, email };
-    const accessToken = getCookie("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
 
     const response = await fetch(url, {
         method: 'PATCH',
@@ -242,8 +244,8 @@ export const updateProfile = (name, password, email) => async (dispatch)  => {
 }
 
 const getProfileInternal = async (url, dispatch) => {
-    const accessToken = getCookie("accessToken");
-
+    const accessToken = localStorage.getItem("accessToken");
+    
     const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -256,13 +258,13 @@ const getProfileInternal = async (url, dispatch) => {
     if (response.ok) {
         const data = await response.json();
         if (data.success){
-            console.log(data);
-            dispatch({ type: UPDATE_PROFILE, data });
+            dispatch({ type: UPDATE_PROFILE, ...data });
         } else {
             console.log(data.message);
         }
     } else {
-        console.log("response failed");
+        dispatch({ type: LOAD_PROFILE_FAILED});
+        console.log("response failed", response.statusText);
     }
 }
 

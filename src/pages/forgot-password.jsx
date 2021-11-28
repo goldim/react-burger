@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
 
   useEffect(() => {
     if (resetSuccess){
-      navigate('/reset-password');
+      navigate('/reset-password', {state: { forgotPassed: true}});
     }
   }, [resetSuccess, navigate]);
 
@@ -33,9 +33,9 @@ const ForgotPasswordPage = () => {
         <p>Восстановление пароля</p>
         <form onSubmit={onSubmit}>
           <EmailInput placeholder="e-mail" value={email} onChange={onChangeEmail}/>
-          <Button type="primary" size="medium">Восстановить</Button>
+          <center><Button type="primary" size="medium">Восстановить</Button></center>
         </form>
-        <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        <center><p>Вспомнили пароль? <Link to="/login">Войти</Link></p></center>
     </div>
   );
 }

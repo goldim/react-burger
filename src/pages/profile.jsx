@@ -31,7 +31,7 @@ const NavList = () => {
 }
 
 const ProfilePage = () => {
-  const { name: savedName, password: savedPassword, email: savedEmail } = useSelector(store => store.authReducer.currentUser);
+  const { name: savedName, email: savedEmail } = useSelector(store => store.authReducer.currentUser);
   const reduxDispatch = useDispatch();
 
   const [name, setName] = useState(savedName);
@@ -39,7 +39,7 @@ const ProfilePage = () => {
     setName(e.target.value)
   }
 
-  const [password, setPassword] = useState(savedPassword);
+  const [password, setPassword] = useState("");
   const onChangePassword = e => {
     setPassword(e.target.value)
   }
@@ -57,9 +57,9 @@ const ProfilePage = () => {
   
   const resetFields = useCallback(() => {
     setName(savedName);
-    setPassword(savedPassword);
+    setPassword(password);
     setEmail(savedEmail);
-  }, [savedName, savedPassword, savedEmail])
+  }, [savedName, password, savedEmail])
 
   const onCancel = useCallback((e) => {
     e.preventDefault();

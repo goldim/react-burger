@@ -5,11 +5,13 @@ import {
     TOKEN,
     RESET_PASSWORD,
     SAVE_PASSWORD,
-    UPDATE_PROFILE
+    UPDATE_PROFILE,
+    LOAD_PROFILE_FAILED
 } from '../actions/auth'
 
 const initialState = {
     currentUser: {
+        loaded: false,
         name: "",
         email: "",
         password: ""
@@ -17,7 +19,8 @@ const initialState = {
     accessToken: "",
     refreshToken: "",
     resetSuccess: false,
-    savePasswordSuccess: false
+    savePasswordSuccess: false,
+    logoutSuccess: false
 }
 
 export const AuthReducer = (state = initialState, action) => {
@@ -32,11 +35,15 @@ export const AuthReducer = (state = initialState, action) => {
                 },
                 accessToken: action.data.accessToken,
                 refreshToken: action.data.refreshToken
+                // logoutSuccess: false
             };
         case LOGOUT:
-            return {
-                ...initialState
+            const result2 = {
+                ...initialState,
+                logoutSuccess: true
             };
+            console.log("reducer", result2);
+            return result2;
         case RESET_PASSWORD:
             return {
                 ...state,
@@ -60,13 +67,22 @@ export const AuthReducer = (state = initialState, action) => {
                 refreshToken: action.data.refreshToken
             };
         case UPDATE_PROFILE:
+            const newstate = {
+                ...state,
+                currentUser: {
+                    ...state.currentUser,
+                    loaded: true,
+                    name: action.user.name,
+                    email: action.user.email
+                }
+            };
+            return newstate;
+        case LOAD_PROFILE_FAILED:
             return {
                 ...state,
                 currentUser: {
                     ...state.currentUser,
-                    name: action.user.name,
-                    email: action.user.email,
-                    password: action.user.password
+                    loaded: true
                 }
             };
         case TOKEN:

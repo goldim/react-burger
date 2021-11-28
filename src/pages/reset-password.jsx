@@ -1,14 +1,26 @@
 import { Button, Input, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
 
 import "./styles.css"
 
 const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const savePasswordSuccess = useSelector(store => store.authReducer.savePasswordSuccess);
+
+  useEffect(() => {
+    if (!location.state || !location.state.forgotPassed){
+      navigate(-1);
+    } else {
+      if (savePasswordSuccess){
+        navigate('/login', {state: {resetPassed: true}});
+      }
+    }
+  }, [savePasswordSuccess]);
 
   const [password, setPassword] = useState("");
   const onChangePassword = e => {
@@ -25,14 +37,6 @@ const ResetPasswordPage = () => {
     reduxDispatch(savePassword(password, token))
   }
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (savePasswordSuccess){
-      navigate('/profile');
-    }
-  }, [savePasswordSuccess, navigate]);
-
   return (
     <div>
         <p><Link to="/"><Logo/></Link></p>
@@ -40,11 +44,13 @@ const ResetPasswordPage = () => {
         <form onSubmit={onSubmit}>
           <PasswordInput placeholder="Введите новый пароль" onChange={onChangePassword} value={password}/>
           <Input type="text" placeholder="Введите код из письма" onChange={onChangeToken} value={token}/>
-          <Button type="primary" size="medium">
-            Сохранить
-          </Button>
+          <center>
+            <Button type="primary" size="medium">
+              Сохранить
+            </Button>
+          </center>
         </form>
-        <p>Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        <center><p>Вспомнили пароль? <Link to="/login">Войти</Link></p></center>
     </div>
   );
 }

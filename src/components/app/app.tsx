@@ -14,6 +14,7 @@ import ProtectedRoute from '../protected-route';
 import LogoutPage from '../../pages/logout';
 import IngredientDetailsPage from '../../pages/ingredient-details';
 import AppHeader from '../app-header';
+import ProtectedFromAuthedRoute from '../protected-from-authed';
 
 function App() {
     return (
@@ -26,12 +27,12 @@ function App() {
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/ingredients/:id" element={<IngredientDetailsPage/>} />
                         <Route path="/constructor" element={<MainPage/>} />
-                        <Route path="register" element={<RegisterPage/>} />
-                        <Route path="login" element={<LoginPage/>} />
-                        <Route path="logout" element={<LogoutPage/>} />
+                        <Route path="register" element={<ProtectedFromAuthedRoute><RegisterPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="login" element={<ProtectedFromAuthedRoute><LoginPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
                         <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
-                        <Route path="forgot-password" element={<ForgotPasswordPage/>} />
-                        <Route path="reset-password" element={<ResetPasswordPage/>} />
+                        <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="*" element={<Page404/>} />
                     </Routes>
                     </main>
