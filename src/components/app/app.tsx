@@ -15,9 +15,11 @@ import LogoutPage from '../../pages/logout';
 import IngredientDetailsPage from '../../pages/ingredient-details';
 import AppHeader from '../app-header';
 import ProtectedFromAuthedRoute from '../protected-from-authed';
+import { ProvideAuth } from '../../services/auth';
 
 function App() {
     return (
+        <ProvideAuth>
         <Provider store={ ReduxStore }>
             <div className={ appStyles.App }>
                 <Router>
@@ -39,6 +41,7 @@ function App() {
                 </Router>
             </div>
         </Provider>
+        </ProvideAuth>
     );
 }
 

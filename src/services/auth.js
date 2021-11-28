@@ -1,23 +1,12 @@
 import { useContext, useState, createContext } from 'react';
-import { loginRequest } from './api';
-import { setCookie } from './utils';
-
-const fakeAuth = {
-  isAuthenticated: false,
-  signIn(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signOut(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
+import { loginRequest, getUserRequest, logoutRequest } from './api';
+import { deleteCookie, setCookie } from './cookies';
 
 const AuthContext = createContext(undefined);
 
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
+
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
@@ -28,36 +17,42 @@ export function useAuth() {
 export function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const signIn = async form => {
-    const data = await loginRequest(form)
-      .then(res => {
-        let authToken;
-        res.headers.forEach(header => {
-          if (header.indexOf('Bearer') === 0) {
-            authToken = header.split('Bearer ')[1];
-          }
-        });
-        if (authToken) {
-          setCookie('token', authToken);
-        }
-        return res.json();
-      })
-      .then(data => data);
-
-    if (data.success) {
-      setUser({ ...data.user, id: data.user._id });
+  const getUser = async () => {
+    try {
+        const data = await getUserRequest();
+        setUser({ name: data.user.name, email: data.user.email });
+    }
+    catch (ex){
+      console.log(ex.message);
     }
   };
 
-  const signOut = cb => {
-    return fakeAuth.signOut(() => {
+  const signIn = async (email, password) => {
+    try {
+      const data = await loginRequest(email, password);
+
+      setCookie("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+    }
+    catch (ex){
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await logoutRequest();
+      
+      deleteCookie("accessToken");
+      localStorage.removeItem("refreshToken");
       setUser(null);
-      cb();
-    });
+    } catch (ex){
+
+    }
   };
 
   return {
     user,
+    getUser,
     signIn,
     signOut
   };
