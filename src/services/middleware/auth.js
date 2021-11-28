@@ -1,29 +1,13 @@
 import { LOGIN, LOGOUT, REGISTER, RESET_PASSWORD, SAVE_PASSWORD, UPDATE_PROFILE, LOAD_PROFILE_FAILED } from '../actions/auth';
-import { deleteCookie, getCookie, setCookie } from '../cookies';
+import { changeUserRequest, getUserRequest, loginRequest, logoutRequest, registerRequest, resetPasswordRequest, sendRecoveryCodeRequest } from '../api';
+import { deleteCookie, setCookie } from '../cookies';
 
-const ENDPOINT_URL = 'https://norma.nomoreparties.space/api/';
-const LOGIN_URL = ENDPOINT_URL + 'auth/login';
-const LOGOUT_URL = ENDPOINT_URL +  'auth/logout';
-const REGISTER_URL = ENDPOINT_URL + 'auth/register';
-const RESET_PASSWORD_STEP_1_URL = ENDPOINT_URL + 'password-reset';
-const RESET_PASSWORD_STEP_2_URL = ENDPOINT_URL + 'password-reset/reset';
-
-const resetPasswordInternal = async (url, email, dispatch) => {
-    const data = { email };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const resetPasswordInternal = async (email, dispatch) => {
+    const response = await sendRecoveryCodeRequest(email);
 
     if (response.ok) {
         const data = await response.json();
         if (data.success){
-            console.log(data.message);
             dispatch({ type: RESET_PASSWORD });
         } else {
             console.log(data.message);
@@ -33,17 +17,8 @@ const resetPasswordInternal = async (url, email, dispatch) => {
     }
 }
 
-const resetPasswordInternal2 = async (url, password, token, dispatch) => {
-    const data = { password, token };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const resetPasswordInternal2 = async (password, token, dispatch) => {
+    const response = await resetPasswordRequest(password, token);
 
     if (response.ok) {
         const data = await response.json();
@@ -60,7 +35,7 @@ const resetPasswordInternal2 = async (url, password, token, dispatch) => {
 
 export const resetPassword = (email) => async (dispatch)  => {
     try {
-        await resetPasswordInternal(RESET_PASSWORD_STEP_1_URL, email, dispatch);
+        await resetPasswordInternal(email, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
@@ -68,23 +43,14 @@ export const resetPassword = (email) => async (dispatch)  => {
 
 export const savePassword = (password, token) => async (dispatch)  => {
     try {
-        await resetPasswordInternal2(RESET_PASSWORD_STEP_2_URL, password, token, dispatch);
+        await resetPasswordInternal2(password, token, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
 }
 
-const registerNewUserInternal = async (url, name, password, email, dispatch) => {
-    const data = { email, password, name };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const registerNewUserInternal = async (name, password, email, dispatch) => {
+    const response = await registerRequest(name, password, email);
 
     if (response.ok) {
         const data = await response.json();
@@ -100,30 +66,18 @@ const registerNewUserInternal = async (url, name, password, email, dispatch) => 
 
 export const registerNewUser = (name, password, email) => async (dispatch)  => {
     try {
-        await registerNewUserInternal(REGISTER_URL, name, password, email, dispatch);
+        await registerNewUserInternal(name, password, email, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
 }
 
-const logoutInternal = async (url, dispatch) => {
-    const token = localStorage.getItem("refreshToken");
-    const data = { token };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const logoutInternal = async (dispatch) => {
+    const response = await logoutRequest();
 
     if (response.ok) {
         const data = await response.json();
-        console.log("LOGIT INTERN", data.success);
         if (data.success){
-            console.log(data.message);
             deleteCookie("accessToken");
             localStorage.removeItem("refreshToken");
             dispatch({ type: LOGOUT });
@@ -137,23 +91,14 @@ const logoutInternal = async (url, dispatch) => {
 
 export const logout = () => async (dispatch)  => {
     try {
-        await logoutInternal(LOGOUT_URL, dispatch);
+        await logoutInternal(dispatch);
     } catch(ex){
         console.log(ex.message);
     }
 }
 
-const loginInternal = async (url, email, password, dispatch) => {
-    const data = { email, password };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const loginInternal = async (email, password, dispatch) => {
+    const response = await loginRequest(email, password);
 
     if (response.ok) {
         const data = await response.json();
@@ -171,25 +116,14 @@ const loginInternal = async (url, email, password, dispatch) => {
 
 export const login = (email, password) => async (dispatch)  => {
     try {
-        await loginInternal(LOGIN_URL, email, password, dispatch);
+        await loginInternal(email, password, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
 }
 
-const updateProfileInternal = async (url, name, password, email, dispatch) => {
-    const data = { name, password, email };
-    const accessToken = getCookie("accessToken");
-
-    const response = await fetch(url, {
-        method: 'PATCH',
-        headers: {
-            'authorization': accessToken,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+const updateProfileInternal = async (name, password, email, dispatch) => {
+    const response = await changeUserRequest(name, password, email);
 
     if (response.ok) {
         const data = await response.json();
@@ -203,27 +137,16 @@ const updateProfileInternal = async (url, name, password, email, dispatch) => {
     }
 }
 
-const PROFILE_URL = ENDPOINT_URL + 'auth/user';
-
 export const updateProfile = (name, password, email) => async (dispatch)  => {
     try {
-        await updateProfileInternal(PROFILE_URL, name, password, email, dispatch);
+        await updateProfileInternal(name, password, email, dispatch);
     } catch(ex){
         console.log(ex.message);
     }
 }
 
-const getProfileInternal = async (url, dispatch) => {
-    const accessToken = getCookie("accessToken");
-    
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'authorization': accessToken,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
+const getUser = async (dispatch) => {
+    const response = await getUserRequest();
 
     if (response.ok) {
         const data = await response.json();
@@ -240,7 +163,7 @@ const getProfileInternal = async (url, dispatch) => {
 
 export const getProfile = () => async (dispatch)  => {
     try {
-        await getProfileInternal(PROFILE_URL, dispatch);
+        await getUser(dispatch);
     } catch(ex){
         console.log(ex.message);
     }
