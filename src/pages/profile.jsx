@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
 
 import "./styles.css"
+import "./profile.css"
 
 const NavList = () => {
   return (
-    <section>
+    <div>
       <ul>
         <li>
           <Link to="/profile" style={{ textDecoration: 'none', color: "white" }}>
@@ -26,7 +27,7 @@ const NavList = () => {
           </Link>
         </li>
       </ul>
-    </section>
+    </div>
   );
 }
 
@@ -79,19 +80,21 @@ const ProfilePage = () => {
 
   return (
     <>
-      <NavList/>
-      <aside>
-        <form onSubmit={onSubmit}>
-          <Input type="text" placeholder="Имя" icon="EditIcon" onChange={onChangeName} value={name}/>
-          <Input type="email" placeholder="e-mail" icon="EditIcon" onChange={onChangeEmail} value={email}/>
-          <Input type="password" placeholder="Пароль" icon="EditIcon" onChange={onChangePassword} value={password}/>
-          <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
-          <Button type="primary" size="medium">Сохранить</Button>
-        </form>
-      </aside>
-      <footer align="center">
-        <p>В этом разделе вы можете изменить ваши персональные данные</p>
-      </footer>
+      <div className="mystyle">
+        <NavList/>
+        <div>
+          <form onSubmit={onSubmit}>
+            <Input type="text" placeholder="Имя" icon="EditIcon" onChange={onChangeName} value={name}/>
+            <Input type="email" placeholder="e-mail" icon="EditIcon" onChange={onChangeEmail} value={email}/>
+            <Input type="password" placeholder="Пароль" icon="EditIcon" onChange={onChangePassword} value={password}/>
+            <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
+            <Button type="primary" size="medium">Сохранить</Button>
+          </form>
+        </div>
+        <div>
+          <p className="text text_color_inactive">В этом разделе вы можете изменить ваши персональные данные</p>
+        </div> 
+      </div>
     </>
   )
 };
