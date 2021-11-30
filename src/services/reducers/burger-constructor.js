@@ -58,14 +58,25 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                 };
             }
         case MOVE_INGREDIENT: {
-            const newIngredients = [...state.chosenIngredients];
-            let tmp = newIngredients[action.whatIndex + 1];
-            newIngredients.splice(action.whatIndex + 1, 1);
-            newIngredients.splice(action.whereIndex + 1, 0, tmp);
-            return {
-                ...state,
-                chosenIngredients: newIngredients
-            };
+            if (state.hasBun){
+                const newIngredients = [...state.chosenIngredients];
+                let tmp = newIngredients[action.whatIndex + 1];
+                newIngredients.splice(action.whatIndex + 1, 1);
+                newIngredients.splice(action.whereIndex + 1, 0, tmp);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            } else {
+                const newIngredients = [...state.chosenIngredients];
+                let tmp = newIngredients[action.whatIndex];
+                newIngredients.splice(action.whatIndex, 1);
+                newIngredients.splice(action.whereIndex, 0, tmp);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            }
         }
         case REMOVE_INGREDIENT:
             const newIngredients = [...state.chosenIngredients];
