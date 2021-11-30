@@ -26,6 +26,7 @@ const calcTotalPriceReducer = (state, action) => {
 
 const TotalBar = ({ingredients}) => {
     const currentOrder = useSelector(store => store.burgerConstruct.currentOrder);
+    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
     const reduxDispatch = useDispatch();
     const name = useSelector(store => store.authReducer.currentUser.name);
     const authed = name !== "";
@@ -52,7 +53,9 @@ const TotalBar = ({ingredients}) => {
 
     const onMakeOrderClick = () => {
         if (authed){
-            reduxDispatch(makeOrder(ingredients))
+            if (hasBun){
+                reduxDispatch(makeOrder(ingredients))
+            }
         } else {
             navigate("/login");
         }

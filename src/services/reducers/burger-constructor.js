@@ -50,7 +50,12 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                     chosenIngredients: newIngredients
                 };
             } else {
-                return state;
+                const newIngredients = [...state.chosenIngredients];
+                newIngredients.splice(state.chosenIngredients.length, 0, action.id);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
             }
         case MOVE_INGREDIENT: {
             const newIngredients = [...state.chosenIngredients];
@@ -94,8 +99,7 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
         case NEW_ORDER:
             return {
                 ...state,
-                currentOrder: {
-                },
+                currentOrder: {},
                 currentOrderFailed: false,
                 currentOrderIsLoading: false
             };

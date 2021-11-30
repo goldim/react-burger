@@ -6,7 +6,7 @@ import ChosenIngredient from './chosen-ingredient'
 
 import { useDrag, useDrop } from 'react-dnd'
 import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burger-constructor'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 
 const IngredientList = ({ingredients}) => {
@@ -34,13 +34,16 @@ const IngredientList = ({ingredients}) => {
         return ingredients.length !== 0;
     }
 
-    const renderScrollablePart = () => (
-        <div className={constructorStyles.dynamicPart}>
-            { ingredients.slice(1, getListLength() - 1).map((ingr, index) => renderItem(index, ingr)) }
-        </div>
-    )
+    const renderScrollablePart = (startIndex, endIndex) => {
+        return(
+            <div className={constructorStyles.dynamicPart}>
+                { ingredients.slice(startIndex, endIndex).map((ingr, index) => renderItem(index, ingr)) }
+            </div>
+        );
+    }
 
     const dispatch = useDispatch();
+    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
 
     const onDropHandler = (item) => {
         if (item.isBun){
@@ -57,11 +60,21 @@ const IngredientList = ({ingredients}) => {
         }
     });
 
+    
+    let startIndex, endIndex;
+    if (hasBun){
+        startIndex = 1;
+        endIndex = getListLength() - 1;
+    } else {
+        startIndex = 0;
+        endIndex = getListLength();
+    }
+
     return (
         <ul className={constructorStyles.ingredientList} ref={dropTarget}>
-            { isNotEmpty() ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
-            { isNotEmpty() ? renderScrollablePart() : "" }
-            { isNotEmpty() ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
+            { isNotEmpty() && hasBun ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
+            { isNotEmpty() ? renderScrollablePart(startIndex, endIndex) : "" }
+            { isNotEmpty() && hasBun ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
         </ul>
     )
 }
