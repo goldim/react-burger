@@ -11,35 +11,17 @@ const CategoryTitle = ({title}) => (
 );
 
 const IngredientGrid = (props) => (
-    <ul className={ingredientsStyles.categoryList}>
+    <div style={{display:"grid", gridTemplateColumns: "auto auto"}} className={ingredientsStyles.categoryList}>
         { props.children }
-    </ul>
+    </div>
 );
 
 const Category = ({code, title}) => {
     const allIngredients = useSelector(store => store.ingredientsReducer.ingredients);
     const ingredientsInCategory = allIngredients.filter(ingr => ingr.type === code);
 
-    const renderItems = () => {
-        const result = [];
-        const items = ingredientsInCategory;
-
-        for (let i = 0; i < items.length; i += 2){
-            const ingr = items[i];
-            const nextIngr = items[i + 1];
-            const element = renderRow(ingr, nextIngr, i);
-            result.push(element);
-
-        }
-        return result;
-    }
-
-    const renderRow = (firstItem, secondItem, i) => (
-        <li key={i} className={ingredientsStyles.noPointList}>
-            { renderItem(firstItem) }
-            { secondItem ? renderItem(secondItem) : <p></p>}
-        </li>
-    )
+    const renderItems = () => ingredientsInCategory.map((item) => renderRow(item))
+    const renderRow = (firstItem) => (renderItem(firstItem))
 
     const renderItem = (item) => (
         <Ingredient
