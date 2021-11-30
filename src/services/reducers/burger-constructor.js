@@ -88,7 +88,9 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                     success: action.success
                 },
                 currentOrderIsLoading: false,
-                currentOrderFailed: false
+                currentOrderFailed: false,
+                chosenIngredients: [],
+                hasBun: false
             };
         case MAKE_ORDER_FAILED:
             return {
