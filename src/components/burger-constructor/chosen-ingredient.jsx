@@ -19,6 +19,12 @@ const isCenter = (type) => {
     return !["bottom", "top"].includes(type);
 }
 
+const DragIconContainer = () => (
+    <div className={styles.dragIcon}>
+        <DragIcon/>
+    </div>
+)
+
 const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
     const dispatch = useDispatch();
 
@@ -28,7 +34,7 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
 
     return (
         <div className={styles.chosenItem}>
-            { isCenter(type) && <DragIcon/> }
+            { isCenter(type) &&  <DragIconContainer/>}
             <ConstructorElement
                 type={type}
                 isLocked={isLocked}

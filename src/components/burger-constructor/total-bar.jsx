@@ -1,15 +1,17 @@
-import { useReducer, useLayoutEffect } from 'react'
+import { useReducer, useLayoutEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import DataItemPropTypes from '../../utils/data-item-format'
 
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
-import Modal from '../modal/modal'
-import OrderDetails from '../order-details/order-details'
+import Modal from '../modal'
+import OrderDetails from '../order-details'
 import styles from './burger-constructor.module.css'
 import detailsWindowStyles from '../order-details/order-details.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeOrder } from '../../services/middleware'
 import { NEW_ORDER } from '../../services/actions/burger-constructor'
+import { getProfile } from '../../services/middleware/auth'
+import { useNavigate } from 'react-router'
 
 const calcTotalPrice = (ingredients) => ingredients.reduce((acc, current) => acc + current.price, 0);
 
@@ -24,11 +26,22 @@ const calcTotalPriceReducer = (state, action) => {
 
 const TotalBar = ({ingredients}) => {
     const currentOrder = useSelector(store => store.burgerConstruct.currentOrder);
+    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
     const reduxDispatch = useDispatch();
+    const name = useSelector(store => store.authReducer.currentUser.name);
+    const authed = name !== "";
 
     const closeModal = () => {
         reduxDispatch({type: NEW_ORDER})
     }
+
+    const init = useCallback(() => {
+        reduxDispatch(getProfile());
+    }, [reduxDispatch]);
+
+    useLayoutEffect(() => {
+        init();
+    }, [init]);
 
     const [totalPrice, dispatch] = useReducer(calcTotalPriceReducer, 0);
     
@@ -36,8 +49,16 @@ const TotalBar = ({ingredients}) => {
         dispatch({type: 'CALC_TOTAL_PRICE', ingredients});
     }, [ingredients]);
 
+    const navigate = useNavigate();
+
     const onMakeOrderClick = () => {
-        reduxDispatch(makeOrder(ingredients))
+        if (authed){
+            if (hasBun){
+                reduxDispatch(makeOrder(ingredients))
+            }
+        } else {
+            navigate("/login");
+        }
     }
 
     return (

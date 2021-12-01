@@ -24,7 +24,6 @@ export const getIngredients = () => async (dispatch) => {
         await fetchIngredients(INGREDIENTS_SOURCE, dispatch)
     }
     catch (e){
-        console.log(e);
         dispatch({ type: LOAD_INGREDIENTS_FAILED });
     }
 }
@@ -51,7 +50,6 @@ const sentData = async (url, items, dispatch) => {
                 success: data.success
             });
         } else {
-            console.log(data.message);
             dispatch({
                 type: MAKE_ORDER_FAILED,
                 message: data.message
@@ -69,7 +67,6 @@ export const makeOrder = (ingredients) => async (dispatch)  => {
     try {
         await sentData(MAKING_ORDER_URL, ingredients, dispatch);
     } catch(ex){
-        console.log(ex.message);
         dispatch({
             type: MAKE_ORDER_FAILED,
             message: ex.message

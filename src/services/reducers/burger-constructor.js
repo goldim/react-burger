@@ -50,17 +50,33 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                     chosenIngredients: newIngredients
                 };
             } else {
-                return state;
+                const newIngredients = [...state.chosenIngredients];
+                newIngredients.splice(state.chosenIngredients.length, 0, action.id);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
             }
         case MOVE_INGREDIENT: {
-            const newIngredients = [...state.chosenIngredients];
-            let tmp = newIngredients[action.whatIndex + 1];
-            newIngredients.splice(action.whatIndex + 1, 1);
-            newIngredients.splice(action.whereIndex + 1, 0, tmp);
-            return {
-                ...state,
-                chosenIngredients: newIngredients
-            };
+            if (state.hasBun){
+                const newIngredients = [...state.chosenIngredients];
+                let tmp = newIngredients[action.whatIndex + 1];
+                newIngredients.splice(action.whatIndex + 1, 1);
+                newIngredients.splice(action.whereIndex + 1, 0, tmp);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            } else {
+                const newIngredients = [...state.chosenIngredients];
+                let tmp = newIngredients[action.whatIndex];
+                newIngredients.splice(action.whatIndex, 1);
+                newIngredients.splice(action.whereIndex, 0, tmp);
+                return {
+                    ...state,
+                    chosenIngredients: newIngredients
+                };
+            }
         }
         case REMOVE_INGREDIENT:
             const newIngredients = [...state.chosenIngredients];
@@ -83,7 +99,9 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
                     success: action.success
                 },
                 currentOrderIsLoading: false,
-                currentOrderFailed: false
+                currentOrderFailed: false,
+                chosenIngredients: [],
+                hasBun: false
             };
         case MAKE_ORDER_FAILED:
             return {
@@ -94,8 +112,7 @@ export const BurgerConstructorReducer = (state = initialState, action) => {
         case NEW_ORDER:
             return {
                 ...state,
-                currentOrder: {
-                },
+                currentOrder: {},
                 currentOrderFailed: false,
                 currentOrderIsLoading: false
             };

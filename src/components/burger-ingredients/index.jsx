@@ -1,8 +1,8 @@
 import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details.jsx/ingredient-details';
+import Modal from '../modal';
+import IngredientDetails from '../ingredient-details.jsx';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -46,7 +46,10 @@ const BurgerIngredients = () => {
     const current = useSelector(store => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
-    const onCloseItem = () => dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    const onCloseItem = () => {
+        window.history.replaceState(null, null, "/constructor");
+        dispatch({type: CLEAR_CURRENT_INGREDIENT})
+    }
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
     return (

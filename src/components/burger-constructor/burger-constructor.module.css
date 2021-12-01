@@ -8,6 +8,11 @@
     margin-bottom: 16px;
 }
 
+.dragIcon {
+    align-items: center;
+    display: flex;
+}
+
 li {
     list-style-type: none;
 }

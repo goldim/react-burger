@@ -1,59 +1,48 @@
 import appStyles from './app.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import MainPage from '../../pages/main';
+import RegisterPage from '../../pages/register';
+import LoginPage from '../../pages/login';
+import Page404 from '../../pages/not-found';
+import ForgotPasswordPage from '../../pages/forgot-password';
+import ProfilePage from '../../pages/profile';
 
+import { Provider } from 'react-redux';
 import { ReduxStore } from '../../services/storage'
-import { Provider, useDispatch, useSelector } from 'react-redux'
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { getIngredients } from '../../services/middleware';
-import { useEffect } from 'react';
+import ResetPasswordPage from '../../pages/reset-password';
+import ProtectedRoute from '../protected-route';
+import LogoutPage from '../../pages/logout';
+import IngredientDetailsPage from '../../pages/ingredient-details';
+import AppHeader from '../app-header';
+import ProtectedFromAuthedRoute from '../protected-from-authed';
+import { ProvideAuth } from '../../services/auth';
 
 function App() {
-  return (
-    <>
-      <div className={ appStyles.App }>
-        <AppHeader/>
-        <main>
-          <Provider store={ ReduxStore }>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerCafe/>
-            </DndProvider>
-          </Provider>
-        </main>
-      </div>
-      <div id="react-modals"/>
-    </>
-  );
-}
-
-const BurgerCafe = () => {
-  const dispatch = useDispatch();
-  const {loadingFailed, isLoading} = useSelector(
-    (store: any) => (store.ingredientsReducer));
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  if (loadingFailed){
-    return (<InformMessage>Произошла ошибка при получении данных</InformMessage>);
-  }
-  else if (isLoading){
-      return (<InformMessage>Загрузка...</InformMessage>);
-  }
-  else {
     return (
-      <>
-        <BurgerIngredients/>
-        <BurgerConstructor/>
-      </>
+        <ProvideAuth>
+        <Provider store={ ReduxStore }>
+            <div className={ appStyles.App }>
+                <Router>
+                    <AppHeader/>
+                    <main>
+                    <Routes>
+                        <Route path="/" element={<MainPage/>} />
+                        <Route path="/ingredients/:id" element={<IngredientDetailsPage/>} />
+                        <Route path="/constructor" element={<MainPage/>} />
+                        <Route path="register" element={<ProtectedFromAuthedRoute><RegisterPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="login" element={<ProtectedFromAuthedRoute><LoginPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
+                        <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+                        <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
+                        <Route path="*" element={<Page404/>} />
+                    </Routes>
+                    </main>
+                </Router>
+            </div>
+        </Provider>
+        </ProvideAuth>
     );
-  }
 }
-
-const InformMessage = (props: any) => <p className="text text_type_main-medium">{props.children}</p>
 
 export default App;
