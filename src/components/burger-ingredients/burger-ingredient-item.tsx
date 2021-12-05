@@ -6,7 +6,7 @@ import styles from './burger-ingredients.module.css'
 import { useDrag } from 'react-dnd'
 import { FC } from 'react';
 
-interface IBurgerIngredientItemProps {
+export interface IBurgerIngredientItemProps {
     id: string,
     name: string,
     price: number,

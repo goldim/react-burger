@@ -1,28 +1,32 @@
-import PropTypes from 'prop-types'
-import DataItemPropTypes from '../../utils/data-item-format'
+import { IDataItem, TDataItems } from '../../utils/data-item-format'
 
 import constructorStyles from './burger-constructor.module.css'
-import ChosenIngredient from './chosen-ingredient'
+import ChosenIngredient, { TIngredientType } from './chosen-ingredient'
 
 import { useDrag, useDrop } from 'react-dnd'
 import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRef } from 'react'
+import { FC, useRef } from 'react'
+import { IBurgerIngredientItemProps } from '../burger-ingredients/burger-ingredient-item'
 
-const IngredientList = ({ingredients}) => {
-    const renderTopItemLocked = (id, data) => {
+interface IIngredientListProps {
+    ingredients: TDataItems
+}
+
+const IngredientList: FC<IIngredientListProps> = ({ingredients}) => {
+    const renderTopItemLocked = (id: number, data: IDataItem) => {
         return renderLockedItem(id, data, 'top');
     }
 
-    const renderBottomItemLocked = (id, data) => {
+    const renderBottomItemLocked = (id: number, data: IDataItem) => {
         return renderLockedItem(id, data, 'bottom');
     }
 
-    const renderLockedItem = (id, data, type) => (
+    const renderLockedItem = (id: number, data: IDataItem, type: TIngredientType) => (
         <Bun id={id} data={data} type={type}/>
     )
 
-    const renderItem = (id, data) => {
+    const renderItem = (id: number, data: IDataItem) => {
         return (<DraggableIngredient key={id} id={id} data={data}/>)
     };
 
@@ -34,7 +38,7 @@ const IngredientList = ({ingredients}) => {
         return ingredients.length !== 0;
     }
 
-    const renderScrollablePart = (startIndex, endIndex) => {
+    const renderScrollablePart = (startIndex: number, endIndex: number) => {
         return(
             <div className={constructorStyles.dynamicPart}>
                 { ingredients.slice(startIndex, endIndex).map((ingr, index) => renderItem(index, ingr)) }
@@ -43,9 +47,9 @@ const IngredientList = ({ingredients}) => {
     }
 
     const dispatch = useDispatch();
-    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
+    const hasBun = useSelector((store: any) => store.burgerConstruct.hasBun);
 
-    const onDropHandler = (item) => {
+    const onDropHandler = (item: IBurgerIngredientItemProps) => {
         if (item.isBun){
             dispatch({id: item.id, type: ADD_BUN});
         } else {
@@ -55,7 +59,7 @@ const IngredientList = ({ingredients}) => {
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: IBurgerIngredientItemProps) {
             onDropHandler(item);
         }
     });
@@ -79,13 +83,24 @@ const IngredientList = ({ingredients}) => {
     )
 }
 
-const Bun = ({id, data, type}) => (
+interface IBunProps {
+    id: number,
+    type: TIngredientType,
+    data: Omit<IDataItem, "id">
+}
+
+const Bun: FC<IBunProps> = ({id, data, type}) => (
     <li key={id}>
         <ChosenIngredient id={id} {...data} type={type} isLocked={true}/>
     </li>
 );
 
-const DraggableIngredient = ({id, data}) => {
+interface IDraggableIngredientProps {
+    id: number,
+    data: Omit<Omit<IDataItem, "id">, "type">
+}
+
+const DraggableIngredient: FC<IDraggableIngredientProps> = ({id, data}) => {
     const ref = useRef(null);
     const dispatch = useDispatch();
 
@@ -96,7 +111,7 @@ const DraggableIngredient = ({id, data}) => {
 
     const [, drop] = useDrop({
         accept: "ingredientInBurger",
-        drop(item) {
+        drop(item: IBurgerIngredientItemProps) {
             dispatch({type: MOVE_INGREDIENT, whatIndex: item.id, whereIndex: id});
         }
     });
@@ -105,13 +120,9 @@ const DraggableIngredient = ({id, data}) => {
 
     return (
         <li key={id} ref={ref}>
-            <ChosenIngredient id={id} {...data}/>
+            <ChosenIngredient id={id} type={undefined} {...data} isLocked={false}/>
         </li>
     );
-}
-
-IngredientList.propTypes = {
-    ingredients: PropTypes.arrayOf(DataItemPropTypes.isRequired).isRequired
 }
 
 export default IngredientList;

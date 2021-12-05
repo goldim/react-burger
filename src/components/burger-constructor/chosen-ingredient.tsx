@@ -5,7 +5,7 @@ import { REMOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
 
-type TIngredientType = "bottom" | "top" | undefined;
+export type TIngredientType = "bottom" | "top" | undefined;
 
 const makeAlignmentLabel = (baseLabel: string, type: TIngredientType): string => {
     let result = "";
@@ -27,7 +27,7 @@ const DragIconContainer = () => (
     </div>
 )
 
-interface IChosenIngredientProps {
+export interface IChosenIngredientProps {
     id: number,
     name: string,
     type: TIngredientType,
