@@ -1,10 +1,18 @@
-import PropTypes from 'prop-types'
+import { FC } from 'react';
 import { useDispatch } from 'react-redux'
 import { CHANGE_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients'
 
 import BurgerIngredientItem from './burger-ingredient-item'
 
-const Ingredient = ({id, name, image, price, isBun = false}) => {
+interface IIngredientProps {
+    id: string,
+    name: string,
+    price: number,
+    image: string,
+    isBun: boolean
+}
+
+const Ingredient: FC<IIngredientProps> = ({id, name, image, price, isBun = false}) => {
     const dispatch = useDispatch();
 
     const showIngredientsDetails = () => {
@@ -24,12 +32,6 @@ const Ingredient = ({id, name, image, price, isBun = false}) => {
                 isBun={isBun}/>
         </span>
     )
-}
-
-Ingredient.propTypes = {
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired
 }
 
 export default Ingredient;
