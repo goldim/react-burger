@@ -1,4 +1,4 @@
-import { FC, forwardRef, LegacyRef, PropsWithChildren } from 'react';
+import { FC, forwardRef, PropsWithChildren } from 'react';
 import styles from './modal-overlay.module.css'
 
 interface IModalOverlayProps {
