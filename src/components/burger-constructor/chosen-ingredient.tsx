@@ -1,31 +1,42 @@
-import PropTypes from 'prop-types'
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { REMOVE_INGREDIENT } from '../../services/actions/burger-constructor'
 
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
 
-const makeAlignmentLabel = (baseLabel, type) => {
+type TIngredientType = "bottom" | "top" | undefined;
+
+const makeAlignmentLabel = (baseLabel: string, type: TIngredientType): string => {
     let result = "";
     if (type === "bottom") {
         result = "(низ)";
     } else if (type === "top") {
         result = "(верх)"
     }
-    return (<>{baseLabel}<br/>{result}</>);
+    return `${baseLabel}\n${result}`;
 }
 
-const isCenter = (type) => {
-    return !["bottom", "top"].includes(type);
+const isCenter = (type: TIngredientType): boolean => {
+    return !["bottom", "top"].includes(type === undefined ? "": type);
 }
 
 const DragIconContainer = () => (
     <div className={styles.dragIcon}>
-        <DragIcon/>
+        <DragIcon type="primary"/>
     </div>
 )
 
-const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
+interface IChosenIngredientProps {
+    id: number,
+    name: string,
+    type: TIngredientType,
+    price: number,
+    image: string,
+    isLocked: boolean
+}
+
+const ChosenIngredient: FC<IChosenIngredientProps> = ({id, name, type, price, image, isLocked}) => {
     const dispatch = useDispatch();
 
     const onRemoveItem = () =>{
@@ -45,13 +56,6 @@ const ChosenIngredient = ({id, name, type, price, image, isLocked}) => {
             />
         </div>
     )
-}
-
-ChosenIngredient.propTypes = {
-    id: PropTypes.number.isRequired,
-    type: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
 }
 
 export default ChosenIngredient;
