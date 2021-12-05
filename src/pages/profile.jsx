@@ -1,4 +1,4 @@
-import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '../utils/yandex-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';

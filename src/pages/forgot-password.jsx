@@ -1,4 +1,4 @@
-import { Button, EmailInput, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, EmailInput, Logo } from '../utils/yandex-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';

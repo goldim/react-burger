@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 
 import ModalOverlay from '../modal-overlay'
 import styles from './modal.module.css'
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CloseIcon } from '../../utils/yandex-components'
 
 const Modal = ({caption, closeHandler, show, children}) => {
     const root = document.getElementById("react-modals");
