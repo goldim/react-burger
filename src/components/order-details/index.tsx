@@ -1,13 +1,14 @@
 import styles from './order-details.module.css'
 import '../../utils/yandex-components';
 import orderSuccessImage from '../../images/ingredient.png'
+import { FC } from 'react';
 
-type IOrderDetails = {
+interface IOrderDetailsProps {
     No: number;
     success: boolean;
 };
 
-const OrderDetails = ({No = 0, success = false}: IOrderDetails) => (
+const OrderDetails: FC<IOrderDetailsProps> = ({No = 0, success = false}) => (
     <div className={styles.OrderDetails}>
         <p className={`${styles.OrderNumber} text text_type_digits-large`}>{No}</p>
         <p className="text text_type_main-medium">идентификатор заказа</p>
