@@ -1,5 +1,5 @@
 import { Button, Input } from '../utils/yandex-components';
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
@@ -34,22 +34,23 @@ const NavList = () => {
 
 const ProfilePage = () => {
   const auth = useAuth();
-  const savedName = auth.user.name;
-  const savedEmail = auth.user.email;
+  const user = auth.user;
+  const savedName = user ? user.name : "";
+  const savedEmail = user ? user.email : "";
   const reduxDispatch = useDispatch();
 
-  const [name, setName] = useState(savedName);
-  const onChangeName = e => {
+  const [name, setName] = useState<string>(savedName);
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
 
   const [password, setPassword] = useState("");
-  const onChangePassword = e => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
   const [email, setEmail] = useState(savedEmail);
-  const onChangeEmail = e => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
@@ -76,7 +77,7 @@ const ProfilePage = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     reduxDispatch(updateProfile(name, password, email));
   }
