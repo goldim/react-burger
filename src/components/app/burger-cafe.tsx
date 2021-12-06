@@ -1,18 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import BurgerConstructor from '../burger-constructor'
 import BurgerIngredients from '../burger-ingredients'
 
-import { getIngredients } from '../../services/middleware'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 const BurgerCafe = () => {
-    const dispatch = useDispatch();
     const { loadingFailed, isLoading } = useSelector((store: any) => (store.ingredientsReducer));
-
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     if (loadingFailed){
         return (<InformMessage>Произошла ошибка при получении данных</InformMessage>);

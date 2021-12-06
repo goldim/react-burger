@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router";
 import IngredientDetails from "../components/ingredient-details"
 import { CHANGE_CURRENT_INGREDIENT } from "../services/actions/burger-ingredients";
-import { getIngredients } from "../services/middleware";
 import { IDataItem } from "../utils/data-item-format";
 
 const IngredientDetailsPage = () => {
@@ -19,10 +18,6 @@ const IngredientDetailsPage = () => {
             });
         }
     }, [ingredients, dispatch, id]);
-
-    useLayoutEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     useLayoutEffect(() => {
     }, [currentIngredient, dispatch]);

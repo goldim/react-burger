@@ -7,7 +7,7 @@ import Page404 from '../../pages/not-found';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ProfilePage from '../../pages/profile';
 
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { ReduxStore } from '../../services/storage'
 import ResetPasswordPage from '../../pages/reset-password';
 import ProtectedRoute from '../protected-route';
@@ -16,11 +16,28 @@ import IngredientDetailsPage from '../../pages/ingredient-details';
 import AppHeader from '../app-header';
 import ProtectedFromAuthedRoute from '../protected-from-authed';
 import { ProvideAuth } from '../../services/auth';
+import { FC, ReactNode, useLayoutEffect } from 'react';
+import { getIngredients } from '../../services/middleware';
+
+interface ILoadIngredientsProps {
+    children: ReactNode
+}
+
+const LoadIngredients: FC<ILoadIngredientsProps> = ({children}) => {
+    const dispatch = useDispatch();
+
+    useLayoutEffect(() => {
+        dispatch(getIngredients());
+    }, [dispatch]);
+
+    return (<>{ children }</>)
+}
 
 function App() {
     return (
         <ProvideAuth>
         <Provider store={ ReduxStore }>
+        <LoadIngredients>
             <div className={ appStyles.App }>
                 <Router>
                     <AppHeader/>
@@ -40,6 +57,7 @@ function App() {
                     </main>
                 </Router>
             </div>
+        </LoadIngredients>
         </Provider>
         </ProvideAuth>
     );
