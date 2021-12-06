@@ -22,7 +22,6 @@ const getCategoryDescriptions = (ingredients: TDataItems) => {
     const dict = (dictionary as TDictionary).default;
 
     const result = categories.map(type => {
-        console.log(typeof dict[type]);
         if (dict[type]){
             return {
                 code: type,
