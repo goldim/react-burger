@@ -1,14 +1,14 @@
 import { Button, EmailInput, Logo } from '../utils/yandex-components';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/middleware/auth';
 
-import "./styles.css"
+import "./styles.css";
 
 const ForgotPasswordPage = () => {
   const reduxDispatch = useDispatch();
-  const resetSuccess = useSelector(store => store.authReducer.resetSuccess);
+  const resetSuccess = useSelector((store: any) => store.authReducer.resetSuccess);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,12 +17,12 @@ const ForgotPasswordPage = () => {
     }
   }, [resetSuccess, navigate]);
 
-  const [email, setEmail] = useState("");
-  const onChangeEmail = e => {
+  const [email, setEmail] = useState<string>("");
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     reduxDispatch(resetPassword(email))
   }
@@ -32,10 +32,10 @@ const ForgotPasswordPage = () => {
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
         <form onSubmit={onSubmit}>
-          <EmailInput placeholder="e-mail" value={email} onChange={onChangeEmail}/>
-          <center><Button type="primary" size="medium">Восстановить</Button></center>
+          <EmailInput name="email" value={email} onChange={onChangeEmail}/>
+          <p className="centered"><Button type="primary" size="medium">Восстановить</Button></p>
         </form>
-        <center><p>Вспомнили пароль? <Link to="/login">Войти</Link></p></center>
+        <p className="centered">Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
 }
