@@ -1,4 +1,4 @@
-import { getCookie } from "./cookies";
+import Cookies from 'js-cookie'
 
 const ENDPOINT_URL = 'https://norma.nomoreparties.space/api/';
 const GET_USER_URL = ENDPOINT_URL + 'auth/user';
@@ -10,7 +10,7 @@ const getCommonHeaders = () => ({
 
 const getCommonHeadersWithAuth = () => ({
     ...getCommonHeaders(),
-    'Authorization': getCookie('accessToken')
+    'Authorization': Cookies.get('accessToken')
 })
 
 const fetchPatch = async (url, data, headers) => {

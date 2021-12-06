@@ -1,6 +1,6 @@
 import { useContext, useState, createContext, ReactNode, FC } from 'react';
 import { loginRequest, getUserRequest, logoutRequest } from './api';
-import { deleteCookie, setCookie } from './cookies';
+import Cookie from 'js-cookie';
 
 const defaultAuthContextProps = {
   user: null,
@@ -73,7 +73,7 @@ export function useProvideAuth() {
   const signIn = async (email: string, password: string) => {
     try {
       const data = await loginRequest(email, password);
-      setCookie("accessToken", data.accessToken);
+      Cookie.set("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
     }
     catch (ex){
@@ -85,7 +85,7 @@ export function useProvideAuth() {
     try {
       await logoutRequest();
       
-      deleteCookie("accessToken");
+      Cookie.remove("accessToken");
       localStorage.removeItem("refreshToken");
       setUser(null);
     } catch (ex){
