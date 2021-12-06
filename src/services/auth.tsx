@@ -1,10 +1,17 @@
-import { useContext, useState, createContext } from 'react';
+import { useContext, useState, createContext, ReactNode, FC } from 'react';
 import { loginRequest, getUserRequest, logoutRequest } from './api';
 import { deleteCookie, setCookie } from './cookies';
 
-const AuthContext = createContext(undefined);
+const AuthContext = createContext<IAuthContextProps | undefined>(undefined);
 
-export function ProvideAuth({ children }) {
+interface IProvideAuthProps {
+  children: ReactNode
+}
+
+interface IAuthContextProps {
+}
+
+export const ProvideAuth: FC<IProvideAuthProps> = ({ children }) => {
   const auth = useProvideAuth();
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
@@ -14,27 +21,43 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+interface IAuthResponse {
+  name: string,
+  email: string
+}
+
+function handleError(ex: unknown): void {
+  console.log((ex as Error).message);
+}
+
+interface IUserRequestResponse {
+  user: { 
+    name: string,
+    email: string
+  }
+}
+
 export function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IAuthResponse | null>(null);
 
   const getUser = async () => {
     try {
-        const data = await getUserRequest();
+        const data: IUserRequestResponse = await getUserRequest();
         setUser({ name: data.user.name, email: data.user.email });
     }
     catch (ex){
-      console.log(ex.message);
+      handleError(ex);
     }
   };
 
-  const signIn = async (email, password) => {
+  const signIn = async (email: string, password: string) => {
     try {
       const data = await loginRequest(email, password);
       setCookie("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
     }
     catch (ex){
-      console.log(ex.message);
+      handleError(ex);
     }
   };
 
@@ -46,7 +69,7 @@ export function useProvideAuth() {
       localStorage.removeItem("refreshToken");
       setUser(null);
     } catch (ex){
-      console.log(ex.message);
+      handleError(ex);
     }
   };
 
