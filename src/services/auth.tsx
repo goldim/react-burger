@@ -2,13 +2,33 @@ import { useContext, useState, createContext, ReactNode, FC } from 'react';
 import { loginRequest, getUserRequest, logoutRequest } from './api';
 import { deleteCookie, setCookie } from './cookies';
 
-const AuthContext = createContext<IAuthContextProps | undefined>(undefined);
+const defaultAuthContextProps = {
+  user: null,
+  getUser: async () => {},
+  signIn: async (email: string, password: string) => {},
+  signOut: async () => {}
+};
+
+const AuthContext = createContext<IAuthContextProps>(defaultAuthContextProps);
 
 interface IProvideAuthProps {
   children: ReactNode
 }
 
+type TSignInFunc = (email: string, password: string) => Promise<void>;
+type TSignOutFunc = () => Promise<void>;
+type TGetUserFunc = () => Promise<void>;
+
+interface IUser {
+  name: string,
+  email: string
+}
+
 interface IAuthContextProps {
+  user: IUser | null,
+  getUser: TGetUserFunc,
+  signIn: TSignInFunc,
+  signOut: TSignOutFunc
 }
 
 export const ProvideAuth: FC<IProvideAuthProps> = ({ children }) => {
