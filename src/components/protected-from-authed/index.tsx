@@ -1,8 +1,12 @@
-import { useLayoutEffect, useState } from "react";
+import { FC, ReactNode, useLayoutEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { useAuth } from "../../services/auth";
 
-const ProtectedFromAuthedRoute = (props) => {
+interface IProtectedFromAuthedRouteProps {
+    children: ReactNode
+}
+
+const ProtectedFromAuthedRoute: FC<IProtectedFromAuthedRouteProps> = ({children}) => {
     const {getUser, user} = useAuth();
     const [userLoaded, setUserLoaded] = useState(false);
   
@@ -17,7 +21,7 @@ const ProtectedFromAuthedRoute = (props) => {
         return null;
     }
 
-    return (<>{ !user ? props.children: <Navigate to="/"/> }</>);
+    return (<>{ !user ? children: <Navigate to="/"/> }</>);
 }
 
 export default ProtectedFromAuthedRoute;
