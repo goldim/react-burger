@@ -1,5 +1,5 @@
 import { Button, EmailInput, Logo, PasswordInput } from '../utils/yandex-components';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 
@@ -9,18 +9,18 @@ const LoginPage = () => {
   const {signIn} = useAuth();
 
   const [password, setPassword] = useState("");
-  const onChangePassword = e => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
   const [email, setEmail] = useState("");
-  const onChangeEmail = e => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     signIn(email, password).then(function(){
       navigate(-1);
@@ -35,8 +35,8 @@ const LoginPage = () => {
             <p><Link to="/"><Logo/></Link></p>
             <p>Вход</p>
             <form onSubmit={onSubmit}>
-              <EmailInput placeholder="e-mail" value={email} onChange={onChangeEmail}/>
-              <PasswordInput placeholder="Пароль" value={password} onChange={onChangePassword}/>
+              <EmailInput name="email" value={email} onChange={onChangeEmail}/>
+              <PasswordInput name="password" value={password} onChange={onChangePassword}/>
               <Button type="primary" size="medium">
                 Войти
               </Button>
