@@ -1,29 +1,41 @@
-import PropTypes from 'prop-types'
-
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
+import { FC, ReactNode } from 'react';
 
-const CategoryTitle = ({title}) => (
+interface ICategoryTitleProps {
+    title: string
+}
+
+const CategoryTitle: FC<ICategoryTitleProps> = ({title}) => (
     <p id={title} className={`${ingredientsStyles.title} text text_type_main-medium`}>
         {title}
     </p>
 );
 
-const IngredientGrid = (props) => (
+interface IIngredientGridProps {
+    children: ReactNode
+}
+
+const IngredientGrid: FC<IIngredientGridProps> = ({children}) => (
     <div style={{display:"grid", gridTemplateColumns: "auto auto"}} className={ingredientsStyles.categoryList}>
-        { props.children }
+        { children }
     </div>
 );
 
-const Category = ({code, title}) => {
-    const allIngredients = useSelector(store => store.ingredientsReducer.ingredients);
-    const ingredientsInCategory = allIngredients.filter(ingr => ingr.type === code);
+interface ICategoryProps {
+    code: string,
+    title: string
+}
 
-    const renderItems = () => ingredientsInCategory.map((item) => renderRow(item))
-    const renderRow = (firstItem) => (renderItem(firstItem))
+const Category: FC<ICategoryProps> = ({code, title}) => {
+    const allIngredients = useSelector((store: any) => store.ingredientsReducer.ingredients);
+    const ingredientsInCategory = allIngredients.filter((ingr: any) => ingr.type === code);
 
-    const renderItem = (item) => (
+    const renderItems = () => ingredientsInCategory.map((item:any) => renderRow(item))
+    const renderRow = (firstItem: any) => (renderItem(firstItem))
+
+    const renderItem = (item: any) => (
         <Ingredient
             key={item._id}
             id={item._id}
@@ -42,10 +54,6 @@ const Category = ({code, title}) => {
             </IngredientGrid>
         </div>
     )
-}
-
-Category.propTypes = {
-    title: PropTypes.string.isRequired
 }
 
 export default Category;

@@ -1,26 +1,33 @@
 import { MenuIcon, ProfileIcon, BurgerIcon, Logo, Button } from '../../utils/yandex-components'
 import styles from './app-header.module.css'
-
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 
-const NavButton = ({title, icon, to}) => {
-    const Icon = icon;
+interface IIcon {
+    type: string,
+    className: string
+}
+
+interface INavButtonProps {
+    title: string;
+    icon: any;
+    to: string;
+}
+
+const NavButton: FC<INavButtonProps> = ({title, icon, to}) => {
+    const Icon: FC<IIcon> = icon;
     return (
         <Link to={to}>
-            <Button type="secondary" size="medium" className={styles.NavButton}>
+            <span className={styles.NavButton}>
+            <Button type="secondary" size="medium">
                 <Icon type="primary" className={styles.NavButtonIcon}/>
                 <div className={`${styles.NavButtonTitle} text text_type_main-default`}>
                     {title}
                 </div>
             </Button>
+            </span>
         </Link>
     )
-}
-
-NavButton.propTypes = {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.func.isRequired
 }
 
 const AppHeader = () => (

@@ -2,24 +2,30 @@ import Category from './category';
 import CategoryBar from './category-bar';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal';
-import IngredientDetails from '../ingredient-details.jsx';
+import IngredientDetails from '../ingredient-details';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import dictionary from '../../utils/dictionary.json'
+import * as dictionary from '../../utils/dictionary.json'
 import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
-import { useEffect, useRef } from 'react';
+import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
+import { IDataItem, TDataItems } from '../../utils/data-item-format';
 
-const getCategoryDescriptions = (ingredients) => {
-    const categories = [...new Set(ingredients.map(ingr => ingr.type))];
+type TDictionary = {
+    [type: string]: any
+};
+
+const getCategoryDescriptions = (ingredients: TDataItems) => {
+    const categories = Array.from(new Set(ingredients.map((ingr: IDataItem) => ingr.type)).values());
+    const dict = (dictionary as TDictionary).default;
 
     const result = categories.map(type => {
-        if (dictionary[type]){
+        if (dict[type]){
             return {
                 code: type,
-                title: dictionary[type].ru
+                title: dict[type]['ru']
             }
         }
         return {
@@ -31,7 +37,7 @@ const getCategoryDescriptions = (ingredients) => {
     return result;
 }
 
-const onIngredientsRendered = (descriptions, dispatch) => {
+const onIngredientsRendered = (descriptions: any[], dispatch: Dispatch<any>) => {
     descriptions.forEach(desc => {
         dispatch({
             type: ADD_CATEGORY_ID,
@@ -42,12 +48,12 @@ const onIngredientsRendered = (descriptions, dispatch) => {
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
-    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
-    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    const newIngredients = useSelector((store: any) => store.ingredientsReducer.ingredients);
+    const current = useSelector((store: any) => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => {
-        window.history.replaceState(null, null, "/constructor");
+        window.history.replaceState(null, "", "/constructor");
         dispatch({type: CLEAR_CURRENT_INGREDIENT})
     }
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
@@ -70,22 +76,30 @@ const BurgerIngredients = () => {
     )
 }
 
-const CategoriesContainer = (props) => {
-    const scrollableList = useRef(null);
+interface ICategoriesContainerProps {
+    children: ReactNode
+}
+
+const CategoriesContainer: FC<ICategoriesContainerProps> = ({children}) => {
+    const scrollableList = useRef<HTMLInputElement | null>(null);
     const dispatch = useDispatch();
     useEffect(() => {
-        function handleNavigation(e) {
-            dispatch({
-                type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
-                distance: scrollableList.current.getBoundingClientRect().y
-            });
+        function handleNavigation(e: Event) {
+            if (scrollableList && scrollableList.current){
+                dispatch({
+                    type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
+                    distance: scrollableList.current.getBoundingClientRect().y
+                });
+            }
         }
-        scrollableList.current.addEventListener("scroll", handleNavigation);
+        if (scrollableList && scrollableList.current){
+            scrollableList.current.addEventListener("scroll", handleNavigation);
+        }
     }, [scrollableList, dispatch]);
 
     return (
         <div className={ingredientsStyles.categoryBlock} ref={scrollableList}>
-            { props.children }
+            { children }
         </div>
     );
 }

@@ -1,13 +1,16 @@
-import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Tab } from '../../utils/yandex-components'
 import ingredientsStyles from './burger-ingredients.module.css';
 
 import { CHANGE_CURRENT_CATEGORY_BY_ID } from '../../services/actions/burger-ingredients';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
-const CategoryBar = ({titles}) => {
+interface ICategoryBarProps {
+    titles: ReadonlyArray<string>
+}
+
+const CategoryBar: FC<ICategoryBarProps> = ({titles}) => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (titles && titles[0]){
@@ -19,7 +22,7 @@ const CategoryBar = ({titles}) => {
     // eslint-disable-next-line 
     }, [dispatch]);
 
-    const renderTab = (title, id) => {
+    const renderTab = (title: string, id: number) => {
         return (<MyTab key={id} title={title}/>);
     }
 
@@ -30,21 +33,23 @@ const CategoryBar = ({titles}) => {
     );
 }
 
-const MyTab = ({title}) => {
-    const active = useSelector(store => store.ingredientsReducer.currentCategory);
+interface IMyTabProps {
+    title: string
+}
+
+const MyTab: FC<IMyTabProps> = ({title}) => {
+    const active = useSelector((store: any) => store.ingredientsReducer.currentCategory);
     const dispatch = useDispatch();
-    const moveTo = (a) => {
-        document.getElementById(a).scrollIntoView();
+    const moveTo = (titleId: string) => {
+        const doc: any = document;
+        doc.getElementById(titleId).scrollIntoView();
+        
         dispatch({
             type: CHANGE_CURRENT_CATEGORY_BY_ID,
             id: title
         });
     }
-    return (<Tab onClick={() => moveTo(title)} active={active === title}>{title}</Tab>);
-}
-
-CategoryBar.propTypes = {
-    titles: PropTypes.arrayOf(PropTypes.string).isRequired
+    return (<Tab onClick={() => moveTo(title)} active={active === title} value={title}>{title}</Tab>);
 }
 
 export default CategoryBar;

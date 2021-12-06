@@ -1,10 +1,12 @@
 import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from './actions/burger-ingredients';
 import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from './actions/burger-constructor';
+import { Dispatch } from 'react';
+import { TDataItems } from '../utils/data-item-format';
 
 const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
 
-const fetchIngredients = async (url, dispatch) => {
+const fetchIngredients = async (url: string, dispatch: Dispatch<any>) => {
     dispatch({ type: LOAD_INGREDIENTS });
     const response = await fetch(url);
 
@@ -19,7 +21,7 @@ const fetchIngredients = async (url, dispatch) => {
     }
 }
 
-export const getIngredients = () => async (dispatch) => {
+export const getIngredients = () => async (dispatch: Dispatch<any>) => {
     try {
         await fetchIngredients(INGREDIENTS_SOURCE, dispatch)
     }
@@ -28,7 +30,7 @@ export const getIngredients = () => async (dispatch) => {
     }
 }
 
-const sentData = async (url, items, dispatch) => {
+const sentData = async (url: string, items: TDataItems, dispatch: Dispatch<any>) => {
     dispatch({ type: MAKE_ORDER });
     const data = {"ingredients": items.map(item => item._id)};
 
@@ -63,13 +65,13 @@ const sentData = async (url, items, dispatch) => {
     }
 }
 
-export const makeOrder = (ingredients) => async (dispatch)  => {
+export const makeOrder = (ingredients: TDataItems) => async (dispatch: Dispatch<any>)  => {
     try {
         await sentData(MAKING_ORDER_URL, ingredients, dispatch);
     } catch(ex){
         dispatch({
             type: MAKE_ORDER_FAILED,
-            message: ex.message
+            message: (ex as Error).message
         });
     }
 }

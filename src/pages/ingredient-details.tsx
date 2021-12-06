@@ -1,14 +1,14 @@
 import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router";
-import IngredientDetails from "../components/ingredient-details.jsx"
-import { CHANGE_CURRENT_INGREDIENT } from "../services/actions/burger-ingredients.js";
-import { getIngredients } from "../services/middleware.js";
+import IngredientDetails from "../components/ingredient-details"
+import { CHANGE_CURRENT_INGREDIENT } from "../services/actions/burger-ingredients";
+import { IDataItem } from "../utils/data-item-format";
 
 const IngredientDetailsPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { ingredients, currentIngredient } = useSelector(store => store.ingredientsReducer);
+    const { ingredients, currentIngredient } = useSelector((store: any) => store.ingredientsReducer);
 
     useLayoutEffect(() => {
         if (ingredients.length){
@@ -20,19 +20,15 @@ const IngredientDetailsPage = () => {
     }, [ingredients, dispatch, id]);
 
     useLayoutEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
-
-    useLayoutEffect(() => {
     }, [currentIngredient, dispatch]);
 
-    const hasId = (id) => {
-        return ingredients.some(ingredient => ingredient._id === id);
+    const hasId = (id: string) => {
+        return ingredients.some((ingredient: IDataItem) => ingredient._id === id);
     }
 
     return (
         <>
-        { ingredients.length && !hasId(id) ? <Navigate to="/page404"/> : "" }
+        { ingredients.length && !hasId(id!) ? <Navigate to="/page404"/> : "" }
         { currentIngredient._id && ingredients.length ? <IngredientDetails/> : <p>{"Загрузка..."}</p> }
         </>
     );

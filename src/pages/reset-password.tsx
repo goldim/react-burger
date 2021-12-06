@@ -1,5 +1,5 @@
-import { Button, Input, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { Button, Input, Logo, PasswordInput } from '../utils/yandex-components';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
@@ -10,7 +10,7 @@ const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const savePasswordSuccess = useSelector(store => store.authReducer.savePasswordSuccess);
+  const savePasswordSuccess = useSelector((store: any) => store.authReducer.savePasswordSuccess);
 
   useEffect(() => {
     if (!location.state || !location.state.forgotPassed){
@@ -23,16 +23,16 @@ const ResetPasswordPage = () => {
   }, [savePasswordSuccess, navigate, location.state]);
 
   const [password, setPassword] = useState("");
-  const onChangePassword = e => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
   const [token, setToken] = useState("");
-  const onChangeToken = e => {
+  const onChangeToken = (e: ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value)
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     reduxDispatch(savePassword(password, token))
   }
@@ -42,15 +42,15 @@ const ResetPasswordPage = () => {
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
         <form onSubmit={onSubmit}>
-          <PasswordInput placeholder="Введите новый пароль" onChange={onChangePassword} value={password}/>
+          <PasswordInput name="password" onChange={onChangePassword} value={password}/>
           <Input type="text" placeholder="Введите код из письма" onChange={onChangeToken} value={token}/>
-          <center>
+          <p className="centered">
             <Button type="primary" size="medium">
               Сохранить
             </Button>
-          </center>
+          </p>
         </form>
-        <center><p>Вспомнили пароль? <Link to="/login">Войти</Link></p></center>
+        <p className="centered">Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
 }

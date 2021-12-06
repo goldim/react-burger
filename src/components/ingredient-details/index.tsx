@@ -1,29 +1,28 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { memo, useEffect } from 'react';
 
 import styles from './ingredient-details.module.css'
 import { useSelector } from 'react-redux';
 
-const SmallText = React.memo(({children}) => (
+interface ISmallTextProps {
+    children: string
+}
+
+const SmallText = memo(({children}: ISmallTextProps) => (
     <p className="text text_type_main-small text_color_inactive">{children}</p>
 ));
 
-SmallText.propTypes = {
-    children: PropTypes.string.isRequired
+interface IInactiveNumberProps {
+    children: number
 }
 
-const InactiveNumber = React.memo(({children}) => (
+const InactiveNumber = memo(({children}: IInactiveNumberProps) => (
     <p className="text text_type_digits-default text_color_inactive">{children}</p>
 ));
 
-InactiveNumber.propTypes = {
-    children: PropTypes.number.isRequired
-}
-
 const IngredientDetails = () => {
-    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
+    const current = useSelector((store: any) => store.ingredientsReducer.currentIngredient);
     useEffect(() => {
-        window.history.replaceState(null, null, "/ingredients/" + current._id);
+        window.history.replaceState(null, "", "/ingredients/" + current._id);
     }, [current._id]);
     return (
         <div className={styles.container}>
