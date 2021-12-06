@@ -1,6 +1,6 @@
 import { LOGIN, LOGOUT, REGISTER, RESET_PASSWORD, SAVE_PASSWORD, UPDATE_PROFILE, LOAD_PROFILE_FAILED } from '../actions/auth';
 import { changeUserRequest, getUserRequest, loginRequest, logoutRequest, registerRequest, resetPasswordRequest, sendRecoveryCodeRequest } from '../api';
-import { deleteCookie, setCookie } from '../cookies';
+import Cookies from 'js-cookie';
 
 const resetPasswordInternal = async (email, dispatch) => {
     await sendRecoveryCodeRequest(email);
@@ -32,7 +32,7 @@ export const registerNewUser = (name, password, email) => async (dispatch) => {
 const logoutInternal = async (dispatch) => {
     await logoutRequest();
     
-    deleteCookie("accessToken");
+    Cookies.remove("accessToken");
     localStorage.removeItem("refreshToken");
     dispatch({ type: LOGOUT });
 }
@@ -52,7 +52,7 @@ export const logout = () => async (dispatch)  => {
 const loginInternal = async (email, password, dispatch) => {
     const data = await loginRequest(email, password);
 
-    setCookie("accessToken", data.accessToken);
+    Cookies.set("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
     dispatch({ type: LOGIN, data });
 }
