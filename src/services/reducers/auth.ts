@@ -1,15 +1,32 @@
+import { TAuthActions } from '../actions/auth'
+
 import {
     LOGIN,
     LOGOUT,
     REGISTER,
-    TOKEN,
     RESET_PASSWORD,
     SAVE_PASSWORD,
     UPDATE_PROFILE,
     LOAD_PROFILE_FAILED
-} from '../actions/auth'
+} from '../constants/auth'
 
-const initialState = {
+type TCurrentUserSubState = {
+    name: string,
+    email: string,
+    password: string,
+    loaded: boolean
+}
+
+type TAuthState = {
+    currentUser: TCurrentUserSubState,
+    accessToken: string,
+    refreshToken: string,
+    resetSuccess: boolean,
+    savePasswordSuccess: boolean,
+    logoutSuccess: boolean
+}
+
+const initialState: TAuthState = {
     currentUser: {
         loaded: false,
         name: "",
@@ -23,7 +40,7 @@ const initialState = {
     logoutSuccess: false
 }
 
-export const AuthReducer = (state = initialState, action) => {
+export const AuthReducer = (state = initialState, action: TAuthActions) => {
     switch (action.type){
         case LOGIN:
             return {
@@ -42,7 +59,6 @@ export const AuthReducer = (state = initialState, action) => {
                 ...initialState,
                 logoutSuccess: true
             };
-            console.log("reducer", result2);
             return result2;
         case RESET_PASSWORD:
             return {
@@ -85,8 +101,6 @@ export const AuthReducer = (state = initialState, action) => {
                     loaded: true
                 }
             };
-        case TOKEN:
-            return state;
         default:
             return state;
     }

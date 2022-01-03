@@ -4,13 +4,29 @@ import {
     RESET_PASSWORD,
     SAVE_PASSWORD,
     REGISTER,
-    TOKEN,
     UPDATE_PROFILE,
     LOAD_PROFILE_FAILED
 } from '../constants/auth';
 
+type TUserData = {
+    name: string,
+    email: string
+}
+
+type TUserDataWithTokens = TUserData & TWithTokens;
+
+type TWithTokens = {
+    accessToken: string,
+    refreshToken: string
+}
+
+type TAuthData = TWithTokens & {
+    user: TUserData
+}
+
 export interface ILoginAction {
     readonly type: typeof LOGIN;
+    data: TAuthData
 }
 
 export interface ILogoutAction {
@@ -27,14 +43,12 @@ export interface ISavePasswordAction {
 
 export interface IRegisterAction {
     readonly type: typeof REGISTER;
-}
-
-export interface ITokenAction {
-    readonly type: typeof TOKEN;
+    data: TUserDataWithTokens
 }
 
 export interface IUpdateProfileAction {
     readonly type: typeof UPDATE_PROFILE;
+    user: TUserData
 }
 
 export interface ILoadProfileFailedAction {
@@ -47,7 +61,6 @@ export type TAuthActions =
     | IResetPasswordAction
     | ISavePasswordAction
     | IRegisterAction
-    | ITokenAction
     | IUpdateProfileAction
     | ILoadProfileFailedAction
     ;
