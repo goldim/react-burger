@@ -7,7 +7,7 @@ import {
     CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
     ADD_CATEGORY_ID,
     CHANGE_CURRENT_CATEGORY_BY_ID
-} from '../actions/burger-ingredients';
+} from '../constants/burger-ingredients';
 
 const initialState = {
     ingredients: [],

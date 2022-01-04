@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '../../utils/yandex-components'
 import ingredientsStyles from './burger-ingredients.module.css';
 
-import { CHANGE_CURRENT_CATEGORY_BY_ID } from '../../services/actions/burger-ingredients';
+import { CHANGE_CURRENT_CATEGORY_BY_ID } from '../../services/constants/burger-ingredients';
 import { FC, useEffect } from 'react';
 
 interface ICategoryBarProps {

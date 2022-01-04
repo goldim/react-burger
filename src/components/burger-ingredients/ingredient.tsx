@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux'
-import { CHANGE_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients'
+import { CHANGE_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients'
 
 import BurgerIngredientItem from './burger-ingredient-item'
 

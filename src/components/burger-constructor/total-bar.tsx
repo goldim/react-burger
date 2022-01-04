@@ -8,7 +8,7 @@ import styles from './burger-constructor.module.css'
 import detailsWindowStyles from '../order-details/order-details.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeOrder } from '../../services/middleware'
-import { NEW_ORDER } from '../../services/actions/burger-constructor'
+import { NEW_ORDER } from '../../services/constants/burger-constructor'
 import { getProfile } from '../../services/middleware/auth'
 import { useNavigate } from 'react-router'
 

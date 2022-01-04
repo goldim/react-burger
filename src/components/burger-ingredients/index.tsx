@@ -7,10 +7,10 @@ import IngredientDetails from '../ingredient-details';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as dictionary from '../../utils/dictionary.json'
-import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
+import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients';
 import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
 
-import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
+import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
 import { IDataItem, TDataItems } from '../../utils/data-item-format';
 
 type TDictionary = {

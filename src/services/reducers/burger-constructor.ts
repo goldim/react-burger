@@ -7,7 +7,22 @@ import {
     ADD_BUN,
     MOVE_INGREDIENT,
     MAKE_ORDER_SUCCESS
-} from '../actions/burger-constructor'
+} from '../constants/burger-constructor'
+
+import { TBurgerConstructorActions } from '../actions/burger-constructor'
+
+type TCurrentOrder = {
+    No?: number;
+    success?: boolean; 
+}
+
+type TBurgerConstructorState = {
+    chosenIngredients: Array<string>,
+    hasBun: boolean,
+    currentOrder: TCurrentOrder,
+    currentOrderFailed: boolean,
+    currentOrderIsLoading: boolean
+}
 
 const initialState = {
     chosenIngredients: [],
@@ -17,7 +32,7 @@ const initialState = {
     currentOrderIsLoading: false
 }
 
-export const BurgerConstructorReducer = (state = initialState, action) => {
+export const BurgerConstructorReducer = (state: TBurgerConstructorState = initialState, action: TBurgerConstructorActions) => {
     switch (action.type){
         case ADD_BUN:
             if (state.hasBun){

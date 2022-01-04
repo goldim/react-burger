@@ -4,7 +4,7 @@ import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient, { TIngredientType } from './chosen-ingredient'
 
 import { useDrag, useDrop } from 'react-dnd'
-import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burger-constructor'
+import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/constants/burger-constructor'
 import { useDispatch, useSelector } from 'react-redux'
 import { FC, useRef } from 'react'
 import { IBurgerIngredientItemProps } from '../burger-ingredients/burger-ingredient-item'

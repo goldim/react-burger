@@ -1,5 +1,5 @@
-import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from './actions/burger-ingredients';
-import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from './actions/burger-constructor';
+import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from './constants/burger-ingredients';
+import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from './constants/burger-constructor';
 import { Dispatch } from 'react';
 import { TDataItems } from '../utils/data-item-format';
 

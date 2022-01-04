@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router";
 import IngredientDetails from "../components/ingredient-details"
-import { CHANGE_CURRENT_INGREDIENT } from "../services/actions/burger-ingredients";
+import { CHANGE_CURRENT_INGREDIENT } from "../services/constants/burger-ingredients";
 import { IDataItem } from "../utils/data-item-format";
 
 const IngredientDetailsPage = () => {

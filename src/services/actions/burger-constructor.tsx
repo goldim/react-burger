@@ -11,18 +11,23 @@ import {
 
 export interface IAddBunAction {
     readonly type: typeof ADD_BUN;
+    id: string
 }
 
 export interface IAddIngredientAction {
     readonly type: typeof ADD_INGREDIENT;
+    id: string;
 }
 
 export interface IRemoveIngredientAction {
     readonly type: typeof REMOVE_INGREDIENT;
+    index: number
 }
 
 export interface IMoveIngredientAction {
     readonly type: typeof MOVE_INGREDIENT;
+    whatIndex: number;
+    whereIndex: number; 
 }
 
 export interface IMakeOrderAction {
@@ -35,13 +40,15 @@ export interface IMakeOrderFailedAction {
 
 export interface IMakeOrderSuccessAction {
     readonly type: typeof MAKE_ORDER_SUCCESS;
+    No: number;
+    success: boolean;
 }
 
 export interface INewOrderAction {
     readonly type: typeof NEW_ORDER;
 }
 
-export type TAuthActions = 
+export type TBurgerConstructorActions = 
     | IAddBunAction
     | IAddIngredientAction
     | IRemoveIngredientAction
