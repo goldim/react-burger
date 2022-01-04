@@ -19,6 +19,7 @@ import { ProvideAuth } from '../../services/auth';
 import { FC, ReactNode, useLayoutEffect } from 'react';
 import { getIngredients } from '../../services/middleware';
 import { useDispatch } from '../../services/hooks';
+import FeedPage from '../../pages/feed';
 
 interface ILoadIngredientsProps {
     children: ReactNode
@@ -51,6 +52,8 @@ function App() {
                         <Route path="login" element={<ProtectedFromAuthedRoute><LoginPage/></ProtectedFromAuthedRoute>} />
                         <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
                         <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+                        <Route path="feed" element={<FeedPage/>} />
+                        <Route path="/feed/:id" element={<IngredientDetailsPage/>} />
                         <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="*" element={<Page404/>} />
