@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { REMOVE_INGREDIENT } from '../../services/constants/burger-constructor'
+import { useDispatch } from '../../services/hooks';
 
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'

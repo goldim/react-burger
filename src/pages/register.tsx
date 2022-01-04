@@ -1,14 +1,15 @@
 import { Button, EmailInput, Input, Logo, PasswordInput } from '../utils/yandex-components';
 import { ChangeEvent, FormEvent, useEffect, useState,  } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerNewUser } from '../services/middleware/auth';
 
 import "./styles.css"
+import { TRootState } from '../services/types';
+import { useDispatch, useSelector } from '../services/hooks';
 
 const RegisterPage = () => {
   const reduxDispatch = useDispatch();
-  const savedName = useSelector((store: any) => store.authReducer.currentUser.name);
+  const savedName = useSelector((store: TRootState) => store.authReducer.currentUser.name);
   const navigate = useNavigate();
 
   useEffect(() => {

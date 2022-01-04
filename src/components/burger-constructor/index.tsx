@@ -1,19 +1,25 @@
 import TotalBar from './total-bar'
 import IngredientList from './ingredient-list'
 import constructorStyles from './burger-constructor.module.css'
-import { useSelector } from 'react-redux'
-import { IDataItem } from '../../types/data-item-format'
+import { IDataItem } from '../../services/types/data-item-format'
+import { TRootState } from '../../services/types'
+import { useSelector } from '../../services/hooks'
 
 const BurgerConstructor = () => {
     const {ids, allIngredients} = useSelector(
-        (store: any) => ({
+        (store: TRootState) => ({
             allIngredients: store.ingredientsReducer.ingredients,
             ids: store.burgerConstruct.chosenIngredients
         })
     );
 
     const ingredientsInBurger: IDataItem[] = [];
-    ids.forEach((id: string) => ingredientsInBurger.push(allIngredients.find((ingr: IDataItem) => ingr._id === id)));
+    ids.forEach((id: string) => {
+        const found = allIngredients.find((ingr: IDataItem) => ingr._id === id)
+        if (found){
+            ingredientsInBurger.push(found);
+        }
+    });
 
     return (
         <section className={constructorStyles.burgerConstructor}>

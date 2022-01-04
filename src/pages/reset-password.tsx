@@ -1,16 +1,17 @@
 import { Button, Input, Logo, PasswordInput } from '../utils/yandex-components';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
 
 import "./styles.css"
+import { useDispatch, useSelector } from '../services/hooks';
+import { TRootState } from '../services/types';
 
 const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const savePasswordSuccess = useSelector((store: any) => store.authReducer.savePasswordSuccess);
+  const savePasswordSuccess = useSelector((store: TRootState) => store.authReducer.savePasswordSuccess);
 
   useEffect(() => {
     if (!location.state || !location.state.forgotPassed){

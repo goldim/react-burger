@@ -1,14 +1,15 @@
 import { Button, EmailInput, Logo } from '../utils/yandex-components';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/middleware/auth';
 
 import "./styles.css";
+import { useDispatch, useSelector } from '../services/hooks';
+import { TRootState } from '../services/types';
 
 const ForgotPasswordPage = () => {
   const reduxDispatch = useDispatch();
-  const resetSuccess = useSelector((store: any) => store.authReducer.resetSuccess);
+  const resetSuccess = useSelector((store: TRootState) => store.authReducer.resetSuccess);
   const navigate = useNavigate();
 
   useEffect(() => {

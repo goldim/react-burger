@@ -4,14 +4,14 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal';
 import IngredientDetails from '../ingredient-details';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import * as dictionary from '../../utils/dictionary.json'
 import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients';
 import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
-import { IDataItem, TDataItems } from '../../types/data-item-format';
+import { IDataItem, TDataItems } from '../../services/types/data-item-format';
+import { TRootState } from '../../services/types';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 type TDictionary = {
     [type: string]: any
@@ -48,8 +48,8 @@ const onIngredientsRendered = (descriptions: any[], dispatch: Dispatch<any>) => 
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
-    const newIngredients = useSelector((store: any) => store.ingredientsReducer.ingredients);
-    const current = useSelector((store: any) => store.ingredientsReducer.currentIngredient);
+    const newIngredients = useSelector((store: TRootState) => store.ingredientsReducer.ingredients);
+    const current = useSelector((store: TRootState) => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => {

@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Tab } from '../../utils/yandex-components'
 import ingredientsStyles from './burger-ingredients.module.css';
 
 import { CHANGE_CURRENT_CATEGORY_BY_ID } from '../../services/constants/burger-ingredients';
 import { FC, useEffect } from 'react';
+import { TRootState } from '../../services/types';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 interface ICategoryBarProps {
     titles: ReadonlyArray<string>
@@ -38,7 +38,7 @@ interface IMyTabProps {
 }
 
 const MyTab: FC<IMyTabProps> = ({title}) => {
-    const active = useSelector((store: any) => store.ingredientsReducer.currentCategory);
+    const active = useSelector((store: TRootState) => store.ingredientsReducer.currentCategory);
     const dispatch = useDispatch();
     const moveTo = (titleId: string) => {
         const doc: any = document;

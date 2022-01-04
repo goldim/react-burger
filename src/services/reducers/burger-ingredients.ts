@@ -1,4 +1,4 @@
-import { TDataItems } from '../../types/data-item-format';
+import { IDataItem, TDataItems } from '../types/data-item-format';
 import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 import { 
     CHANGE_CURRENT_INGREDIENT,
@@ -11,9 +11,7 @@ import {
     CHANGE_CURRENT_CATEGORY_BY_ID
 } from '../constants/burger-ingredients';
 
-type TCurrentIngredient = {
-
-}
+type TCurrentIngredient = IDataItem;
 
 type TBurgerIngredientsState = {
     ingredients: TDataItems,
@@ -26,7 +24,20 @@ type TBurgerIngredientsState = {
 
 const initialState: TBurgerIngredientsState = {
     ingredients: [],
-    currentIngredient: {},
+    currentIngredient: {
+        _id: "",
+        name: "",
+        type: "",
+        proteins: 0,
+        fat: 0,
+        carbohydrates: 0,
+        calories: 0,
+        price: 0,
+        image: "",
+        image_mobile: "",
+        image_large: "",
+        __v: 0,
+    },
     currentCategory: undefined,
     categoryIds: [],
     isLoading: false,
@@ -79,7 +90,7 @@ export const BurgerIngredientsReducer = (state: TBurgerIngredientsState = initia
         case CLEAR_CURRENT_INGREDIENT:
             return {
                 ...state,
-                currentIngredient: {}
+                currentIngredient: {...initialState.currentIngredient}
             };
         case ADD_CATEGORY_ID: {
             if (state.categoryIds.includes(action.id)){

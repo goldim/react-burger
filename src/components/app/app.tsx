@@ -7,7 +7,7 @@ import Page404 from '../../pages/not-found';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ProfilePage from '../../pages/profile';
 
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { ReduxStore } from '../../services/storage'
 import ResetPasswordPage from '../../pages/reset-password';
 import ProtectedRoute from '../protected-route';
@@ -18,6 +18,7 @@ import ProtectedFromAuthedRoute from '../protected-from-authed';
 import { ProvideAuth } from '../../services/auth';
 import { FC, ReactNode, useLayoutEffect } from 'react';
 import { getIngredients } from '../../services/middleware';
+import { useDispatch } from '../../services/hooks';
 
 interface ILoadIngredientsProps {
     children: ReactNode

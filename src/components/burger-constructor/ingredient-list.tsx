@@ -1,13 +1,14 @@
-import { IDataItem, TDataItems } from '../../types/data-item-format'
+import { IDataItem, TDataItems } from '../../services/types/data-item-format'
 
 import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient, { TIngredientType } from './chosen-ingredient'
 
 import { useDrag, useDrop } from 'react-dnd'
 import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/constants/burger-constructor'
-import { useDispatch, useSelector } from 'react-redux'
 import { FC, useRef } from 'react'
 import { IBurgerIngredientItemProps } from '../burger-ingredients/burger-ingredient-item'
+import { useDispatch, useSelector } from '../../services/hooks'
+import { TRootState } from '../../services/types'
 
 interface IIngredientListProps {
     ingredients: TDataItems
@@ -47,7 +48,7 @@ const IngredientList: FC<IIngredientListProps> = ({ingredients}) => {
     }
 
     const dispatch = useDispatch();
-    const hasBun = useSelector((store: any) => store.burgerConstruct.hasBun);
+    const hasBun = useSelector((store: TRootState) => store.burgerConstruct.hasBun);
 
     const onDropHandler = (item: IBurgerIngredientItemProps) => {
         if (item.isBun){

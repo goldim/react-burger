@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react';
-
+import { useSelector } from '../../services/hooks';
+import { TRootState } from '../../services/types';
 import styles from './ingredient-details.module.css'
-import { useSelector } from 'react-redux';
 
 interface ISmallTextProps {
     children: string
@@ -20,7 +20,7 @@ const InactiveNumber = memo(({children}: IInactiveNumberProps) => (
 ));
 
 const IngredientDetails = () => {
-    const current = useSelector((store: any) => store.ingredientsReducer.currentIngredient);
+    const current = useSelector((store: TRootState) => store.ingredientsReducer.currentIngredient);
     useEffect(() => {
         window.history.replaceState(null, "", "/ingredients/" + current._id);
     }, [current._id]);

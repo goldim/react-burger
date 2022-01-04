@@ -1,4 +1,4 @@
-import { TDataItems } from "../../types/data-item-format";
+import { TDataItems } from "../types/data-item-format";
 import { 
     LOAD_INGREDIENTS,
     LOAD_INGREDIENTS_FAILED,

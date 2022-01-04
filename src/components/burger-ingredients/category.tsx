@@ -1,7 +1,9 @@
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
 import { FC, ReactNode } from 'react';
+import { TRootState } from '../../services/types';
+import { IDataItem } from '../../services/types/data-item-format';
+import { useSelector } from '../../services/hooks';
 
 interface ICategoryTitleProps {
     title: string
@@ -29,13 +31,13 @@ interface ICategoryProps {
 }
 
 const Category: FC<ICategoryProps> = ({code, title}) => {
-    const allIngredients = useSelector((store: any) => store.ingredientsReducer.ingredients);
-    const ingredientsInCategory = allIngredients.filter((ingr: any) => ingr.type === code);
+    const allIngredients = useSelector((store: TRootState) => store.ingredientsReducer.ingredients);
+    const ingredientsInCategory = allIngredients.filter((ingr: IDataItem) => ingr.type === code);
 
-    const renderItems = () => ingredientsInCategory.map((item:any) => renderRow(item))
-    const renderRow = (firstItem: any) => (renderItem(firstItem))
+    const renderItems = () => ingredientsInCategory.map((item: IDataItem) => renderRow(item))
+    const renderRow = (firstItem: IDataItem) => (renderItem(firstItem))
 
-    const renderItem = (item: any) => (
+    const renderItem = (item: IDataItem) => (
         <Ingredient
             key={item._id}
             id={item._id}

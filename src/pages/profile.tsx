@@ -1,12 +1,12 @@
 import { Button, Input } from '../utils/yandex-components';
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/middleware/auth';
 
 import "./styles.css"
 import "./profile.css"
 import { useAuth } from '../services/auth';
+import { useDispatch } from '../services/hooks';
 
 const NavList = () => {
   return (
