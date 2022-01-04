@@ -1,3 +1,4 @@
+import { TDataItems } from "../../utils/data-item-format";
 import { 
     LOAD_INGREDIENTS,
     LOAD_INGREDIENTS_FAILED,
@@ -19,10 +20,12 @@ export interface ILoadIngredientsFailedAction {
 
 export interface ILoadIngredientsSuccessAction {
     readonly type: typeof LOAD_INGREDIENTS_SUCCESS;
+    ingredients: TDataItems
 }
 
 export interface IChangeCurrentIngredientAction {
     readonly type: typeof CHANGE_CURRENT_INGREDIENT;
+    id: string;
 }
 
 export interface IClearCurrentIngredientAction {
@@ -31,17 +34,20 @@ export interface IClearCurrentIngredientAction {
 
 export interface IChangeCurrentCategoryByDistanceAction {
     readonly type: typeof CHANGE_CURRENT_CATEGORY_BY_DISTANCE;
+    distance: number;
 }
 
 export interface IChangeCurrentCategoryByIdAction {
     readonly type: typeof CHANGE_CURRENT_CATEGORY_BY_ID;
+    id: string
 }
 
 export interface IAddCategoryIdAction {
     readonly type: typeof ADD_CATEGORY_ID;
+    id: string
 }
 
-export type TAuthActions = 
+export type TBurgerIngredientsActions = 
     | ILoadIngredientsAction
     | ILoadIngredientsFailedAction
     | ILoadIngredientsSuccessAction

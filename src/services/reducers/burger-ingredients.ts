@@ -1,3 +1,5 @@
+import { TDataItems } from '../../utils/data-item-format';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 import { 
     CHANGE_CURRENT_INGREDIENT,
     LOAD_INGREDIENTS,
@@ -9,7 +11,20 @@ import {
     CHANGE_CURRENT_CATEGORY_BY_ID
 } from '../constants/burger-ingredients';
 
-const initialState = {
+type TCurrentIngredient = {
+
+}
+
+type TBurgerIngredientsState = {
+    ingredients: TDataItems,
+    currentIngredient: TCurrentIngredient,
+    currentCategory: undefined | string,
+    categoryIds: string[],
+    isLoading: boolean,
+    loadingFailed: boolean
+}
+
+const initialState: TBurgerIngredientsState = {
     ingredients: [],
     currentIngredient: {},
     currentCategory: undefined,
@@ -18,11 +33,12 @@ const initialState = {
     loadingFailed: false
 }
 
-const getCategoryByDistance = (ids, distance) => {
+const getCategoryByDistance = (ids: string[], distance: number) => {
     let min = 99999;
     let current;
-    ids.forEach(id => {
-        const d = Math.abs(distance - document.getElementById(id).getBoundingClientRect().y);
+    const doc: any = document;
+    ids.forEach((id: string) => {
+        const d = Math.abs(distance - doc.getElementById(id).getBoundingClientRect().y);
         if (d < min){
             min = d;
             current = id;
@@ -31,7 +47,7 @@ const getCategoryByDistance = (ids, distance) => {
     return current;
 }
 
-export const BurgerIngredientsReducer = (state = initialState, action) => {
+export const BurgerIngredientsReducer = (state: TBurgerIngredientsState = initialState, action: TBurgerIngredientsActions) => {
     switch (action.type){
         case LOAD_INGREDIENTS:
             return {
