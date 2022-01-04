@@ -20,6 +20,7 @@ import { FC, ReactNode, useLayoutEffect } from 'react';
 import { getIngredients } from '../../services/middleware';
 import { useDispatch } from '../../services/hooks';
 import FeedPage from '../../pages/feed';
+import OrdersPage from '../../pages/orders';
 
 interface ILoadIngredientsProps {
     children: ReactNode
@@ -54,6 +55,8 @@ function App() {
                         <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
                         <Route path="feed" element={<FeedPage/>} />
                         <Route path="/feed/:id" element={<IngredientDetailsPage/>} />
+                        <Route path="/profile/orders" element={<ProtectedRoute><OrdersPage/></ProtectedRoute>} />
+                        <Route path="/profile/orders/:id" element={<ProtectedRoute><OrdersPage/></ProtectedRoute>} />
                         <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="*" element={<Page404/>} />
