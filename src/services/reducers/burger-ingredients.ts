@@ -1,4 +1,4 @@
-import { TDataItems } from '../../utils/data-item-format';
+import { TDataItems } from '../../types/data-item-format';
 import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 import { 
     CHANGE_CURRENT_INGREDIENT,

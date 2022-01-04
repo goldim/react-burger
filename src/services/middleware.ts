@@ -1,7 +1,7 @@
 import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from './constants/burger-ingredients';
 import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from './constants/burger-constructor';
 import { Dispatch } from 'react';
-import { TDataItems } from '../utils/data-item-format';
+import { TDataItems } from '../types/data-item-format';
 
 const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";

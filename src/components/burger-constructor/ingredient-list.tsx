@@ -1,4 +1,4 @@
-import { IDataItem, TDataItems } from '../../utils/data-item-format'
+import { IDataItem, TDataItems } from '../../types/data-item-format'
 
 import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient, { TIngredientType } from './chosen-ingredient'

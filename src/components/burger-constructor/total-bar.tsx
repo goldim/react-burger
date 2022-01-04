@@ -1,5 +1,5 @@
 import { useReducer, useLayoutEffect, useCallback, FC } from 'react'
-import { TDataItems } from '../../utils/data-item-format'
+import { TDataItems } from '../../types/data-item-format'
 
 import { Button, CurrencyIcon } from '../../utils/yandex-components'
 import Modal from '../modal'

@@ -11,7 +11,7 @@ import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '.
 import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
-import { IDataItem, TDataItems } from '../../utils/data-item-format';
+import { IDataItem, TDataItems } from '../../types/data-item-format';
 
 type TDictionary = {
     [type: string]: any
