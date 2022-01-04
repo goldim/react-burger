@@ -6,18 +6,25 @@ import IngredientDetails from '../ingredient-details';
 
 import * as dictionary from '../../utils/dictionary.json'
 import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients';
-import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
+import { FC, ReactNode, useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
 import { IDataItem, TDataItems } from '../../services/types/data-item-format';
-import { TRootState } from '../../services/types';
+import { AppDispatch, TRootState } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/hooks';
 
 type TDictionary = {
     [type: string]: any
 };
 
-const getCategoryDescriptions = (ingredients: TDataItems) => {
+interface ICategoryDescription {
+    code: string,
+    title: string
+}
+
+type TCategoryDescriptions = ReadonlyArray<ICategoryDescription>;
+
+const getCategoryDescriptions = (ingredients: TDataItems): TCategoryDescriptions => {
     const categories = Array.from(new Set(ingredients.map((ingr: IDataItem) => ingr.type)).values());
     const dict = (dictionary as TDictionary).default;
 
@@ -37,7 +44,7 @@ const getCategoryDescriptions = (ingredients: TDataItems) => {
     return result;
 }
 
-const onIngredientsRendered = (descriptions: any[], dispatch: Dispatch<any>) => {
+const onIngredientsRendered = (descriptions: TCategoryDescriptions, dispatch: AppDispatch) => {
     descriptions.forEach(desc => {
         dispatch({
             type: ADD_CATEGORY_ID,
@@ -47,7 +54,7 @@ const onIngredientsRendered = (descriptions: any[], dispatch: Dispatch<any>) => 
 };
 
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as  AppDispatch;
     const newIngredients = useSelector((store: TRootState) => store.ingredientsReducer.ingredients);
     const current = useSelector((store: TRootState) => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
