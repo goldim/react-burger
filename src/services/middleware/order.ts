@@ -3,8 +3,6 @@ import { TDataItems } from '../types/data-item-format';
 import { AppDispatch } from '../types';
 
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
-const FETCH_ALL_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
-const FETCH_ORDERS_FOR_USER_URL = 'wss://norma.nomoreparties.space/orders';
 
 const sentData = async (url: string, items: TDataItems, dispatch: AppDispatch) => {
     dispatch({ type: MAKE_ORDER });
@@ -51,3 +49,6 @@ export const makeOrder = (ingredients: TDataItems) => async (dispatch: AppDispat
         });
     }
 }
+
+const FETCH_ALL_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
+const FETCH_ORDERS_FOR_USER_URL = 'wss://norma.nomoreparties.space/orders';
