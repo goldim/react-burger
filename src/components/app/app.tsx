@@ -17,10 +17,11 @@ import AppHeader from '../app-header';
 import ProtectedFromAuthedRoute from '../protected-from-authed';
 import { ProvideAuth } from '../../services/auth';
 import { FC, ReactNode, useLayoutEffect } from 'react';
-import { getIngredients } from '../../services/middleware';
+import { getIngredients } from '../../services/middleware/ingredients';
 import { useDispatch } from '../../services/hooks';
 import FeedPage from '../../pages/feed';
 import OrdersPage from '../../pages/orders';
+import OrderPage from '../../pages/order';
 
 interface ILoadIngredientsProps {
     children: ReactNode
@@ -54,9 +55,9 @@ function App() {
                         <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
                         <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
                         <Route path="feed" element={<FeedPage/>} />
-                        <Route path="/feed/:id" element={<IngredientDetailsPage/>} />
+                        <Route path="/feed/:id" element={<OrderPage/>} />
                         <Route path="/profile/orders" element={<ProtectedRoute><OrdersPage/></ProtectedRoute>} />
-                        <Route path="/profile/orders/:id" element={<ProtectedRoute><OrdersPage/></ProtectedRoute>} />
+                        <Route path="/profile/orders/:id" element={<ProtectedRoute><OrderPage/></ProtectedRoute>} />
                         <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="*" element={<Page404/>} />

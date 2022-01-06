@@ -1,34 +1,10 @@
-import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from './constants/burger-ingredients';
-import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from './constants/burger-constructor';
-import { TDataItems } from './types/data-item-format';
-import { AppDispatch } from './types';
+import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from '../constants/burger-constructor';
+import { TDataItems } from '../types/data-item-format';
+import { AppDispatch } from '../types';
 
-const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
-
-const fetchIngredients = async (url: string, dispatch: AppDispatch) => {
-    dispatch({ type: LOAD_INGREDIENTS });
-    const response = await fetch(url);
-
-    if (response.ok) {
-        const json = await response.json();
-        dispatch({
-            type: LOAD_INGREDIENTS_SUCCESS,
-            ingredients: json.data
-        });
-    } else {
-        dispatch({ type: LOAD_INGREDIENTS_FAILED });
-    }
-}
-
-export const getIngredients = () => async (dispatch: AppDispatch) => {
-    try {
-        await fetchIngredients(INGREDIENTS_SOURCE, dispatch)
-    }
-    catch (e){
-        dispatch({ type: LOAD_INGREDIENTS_FAILED });
-    }
-}
+const FETCH_ALL_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
+const FETCH_ORDERS_FOR_USER_URL = 'wss://norma.nomoreparties.space/orders';
 
 const sentData = async (url: string, items: TDataItems, dispatch: AppDispatch) => {
     dispatch({ type: MAKE_ORDER });
