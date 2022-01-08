@@ -7,16 +7,12 @@ export interface IOrderListProps {
     items: TOrders
 }
 
-const OrderList: FC<IOrderListProps> = ({items}) => {
-    return (
-        <div className={styles.ordersContainer}>
-            <div className={styles.ordersList}>
-                {
-                    items.map((item, index) => <Item key={index} {...item}/>)
-                }
-            </div>
-        </div>
-    )
-}
+const OrderList: FC<IOrderListProps> = ({items}) => (
+    <div className={`${styles.ordersContainer} ${styles.ordersList}`}>
+        {
+            items.map((item, index) => <Item key={index} {...item}/>)
+        }
+    </div>
+)
 
 export default OrderList;
