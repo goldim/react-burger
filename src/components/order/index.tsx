@@ -1,6 +1,4 @@
-import { memo, useEffect } from 'react';
-import { useSelector } from '../../services/hooks';
-import { TRootState } from '../../services/types';
+import { memo } from 'react';
 import styles from './ingredient-details.module.css'
 
 interface ISmallTextProps {
@@ -20,10 +18,6 @@ const InactiveNumber = memo(({children}: IInactiveNumberProps) => (
 ));
 
 const Order = () => {
-    // const current = useSelector((store: TRootState) => store.ingredientsReducer.currentIngredient);
-    // useEffect(() => {
-    //     window.history.replaceState(null, "", "/feed/" + current._id);
-    // }, [current._id]);
     return (
         <div className={styles.container}>
             <SmallText>#1111</SmallText>

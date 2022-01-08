@@ -14,7 +14,7 @@ const FeedPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllOrders());
-  }, []);
+  }, [dispatch]);
 
   const getNIdsByStatus = (status: STATUS, count: number) => {
     return getIdsByStatus(status).slice(0, count);

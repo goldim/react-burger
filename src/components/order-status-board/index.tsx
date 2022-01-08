@@ -1,4 +1,3 @@
-import styles from './order-list.module.css'
 import { FC } from 'react';
 
 interface IOrderStatusBoardProps {
@@ -34,7 +33,6 @@ const OrderStatusBoard: FC<IOrderStatusBoardProps> = (props) => {
         </section>
     )
 }
-
 
 interface IOrderListProps {
     children: ReadonlyArray<number>

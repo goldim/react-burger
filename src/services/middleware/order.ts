@@ -88,7 +88,9 @@ const createSocket = function(url: string, dispatch: AppDispatch){
 
     socket.onmessage = event => {
         const { data } = event;
-        onMessage(data, dispatch);
+        if (data.success){
+            onMessage(data, dispatch);
+        }
     }
 }
 

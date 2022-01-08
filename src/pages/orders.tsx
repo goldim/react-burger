@@ -12,7 +12,7 @@ const OrdersPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrdersByUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
