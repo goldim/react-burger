@@ -28,27 +28,20 @@ const LoginPage = () => {
   }
 
   return (
-    <>
-      {
-        (
-          <div>
-            <p><Link to="/"><Logo/></Link></p>
-            <p>Вход</p>
-            <form onSubmit={onSubmit}>
-              <EmailInput name="email" value={email} onChange={onChangeEmail}/>
-              <PasswordInput name="password" value={password} onChange={onChangePassword}/>
-              <Button type="primary" size="medium">
-                Войти
-              </Button>
-            </form>
-            <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
-            <p>Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link></p>
-          </div>
-          )
-      }
-      </>
-    )
-  ;
+    <div>
+      <p><Link to="/"><Logo/></Link></p>
+      <p>Вход</p>
+      <form onSubmit={onSubmit}>
+        <EmailInput name="email" value={email} onChange={onChangeEmail}/>
+        <PasswordInput name="password" value={password} onChange={onChangePassword}/>
+        <Button type="primary" size="medium">
+          Войти
+        </Button>
+      </form>
+      <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
+      <p>Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link></p>
+    </div>
+  );
 }
 
 export default LoginPage;
