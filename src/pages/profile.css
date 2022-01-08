@@ -3,3 +3,11 @@
     grid-template-columns: repeat(2, 1fr);
     width: 600px;
 }
+
+.active {
+    color: white
+}
+
+.inactive {
+    color: grey
+}
