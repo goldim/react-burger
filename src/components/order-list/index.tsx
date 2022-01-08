@@ -13,7 +13,7 @@ const OrderList: FC<IOrderListProps> = ({items}) => {
             <Title/>
             <div className={styles.ordersList}>
             {
-                items.map(item => <Item {...item}/>)
+                items.map((item, index) => <Item key={index} {...item}/>)
             }
             </div>
         </section>
