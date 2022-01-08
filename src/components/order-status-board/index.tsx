@@ -38,6 +38,6 @@ interface IOrderListProps {
     children: ReadonlyArray<number>
 }
 
-const OrderList: FC<IOrderListProps> = ({children}) => (<>{children.map(id => (<p>#{id}</p>))}</>);
+const OrderList: FC<IOrderListProps> = ({children}) => (<>{children.map((id, index) => (<p key={index}>#{id}</p>))}</>);
 
 export default OrderStatusBoard;
