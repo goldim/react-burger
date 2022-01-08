@@ -1,10 +1,23 @@
 import "./styles.css"
 import "./profile.css"
+import OrderList from "../components/order-list";
+import { useDispatch, useSelector } from "../services/hooks";
+import { useEffect } from "react";
+import { fetchOrdersByUser } from "../services/middleware/order";
+import { TRootState } from "../services/types";
 
 const OrdersPage = () => {
+  const { orders: items } = useSelector((store: TRootState) => store.order);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchOrdersByUser());
+  }, []);
+
   return (
     <>
       <div className="mystyle">
+        <OrderList items={items}/>
       </div>
     </>
   )

@@ -1,21 +1,29 @@
 import styles from './order-list.module.css'
-import Item, { IItemProps } from './item'
+import Item from './item'
 import { FC } from 'react';
+import { TOrders } from '../../services/types/order';
 
-type TItems = ReadonlyArray<IItemProps>;
 export interface IOrderListProps {
-    items: TItems
+    items: TOrders
 }
 
 const OrderList: FC<IOrderListProps> = ({items}) => {
     return (
-        <div>
-            <p>Лента заказов</p>
+        <section className={styles.ordersContainer}>
+            <Title/>
+            <div className={styles.ordersList}>
             {
                 items.map(item => <Item {...item}/>)
             }
-        </div>
+            </div>
+        </section>
     )
 }
+
+const Title = () => (
+    <p className={`${styles.title} text text_type_main-large`}>
+        Лента заказов
+    </p>
+);
 
 export default OrderList;
