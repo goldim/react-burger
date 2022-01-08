@@ -26,10 +26,18 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
             };
 
         case NEW_ORDER_CAME:
-            return {
-                ...state,
-                orders: [...state.orders, action.order]
-            };
+            if (state.orders.some(order => order.id === action.order.id)){
+                let order = state.orders.find(order => order.id === action.order.id)
+                if (order && order.status !== action.order.status){
+                    order.status = action.order.status;
+                }
+                return state;
+            } else {
+                return {
+                    ...state,
+                    orders: [...state.orders, action.order]
+                };
+            }
         case CHANGE_ORDER_STATUS:
             return {
                 ...state
