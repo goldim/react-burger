@@ -3,13 +3,12 @@ import { Navigate, useParams } from "react-router";
 import IngredientDetails from "../components/ingredient-details"
 import { CHANGE_CURRENT_INGREDIENT } from "../services/constants/burger-ingredients";
 import { useDispatch, useSelector } from "../services/hooks";
-import { TRootState } from "../services/types";
 import { IDataItem } from "../services/types/data-item-format";
 
 const IngredientDetailsPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { ingredients, currentIngredient } = useSelector((store: TRootState) => store.ingredientsReducer);
+    const { ingredients, currentIngredient } = useSelector(store => store.ingredientsReducer);
 
     useLayoutEffect(() => {
         if (ingredients.length){

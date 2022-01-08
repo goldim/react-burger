@@ -3,7 +3,6 @@ import ingredientsStyles from './burger-ingredients.module.css';
 
 import { CHANGE_CURRENT_CATEGORY_BY_ID } from '../../services/constants/burger-ingredients';
 import { FC, useEffect } from 'react';
-import { TRootState } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/hooks';
 
 interface ICategoryBarProps {
@@ -38,7 +37,7 @@ interface IMyTabProps {
 }
 
 const MyTab: FC<IMyTabProps> = ({title}) => {
-    const active = useSelector((store: TRootState) => store.ingredientsReducer.currentCategory);
+    const active = useSelector(store => store.ingredientsReducer.currentCategory);
     const dispatch = useDispatch();
     const moveTo = (titleId: string) => {
         const doc: any = document;

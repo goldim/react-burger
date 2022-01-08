@@ -2,12 +2,11 @@ import TotalBar from './total-bar'
 import IngredientList from './ingredient-list'
 import constructorStyles from './burger-constructor.module.css'
 import { IDataItem } from '../../services/types/data-item-format'
-import { TRootState } from '../../services/types'
 import { useSelector } from '../../services/hooks'
 
 const BurgerConstructor = () => {
     const {ids, allIngredients} = useSelector(
-        (store: TRootState) => ({
+        store => ({
             allIngredients: store.ingredientsReducer.ingredients,
             ids: store.burgerConstruct.chosenIngredients
         })

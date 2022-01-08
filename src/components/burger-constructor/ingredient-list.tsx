@@ -8,7 +8,6 @@ import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/constan
 import { FC, useRef } from 'react'
 import { IBurgerIngredientItemProps } from '../burger-ingredients/burger-ingredient-item'
 import { useDispatch, useSelector } from '../../services/hooks'
-import { TRootState } from '../../services/types'
 
 interface IIngredientListProps {
     ingredients: TDataItems
@@ -48,7 +47,7 @@ const IngredientList: FC<IIngredientListProps> = ({ingredients}) => {
     }
 
     const dispatch = useDispatch();
-    const hasBun = useSelector((store: TRootState) => store.burgerConstruct.hasBun);
+    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
 
     const onDropHandler = (item: IBurgerIngredientItemProps) => {
         if (item.isBun){

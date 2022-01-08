@@ -4,12 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerNewUser } from '../services/middleware/auth';
 
 import "./styles.css"
-import { TRootState } from '../services/types';
 import { useDispatch, useSelector } from '../services/hooks';
 
 const RegisterPage = () => {
   const reduxDispatch = useDispatch();
-  const savedName = useSelector((store: TRootState) => store.authReducer.currentUser.name);
+  const savedName = useSelector(store => store.authReducer.currentUser.name);
   const navigate = useNavigate();
 
   useEffect(() => {

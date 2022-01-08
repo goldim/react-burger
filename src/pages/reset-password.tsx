@@ -5,13 +5,12 @@ import { savePassword } from '../services/middleware/auth';
 
 import "./styles.css"
 import { useDispatch, useSelector } from '../services/hooks';
-import { TRootState } from '../services/types';
 
 const ResetPasswordPage = () => {
   const reduxDispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const savePasswordSuccess = useSelector((store: TRootState) => store.authReducer.savePasswordSuccess);
+  const savePasswordSuccess = useSelector(store => store.authReducer.savePasswordSuccess);
 
   useEffect(() => {
     if (!location.state || !location.state.forgotPassed){

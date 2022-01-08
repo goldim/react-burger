@@ -11,7 +11,6 @@ import { NEW_ORDER } from '../../services/constants/burger-constructor'
 import { getProfile } from '../../services/middleware/auth'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from '../../services/hooks'
-import { TRootState } from '../../services/types'
 
 const calcTotalPrice = (ingredients: TDataItems) => ingredients.reduce((acc, current) => acc + current.price, 0);
 
@@ -36,10 +35,10 @@ interface ITotalBarProps {
 }
 
 const TotalBar: FC<ITotalBarProps> = ({ingredients}) => {
-    const currentOrder = useSelector((store: TRootState) => store.burgerConstruct.currentOrder);
-    const hasBun = useSelector((store: TRootState) => store.burgerConstruct.hasBun);
+    const currentOrder = useSelector(store => store.burgerConstruct.currentOrder);
+    const hasBun = useSelector(store => store.burgerConstruct.hasBun);
     const reduxDispatch = useDispatch();
-    const name = useSelector((store: TRootState) => store.authReducer.currentUser.name);
+    const name = useSelector(store => store.authReducer.currentUser.name);
     const authed = name !== "";
 
     const closeModal = () => {
@@ -92,7 +91,7 @@ const TotalBar: FC<ITotalBarProps> = ({ingredients}) => {
 }
 
 const StatusModal = () => {
-    const {currentOrderIsLoading, currentOrderFailed} = useSelector((store: TRootState) => store.burgerConstruct);
+    const {currentOrderIsLoading, currentOrderFailed} = useSelector(store => store.burgerConstruct);
     const reduxDispatch = useDispatch();
     const closeProgressOrFailedModal = () => {
         reduxDispatch({type: NEW_ORDER})

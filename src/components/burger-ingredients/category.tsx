@@ -1,7 +1,6 @@
 import Ingredient from './ingredient'
 import ingredientsStyles from './burger-ingredients.module.css';
 import { FC, ReactNode } from 'react';
-import { TRootState } from '../../services/types';
 import { IDataItem } from '../../services/types/data-item-format';
 import { useSelector } from '../../services/hooks';
 
@@ -31,7 +30,7 @@ interface ICategoryProps {
 }
 
 const Category: FC<ICategoryProps> = ({code, title}) => {
-    const allIngredients = useSelector((store: TRootState) => store.ingredientsReducer.ingredients);
+    const allIngredients = useSelector(store => store.ingredientsReducer.ingredients);
     const ingredientsInCategory = allIngredients.filter((ingr: IDataItem) => ingr.type === code);
 
     const renderItems = () => ingredientsInCategory.map((item: IDataItem) => renderRow(item))

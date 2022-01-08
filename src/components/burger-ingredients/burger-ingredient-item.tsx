@@ -4,7 +4,6 @@ import styles from './burger-ingredients.module.css'
 import { useDrag } from 'react-dnd'
 import { FC } from 'react';
 import { useSelector } from '../../services/hooks';
-import { TRootState } from '../../services/types';
 
 export interface IBurgerIngredientItemProps {
     id: string,
@@ -15,7 +14,7 @@ export interface IBurgerIngredientItemProps {
 }
 
 const BurgerIngredientItem: FC<IBurgerIngredientItemProps> = ({id, name, image, price = 0, isBun = false}) => {
-    const ids = useSelector((store: TRootState) => store.burgerConstruct.chosenIngredients);
+    const ids = useSelector(store => store.burgerConstruct.chosenIngredients);
     const count = ids.filter((chosenId: string) => chosenId === id).length;
 
     const [, dragRef] = useDrag({

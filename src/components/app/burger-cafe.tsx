@@ -2,11 +2,10 @@ import BurgerConstructor from '../burger-constructor'
 import BurgerIngredients from '../burger-ingredients'
 
 import { FC } from 'react'
-import { TRootState } from '../../services/types'
 import { useSelector } from '../../services/hooks'
 
 const BurgerCafe = () => {
-    const { loadingFailed, isLoading } = useSelector((store: TRootState) => (store.ingredientsReducer));
+    const { loadingFailed, isLoading } = useSelector(store => (store.ingredientsReducer));
 
     if (loadingFailed){
         return (<InformMessage>Произошла ошибка при получении данных</InformMessage>);

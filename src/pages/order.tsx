@@ -3,11 +3,10 @@ import { useParams } from "react-router";
 import Order from "../components/order";
 import { useDispatch, useSelector } from "../services/hooks";
 import { fetchAllOrders } from "../services/middleware/order";
-import { TRootState } from "../services/types";
 
 const OrderPage = () => {
     const { id } = useParams();
-    const { orders: items } = useSelector((store: TRootState) => store.order);
+    const { orders: items } = useSelector(store => store.order);
     
     const dispatch = useDispatch();
     useEffect(() => {

@@ -5,11 +5,10 @@ import { resetPassword } from '../services/middleware/auth';
 
 import "./styles.css";
 import { useDispatch, useSelector } from '../services/hooks';
-import { TRootState } from '../services/types';
 
 const ForgotPasswordPage = () => {
   const reduxDispatch = useDispatch();
-  const resetSuccess = useSelector((store: TRootState) => store.authReducer.resetSuccess);
+  const resetSuccess = useSelector(store => store.authReducer.resetSuccess);
   const navigate = useNavigate();
 
   useEffect(() => {

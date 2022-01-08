@@ -10,7 +10,7 @@ import { FC, ReactNode, useEffect, useRef } from 'react';
 
 import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
 import { IDataItem, TDataItems } from '../../services/types/data-item-format';
-import { AppDispatch, TRootState } from '../../services/types';
+import { AppDispatch } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/hooks';
 
 type TDictionary = {
@@ -55,8 +55,8 @@ const onIngredientsRendered = (descriptions: TCategoryDescriptions, dispatch: Ap
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch() as  AppDispatch;
-    const newIngredients = useSelector((store: TRootState) => store.ingredientsReducer.ingredients);
-    const current = useSelector((store: TRootState) => store.ingredientsReducer.currentIngredient);
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => {
