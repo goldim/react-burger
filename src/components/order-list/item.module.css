@@ -25,3 +25,15 @@
     height: 50px;
     background-color: #141418;
 }
+
+.currency {
+    padding-left: 10px;
+}
+
+.oneLeftOneRight {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -11,3 +11,11 @@
 .inactive {
     color: grey
 }
+
+.navListContainer {
+    margin-right: 30px;
+}
+
+.navLink {
+    text-decoration: none;
+}

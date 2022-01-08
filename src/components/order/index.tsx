@@ -4,7 +4,7 @@ import { formatRelative } from 'date-fns';
 import { ru } from 'date-fns/esm/locale';
 import { TDataItems } from '../../services/types/data-item-format';
 import { useSelector } from '../../services/hooks';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '../../utils/yandex-components';
 
 import styles from './order.module.css'
 
@@ -93,7 +93,7 @@ const Order: FC<IOrder> = ({id, fullname, status, createdAt, ingredientIds}) => 
                                     <span className="text text_type_main-medium">
                                         {found.price}
                                     </span>
-                                    <span style={{paddingLeft: "10px"}}>
+                                    <span className={styles.currency}>
                                         <CurrencyIcon type="primary"/>
                                     </span>
                                 </span>
@@ -110,7 +110,7 @@ const Order: FC<IOrder> = ({id, fullname, status, createdAt, ingredientIds}) => 
                     <span className="text text_type_main-medium">
                         {price}
                     </span>
-                    <span style={{paddingLeft: "10px"}}>
+                    <span className={styles.currency}>
                         <CurrencyIcon type="primary"/>
                     </span>
                 </span>
