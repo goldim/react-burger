@@ -9,6 +9,11 @@ import "./profile.css"
 
 const OrdersPage = () => {
   const { orders: items } = useSelector((store: TRootState) => store.order);
+  const sortedOrdersById = items.slice().sort((a, b) => {
+    const aId = a.id;
+    const bId = b.id;
+    return (aId < bId ? 1: (aId > bId ? -1: 0));
+  });
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,7 +23,7 @@ const OrdersPage = () => {
   return (
     <>
       <div className="mystyle">
-        <OrderList items={items}/>
+        <OrderList items={sortedOrdersById}/>
       </div>
     </>
   )

@@ -10,6 +10,7 @@ export interface IOrder {
 export enum STATUS {
     DONE = 'done',
     CREATED = 'created',
+    CANCELLED = 'cancelled',
     PENDING = 'pending'
 };
 
