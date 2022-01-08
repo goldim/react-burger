@@ -3,6 +3,7 @@ import { TDataItems } from '../types/data-item-format';
 import { AppDispatch } from '../types';
 import { CLEAR_ORDERS, NEW_ORDER_CAME, START_FETCHING_ORDERS, UPDATE_TOTALS } from '../constants/order';
 import Cookies from 'js-cookie';
+import { IServerOrder, IServerOrderReply } from '../types/order';
 
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
 
@@ -63,8 +64,8 @@ const startFetching = async (dispatch: AppDispatch, url: string) => {
     createSocket(url, dispatch);
 }
 
-const onData = (data: any, dispatch: any) => {
-    data.orders.forEach((order: any) => {
+const onData = (data: IServerOrderReply, dispatch: AppDispatch) => {
+    data.orders.forEach((order: IServerOrder) => {
         dispatch({ type: NEW_ORDER_CAME, order: {
             id: order.number,
             fullname: order.name,
@@ -78,7 +79,7 @@ const onData = (data: any, dispatch: any) => {
 }
 
 const createSocket = function(url: string, dispatch: AppDispatch){
-    let socket = new WebSocket(`${url}`);
+    let socket = new WebSocket(url);
     
     socket.onopen = event => {};
     socket.onerror = event => {};
