@@ -3,9 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router';
 
 import "./styles.css"
-import "./profile.css"
+import profileStyles from "./profile.module.css"
 import { FC } from 'react';
-
 
 const NavList = () => {
   return (
@@ -25,20 +24,17 @@ interface IProfileLinkProps {
 }
 
 const ProfileLink: FC<IProfileLinkProps> = ({children, to}) => (
-  <NavLink to={to} className={({ isActive }) => (isActive ? 'active' : 'inactive')} style={{ textDecoration: 'none' }}>
+  <NavLink to={to} className={({ isActive }) => (isActive ? profileStyles.active : profileStyles.inactive)} style={{ textDecoration: 'none' }}>
     <p className="text text_type_main-default">{children}</p>
   </NavLink>
 )
 
-const ProfilePage = () => {
-  return (
-    <>
-      <div className="mystyle">
-        <NavList/>
-        <Outlet/>
-      </div>
-    </>
-  )
-};
+const ProfilePage = () => (
+  <div className={profileStyles.twoColumns}>
+    <NavList/>
+    <Outlet/>
+  </div>
+)
+
 
 export default ProfilePage;

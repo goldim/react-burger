@@ -6,7 +6,7 @@ import OrderStatusBoard from "../components/order-status-board";
 import { STATUS } from "../services/types/order";
 
 import "./styles.css"
-import "./profile.css"
+import profileStyles from "./profile.module.css"
 
 const FeedPage = () => {
   const { orders: items, todayTotal, total} = useSelector(store => store.order);
@@ -29,7 +29,7 @@ const FeedPage = () => {
   const pendingOrderIds = getNIdsByStatus(STATUS.PENDING, DISPLAY_COUNT);
 
   return (
-    <div className="mystyle">
+    <div className={profileStyles.twoColumns}>
       <section className="feedContainer">
         <Title/>
         <OrderList items={items}/>

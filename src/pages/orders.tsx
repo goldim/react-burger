@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { fetchOrdersByUser } from "../services/middleware/order";
 
 import "./styles.css"
-import "./profile.css"
+import profileStyles from "./profile.module.css"
 
 const OrdersPage = () => {
-  const { orders: items } = useSelector(store => store.order);
-  const sortedOrdersById = items.slice().sort((a, b) => {
+  const { orders } = useSelector(store => store.order);
+  const sortedOrdersById = orders.slice().sort((a, b) => {
     const aId = a.id;
     const bId = b.id;
     return (aId < bId ? 1: (aId > bId ? -1: 0));
@@ -19,13 +19,7 @@ const OrdersPage = () => {
     dispatch(fetchOrdersByUser());
   }, [dispatch]);
 
-  return (
-    <>
-      <div className="mystyle">
-        <OrderList items={sortedOrdersById}/>
-      </div>
-    </>
-  )
+  return (<div className={profileStyles.twoColumns}><OrderList items={sortedOrdersById}/></div>);
 };
 
 export default OrdersPage;
