@@ -4,3 +4,11 @@
     padding: 5px;
     margin: 5px;
 }
+
+.ingredientIds {
+    word-break: "normal";
+}
+
+.fullname {
+    word-break: "normal";
+}

@@ -47,3 +47,8 @@
     top: 0px;
     right: 0px;
 }
+
+.ingredientGrid {
+    display: grid;
+    grid-template-columns: auto auto
+}

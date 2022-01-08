@@ -14,9 +14,9 @@ const Item: FC<IOrder> = ({id, createdAt, fullname, price, ingredientIds}) => {
     return (
         <div className={styles.itemContainer}>
             <p>#{id} {createdAt}</p>
-            <p style={{wordBreak: "normal"}}>{fullname}</p>
-            <p style={{wordBreak: "normal"}}>{ ingredientIds.map(ingredient => ingredient + ' ') }</p>
-            <p></p>
+            <p className={styles.fullname}>{fullname}</p>
+            <p className={styles.ingredientIds}>{ ingredientIds.map(ingredient => ingredient + ' ') }</p>
+            <p>{price}</p>
         </div>
     )
 }

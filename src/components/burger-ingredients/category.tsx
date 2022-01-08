@@ -20,7 +20,7 @@ interface IIngredientGridProps {
 }
 
 const IngredientGrid: FC<IIngredientGridProps> = ({children}) => (
-    <div style={{display:"grid", gridTemplateColumns: "auto auto"}} className={ingredientsStyles.categoryList}>
+    <div className={`${ingredientsStyles.categoryList} ${ingredientsStyles.ingredientGrid}`}>
         { children }
     </div>
 );
