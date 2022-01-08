@@ -1,7 +1,7 @@
 import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from '../constants/burger-constructor';
 import { TDataItems } from '../types/data-item-format';
 import { AppDispatch } from '../types';
-import { NEW_ORDER_CAME, START_FETCHING_ORDERS } from '../constants/order';
+import { NEW_ORDER_CAME, START_FETCHING_ORDERS, UPDATE_TOTALS } from '../constants/order';
 import Cookies from 'js-cookie';
 
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
@@ -66,9 +66,8 @@ const startFetching = async (dispatch: AppDispatch, url: string) => {
 const onMessage = (data: any, dispatch: any) => {
     const parsedData = JSON.parse(data);
     const { success, ...restData } = parsedData;
-    console.log(data);
     restData.orders.forEach((order: any) => {
-        dispatch({ type: NEW_ORDER_CAME, "order": {
+        dispatch({ type: NEW_ORDER_CAME, order: {
             id: order.number,
             fullname: order.name,
             status: order.status,
@@ -76,6 +75,7 @@ const onMessage = (data: any, dispatch: any) => {
             ingredientIds: order.ingredients,
             price: 0
         }});
+        dispatch({ type: UPDATE_TOTALS, total: restData.total, todayTotal: restData.totalToday});
     });
 }
 
