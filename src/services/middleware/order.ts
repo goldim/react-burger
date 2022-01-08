@@ -1,7 +1,7 @@
 import { MAKE_ORDER, MAKE_ORDER_FAILED, MAKE_ORDER_SUCCESS } from '../constants/burger-constructor';
 import { TDataItems } from '../types/data-item-format';
 import { AppDispatch } from '../types';
-import { NEW_ORDER_CAME, START_FETCHING_ORDERS, UPDATE_TOTALS } from '../constants/order';
+import { CLEAR_ORDERS, NEW_ORDER_CAME, START_FETCHING_ORDERS, UPDATE_TOTALS } from '../constants/order';
 import Cookies from 'js-cookie';
 
 const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
@@ -63,10 +63,8 @@ const startFetching = async (dispatch: AppDispatch, url: string) => {
     createSocket(url, dispatch);
 }
 
-const onMessage = (data: any, dispatch: any) => {
-    const parsedData = JSON.parse(data);
-    const { success, ...restData } = parsedData;
-    restData.orders.forEach((order: any) => {
+const onData = (data: any, dispatch: any) => {
+    data.orders.forEach((order: any) => {
         dispatch({ type: NEW_ORDER_CAME, order: {
             id: order.number,
             fullname: order.name,
@@ -75,8 +73,8 @@ const onMessage = (data: any, dispatch: any) => {
             ingredientIds: order.ingredients,
             price: 0
         }});
-        dispatch({ type: UPDATE_TOTALS, total: restData.total, todayTotal: restData.totalToday});
     });
+    dispatch({ type: UPDATE_TOTALS, total: data.total, todayTotal: data.totalToday});
 }
 
 const createSocket = function(url: string, dispatch: AppDispatch){
@@ -84,18 +82,23 @@ const createSocket = function(url: string, dispatch: AppDispatch){
     
     socket.onopen = event => {};
     socket.onerror = event => {};
-    socket.onclose = event => {};
+    socket.onclose = event => {
+        dispatch({type: CLEAR_ORDERS});
+    };
 
     socket.onmessage = event => {
         const { data } = event;
-        if (data.success){
-            onMessage(data, dispatch);
+        const parsedData = JSON.parse(data);
+        const { success, ...restData } = parsedData;
+        if (success){
+            onData(restData, dispatch);
         }
     }
 }
 
 export const fetchAllOrders = () => async (dispatch: AppDispatch)  => {
     try {
+        dispatch({type: CLEAR_ORDERS});
         await startFetching(dispatch, FETCH_ALL_ORDERS_URL);
     } catch(ex){
     }
@@ -103,6 +106,7 @@ export const fetchAllOrders = () => async (dispatch: AppDispatch)  => {
 
 export const fetchOrdersByUser = () => async (dispatch: AppDispatch)  => {
     try {
+        dispatch({type: CLEAR_ORDERS});
         let token = Cookies.get('accessToken');
         if (token){
             token = token.replace('Bearer', '');

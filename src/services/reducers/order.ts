@@ -2,7 +2,8 @@ import { TOrderActions } from '../actions/order';
 import {
     START_FETCHING_ORDERS,
     NEW_ORDER_CAME,
-    UPDATE_TOTALS
+    UPDATE_TOTALS,
+    CLEAR_ORDERS
 } from '../constants/order';
 import { TOrders } from '../types/order';
 
@@ -45,6 +46,10 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
                 total: action.total,
                 todayTotal: action.todayTotal
             };
+
+        case CLEAR_ORDERS:
+            return {...initialState};
+
         default:
             return state;
     }

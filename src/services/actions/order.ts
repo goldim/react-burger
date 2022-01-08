@@ -1,7 +1,8 @@
 import {
     START_FETCHING_ORDERS,
     NEW_ORDER_CAME,
-    UPDATE_TOTALS
+    UPDATE_TOTALS,
+    CLEAR_ORDERS
 } from '../constants/order';
 import { IOrder } from '../types/order';
 
@@ -20,8 +21,13 @@ interface IUpdateTotalsAction {
     todayTotal: number
 };
 
+interface IClearOrdersAction {
+    readonly type: typeof CLEAR_ORDERS
+};
+
 export type TOrderActions = 
     | IStartFetchingOrdersAction
     | INewOrderCameAction
     | IUpdateTotalsAction
+    | IClearOrdersAction
     ;
