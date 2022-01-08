@@ -1,64 +1,31 @@
-import { FC } from 'react';
-import { IOrder, STATUS } from '../../services/types/order';
+import { FC, useState } from 'react';
+import { IOrder } from '../../services/types/order';
 import styles from './item.module.css'
-import { formatRelative } from 'date-fns';
-import { ru } from 'date-fns/esm/locale';
 import { useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
-const formatRelativeLocale: { [key: string]: string } = {
-    lastWeek: "'Last' eeee",
-    tomorrow: "'Tomorrow'",
-    nextWeek: "'Next' eeee",
-    yesterday: 'Вчера, HH:mm z',
-    today: 'Сегодня, HH:mm z',
-    other: 'dd.MM.yyyy'
-};
-
-const locale = {
-    ...ru,
-    formatRelative: (token:string) => formatRelativeLocale[token],
-};
-
-const localizeStatus = (status: STATUS) => {
-    switch (status){
-        case STATUS.DONE:
-            return 'Выполнен';
-        case STATUS.CREATED:
-            return 'Создан';
-        case STATUS.PENDING:
-            return 'Готовится';
-        case STATUS.CANCELLED:
-            return 'Отменен';
-        default:
-            return 'Неизвестно';
-    }
-}
-
-const getColorOfStatus = (status: STATUS) => {
-    switch (status){
-        case STATUS.PENDING:
-            return '#1C1C21';
-        case STATUS.CANCELLED:
-            return 'red';
-        default:
-            return 'white';
-    }
-}
+import Modal from '../modal';
+import { formatRelative } from 'date-fns';
+import Order, { getColorOfStatus, localizeStatus, locale, calcPrice } from '../order';
 
 const Item: FC<IOrder> = ({id, createdAt, fullname, status, ingredientIds}) => {
     const date = formatRelative(new Date(createdAt), new Date(), { locale });
     const ingredients = useSelector(store => store.ingredientsReducer.ingredients);
-    const calcPrice = () => {
-        return ingredientIds.reduce((acc, currentVal) => {
-            const found = ingredients.find(ingr => ingr._id === currentVal);
-            return found ? found.price + acc: acc;
-        }, 0);
+    
+    const price = calcPrice(ingredientIds, ingredients);
+
+    const [modal, setModal] = useState(false);
+
+    const onClick = () => {
+        setModal(true);
     }
-    const price = calcPrice();
+
+    const closeModal = () => {
+        setModal(false);
+    }
 
     return (
-        <div className={styles.itemContainer}>
+        <>
+        <div className={styles.itemContainer} onClick={onClick}>
             <p><span className="text text_type_main-medium">#{id}</span> <span style={{float:"right"}} className="text text_type_main-default text_color_inactive">{date}</span></p>
             <p className={`${styles.fullname} text text_type_main-small`}>{fullname}</p>
             <br/>
@@ -79,8 +46,11 @@ const Item: FC<IOrder> = ({id, createdAt, fullname, status, ingredientIds}) => {
                     </span>
                 </span>
             </p>
-            <p></p>
         </div>
+        <Modal show={modal} caption={`#${id}`} closeHandler={closeModal}>
+            <Order {...{id, createdAt, fullname, status, ingredientIds}}/>
+        </Modal>
+        </>
     )
 }
 

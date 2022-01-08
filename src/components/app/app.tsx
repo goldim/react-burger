@@ -54,9 +54,8 @@ function App() {
                         <Route path="register" element={<ProtectedFromAuthedRoute><RegisterPage/></ProtectedFromAuthedRoute>} />
                         <Route path="login" element={<ProtectedFromAuthedRoute><LoginPage/></ProtectedFromAuthedRoute>} />
                         <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
-                        <Route path="feed" element={<FeedPage/>}>
-                            <Route path=":id" element={<OrderPage/>} />
-                        </Route>
+                        <Route path="feed" element={<FeedPage/>}/>
+                        <Route path="/feed/:id" element={<OrderPage/>} />
                         <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}>
                             <Route path="" element={<ProtectedRoute><ProfileSettingsPage/></ProtectedRoute>}/>
                             <Route path="settings" element={<ProtectedRoute><ProfileSettingsPage/></ProtectedRoute>}/>

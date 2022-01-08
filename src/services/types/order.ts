@@ -2,10 +2,11 @@ export interface IOrder {
     id: number,
     createdAt: string,
     fullname: string,
-    price: number,
     status: STATUS,
-    ingredientIds: ReadonlyArray<string>
+    ingredientIds: TIngredientIds
 };
+
+export type TIngredientIds = ReadonlyArray<string>;
 
 export enum STATUS {
     DONE = 'done',
@@ -19,7 +20,7 @@ export interface IServerOrder {
     updatedAt: string,
     number: number,
     _id: string,
-    ingredients: ReadonlyArray<string>
+    ingredients: TIngredientIds
     status: STATUS,
     name: string
 }
