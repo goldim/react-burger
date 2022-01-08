@@ -4,8 +4,9 @@ import { AppDispatch } from '../types';
 import { CLEAR_ORDERS, NEW_ORDER_CAME, START_FETCHING_ORDERS, UPDATE_TOTALS } from '../constants/order';
 import Cookies from 'js-cookie';
 import { IServerOrder, IServerOrderReply } from '../types/order';
+import { HTTPS_BASE_URL, WS_BASE_URL } from '../constants';
 
-const MAKING_ORDER_URL = "https://norma.nomoreparties.space/api/orders";
+const MAKING_ORDER_URL = `${HTTPS_BASE_URL}/api/orders`;
 
 const sentData = async (url: string, items: TDataItems, dispatch: AppDispatch) => {
     dispatch({ type: MAKE_ORDER });
@@ -56,8 +57,8 @@ export const makeOrder = (ingredients: TDataItems) => async (dispatch: AppDispat
     }
 }
 
-const FETCH_ALL_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
-const FETCH_ORDERS_FOR_USER_URL = 'wss://norma.nomoreparties.space/orders';
+const FETCH_ALL_ORDERS_URL = `${WS_BASE_URL}/orders/all`;
+const FETCH_ORDERS_FOR_USER_URL = `${WS_BASE_URL}/orders`;
 
 const startFetching = async (dispatch: AppDispatch, url: string) => {
     dispatch({ type: START_FETCHING_ORDERS });

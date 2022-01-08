@@ -1,7 +1,8 @@
+import { HTTPS_BASE_URL } from '../constants';
 import { LOAD_INGREDIENTS, LOAD_INGREDIENTS_FAILED, LOAD_INGREDIENTS_SUCCESS } from '../constants/burger-ingredients';
 import { AppDispatch } from '../types';
 
-const INGREDIENTS_SOURCE = 'https://norma.nomoreparties.space/api/ingredients';
+const INGREDIENTS_SOURCE = `${HTTPS_BASE_URL}/api/ingredients`;
 
 const fetchIngredients = async (url: string, dispatch: AppDispatch) => {
     dispatch({ type: LOAD_INGREDIENTS });
