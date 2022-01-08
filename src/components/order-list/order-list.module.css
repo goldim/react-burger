@@ -1,13 +1,8 @@
-.title {
-    text-align: left
-}
-
 .name {
     margin-bottom: 32px;
 }
 
 .ordersContainer {
-    margin-top: 40px;
     width: 500px;
 }
 

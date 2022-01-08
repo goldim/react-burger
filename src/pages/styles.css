@@ -5,3 +5,11 @@ form .input__container {
 .centered {
     text-align: center;
 }
+
+.feedTitle {
+    text-align: left
+}
+
+.feedContainer {
+    margin-top: 40px;
+}

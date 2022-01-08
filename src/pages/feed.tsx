@@ -31,10 +31,19 @@ const FeedPage = () => {
 
   return (
     <div className="mystyle">
-      <OrderList items={items}/>
+      <section className="feedContainer">
+        <Title/>
+        <OrderList items={items}/>
+      </section>
       <OrderStatusBoard doneOrderIds={doneOrderIds} pendingOrderIds={pendingOrderIds} total={total} todayTotal={todayTotal}/>
     </div>
   )
 };
+
+const Title = () => (
+  <p className='feedTitle text text_type_main-large'>
+      Лента заказов
+  </p>
+);
 
 export default FeedPage;

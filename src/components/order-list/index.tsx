@@ -9,21 +9,14 @@ export interface IOrderListProps {
 
 const OrderList: FC<IOrderListProps> = ({items}) => {
     return (
-        <section className={styles.ordersContainer}>
-            <Title/>
+        <div className={styles.ordersContainer}>
             <div className={styles.ordersList}>
-            {
-                items.map((item, index) => <Item key={index} {...item}/>)
-            }
+                {
+                    items.map((item, index) => <Item key={index} {...item}/>)
+                }
             </div>
-        </section>
+        </div>
     )
 }
-
-const Title = () => (
-    <p className={`${styles.title} text text_type_main-large`}>
-        Лента заказов
-    </p>
-);
 
 export default OrderList;
