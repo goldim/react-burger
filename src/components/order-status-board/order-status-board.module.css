@@ -1,0 +1,13 @@
+.columns {
+    display: grid;
+    grid-template-columns: 300px auto;
+}
+
+.column {
+    margin: 10px;
+}
+
+.container {
+    margin-top: 40px;
+    margin-left: 20px;
+}

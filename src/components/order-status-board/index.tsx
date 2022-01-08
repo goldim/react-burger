@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import styles from './order-status-board.module.css'
+
 interface IOrderStatusBoardProps {
     doneOrderIds: ReadonlyArray<number>,
     pendingOrderIds: ReadonlyArray<number>,
@@ -9,35 +11,44 @@ interface IOrderStatusBoardProps {
 
 const OrderStatusBoard: FC<IOrderStatusBoardProps> = (props) => {
     return (
-        <section>
-            <div>
-                <p>Готовы:</p>
-                <OrderList>
-                    {props.doneOrderIds}
-                </OrderList>
+        <section className={styles.container}>
+            <div className={styles.columns}>
+                <div>
+                    <OrderList title="Готовы" color="#009393">
+                        {props.doneOrderIds}
+                    </OrderList>
+                </div>
+                <div>
+                    <OrderList title="В работе">
+                        {props.pendingOrderIds}
+                    </OrderList>
+                </div>
             </div>
             <div>
-                <p>В работе:</p>
-                <OrderList>
-                    {props.pendingOrderIds}
-                </OrderList>
+                <p className="text text_type_main-medium">Выполнено за все время:</p>
+                <p className="text text_type_digits-large">{props.total}</p>
             </div>
             <div>
-                <p>Выполнено за все время:</p>
-                <p>{props.total}</p>
-            </div>
-            <div>
-                <p>Выполнено за сегодня:</p>
-                <p>{props.todayTotal}</p>
+                <p className="text text_type_main-medium">Выполнено за сегодня:</p>
+                <p className="text text_type_digits-large">{props.todayTotal}</p>
             </div>
         </section>
     )
 }
 
 interface IOrderListProps {
-    children: ReadonlyArray<number>
+    title: string,
+    children: ReadonlyArray<number>,
+    color?: string
 }
 
-const OrderList: FC<IOrderListProps> = ({children}) => (<>{children.map((id, index) => (<p key={index}>#{id}</p>))}</>);
+const OrderList: FC<IOrderListProps> = ({children, title, color}) => (
+    <>
+        <p className="text text_type_main-medium">{title}:</p>
+        <div className={styles.column}>
+            {children.map((id, index) => (<p className="text text_type_digits-default" style={{color}} key={index}>{id}</p>))}
+        </div>
+    </>
+);
 
 export default OrderStatusBoard;
