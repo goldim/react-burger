@@ -2,7 +2,6 @@
 import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router';
 
-import "./styles.css"
 import profileStyles from "./profile.module.css"
 import { FC } from 'react';
 

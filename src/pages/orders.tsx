@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "../services/hooks";
 import { useEffect } from "react";
 import { fetchOrdersByUser } from "../services/middleware/order";
 
-import "./styles.css"
+import "./common.module.css"
 import profileStyles from "./profile.module.css"
 
 const OrdersPage = () => {

@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { savePassword } from '../services/middleware/auth';
 
-import "./styles.css"
+import styles from "./common.module.css"
 import { useDispatch, useSelector } from '../services/hooks';
 
 const ResetPasswordPage = () => {
@@ -44,13 +44,13 @@ const ResetPasswordPage = () => {
         <form onSubmit={onSubmit}>
           <PasswordInput name="password" onChange={onChangePassword} value={password}/>
           <Input type="text" placeholder="Введите код из письма" onChange={onChangeToken} value={token}/>
-          <p className="centered">
+          <p className={styles.centered}>
             <Button type="primary" size="medium">
               Сохранить
             </Button>
           </p>
         </form>
-        <p className="centered">Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        <p className={styles.centered}>Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
 }

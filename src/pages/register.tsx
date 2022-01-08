@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState,  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerNewUser } from '../services/middleware/auth';
 
-import "./styles.css"
+import styles from "./common.module.css"
 import { useDispatch, useSelector } from '../services/hooks';
 
 const RegisterPage = () => {
@@ -45,13 +45,13 @@ const RegisterPage = () => {
           <Input type="text" placeholder="Имя" onChange={onChangeName} value={name}/>
           <EmailInput name="email" onChange={onChangeEmail} value={email}/>
           <PasswordInput name="password" onChange={onChangePassword} value={password}/>
-          <p className="centered">
+          <p className={styles.centered}>
             <Button type="primary" size="medium">
               Зарегистрироваться
             </Button>
           </p>
         </form>
-        <p className="centered">Уже зарегистрированы? <Link to="/login">Войти</Link></p>
+        <p className={styles.centered}>Уже зарегистрированы? <Link to="/login">Войти</Link></p>
     </div>
   );
 }

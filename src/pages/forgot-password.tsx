@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/middleware/auth';
 
-import "./styles.css";
+import styles from "./common.module.css";
 import { useDispatch, useSelector } from '../services/hooks';
 
 const ForgotPasswordPage = () => {
@@ -33,9 +33,9 @@ const ForgotPasswordPage = () => {
         <p>Восстановление пароля</p>
         <form onSubmit={onSubmit}>
           <EmailInput name="email" value={email} onChange={onChangeEmail}/>
-          <p className="centered"><Button type="primary" size="medium">Восстановить</Button></p>
+          <p className={styles.centered}><Button type="primary" size="medium">Восстановить</Button></p>
         </form>
-        <p className="centered">Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        <p className={styles.centered}>Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
 }

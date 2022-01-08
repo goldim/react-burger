@@ -5,7 +5,7 @@ import { fetchAllOrders } from "../services/middleware/order";
 import OrderStatusBoard from "../components/order-status-board";
 import { STATUS } from "../services/types/order";
 
-import "./styles.css"
+import styles from "./common.module.css"
 import profileStyles from "./profile.module.css"
 
 const FeedPage = () => {
@@ -30,7 +30,7 @@ const FeedPage = () => {
 
   return (
     <div className={profileStyles.twoColumns}>
-      <section className="feedContainer">
+      <section className={styles.feedContainer}>
         <Title/>
         <OrderList items={items}/>
       </section>
@@ -40,7 +40,7 @@ const FeedPage = () => {
 };
 
 const Title = () => (
-  <p className='feedTitle text text_type_main-large'>
+  <p className={`${styles.feedTitle} text text_type_main-large`}>
       Лента заказов
   </p>
 );
