@@ -1,8 +1,7 @@
 import { TOrderActions } from '../actions/order';
 import {
     START_FETCHING_ORDERS,
-    NEW_ORDER_CAME,
-    CHANGE_ORDER_STATUS
+    NEW_ORDER_CAME
 } from '../constants/order';
 import { TOrders } from '../types/order';
 
@@ -38,11 +37,6 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
                     orders: [...state.orders, action.order]
                 };
             }
-        case CHANGE_ORDER_STATUS:
-            return {
-                ...state
-                // orders: [...state.orders, action.]
-            };
         default:
             return state;
     }
