@@ -6,6 +6,8 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { getProfile } from '../services/middleware/auth';
 import { useAuth } from '../services/auth';
 
+import styles from './common.module.css';
+
 const ProfileSettingsPage = () => {
     const auth = useAuth();
     const user = auth.user;
@@ -58,7 +60,7 @@ const ProfileSettingsPage = () => {
 
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className={styles.formContainer}>
                 <Input type="text" placeholder="Имя" icon="EditIcon" onChange={onChangeName} value={name}/>
                 <Input type="email" placeholder="e-mail" icon="EditIcon" onChange={onChangeEmail} value={email}/>
                 <Input type="password" placeholder="Пароль" icon="EditIcon" onChange={onChangePassword} value={password}/>

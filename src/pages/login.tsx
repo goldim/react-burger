@@ -3,6 +3,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 
+import styles from './common.module.css';
+
 const LoginPage = () => {
   const {signIn} = useAuth();
 
@@ -29,7 +31,7 @@ const LoginPage = () => {
     <div>
       <p><Link to="/"><Logo/></Link></p>
       <p>Вход</p>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles.formContainer}>
         <EmailInput name="email" value={email} onChange={onChangeEmail}/>
         <PasswordInput name="password" value={password} onChange={onChangePassword}/>
         <Button type="primary" size="medium">

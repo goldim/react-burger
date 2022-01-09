@@ -1,5 +1,9 @@
-form .input__container {
-    margin-bottom: 20px;
+.formContainer{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .centered {

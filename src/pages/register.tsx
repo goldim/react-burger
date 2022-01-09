@@ -38,10 +38,10 @@ const RegisterPage = () => {
   }
 
   return (
-    <div>
+    <div >
         <p><Link to="/"><Logo/></Link></p>
         <p>Регистрация</p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={styles.formContainer}>
           <Input type="text" placeholder="Имя" onChange={onChangeName} value={name}/>
           <EmailInput name="email" onChange={onChangeEmail} value={email}/>
           <PasswordInput name="password" onChange={onChangePassword} value={password}/>

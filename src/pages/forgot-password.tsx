@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
     <div>
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={styles.formContainer}>
           <EmailInput name="email" value={email} onChange={onChangeEmail}/>
           <p className={styles.centered}><Button type="primary" size="medium">Восстановить</Button></p>
         </form>

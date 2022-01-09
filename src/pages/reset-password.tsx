@@ -41,7 +41,7 @@ const ResetPasswordPage = () => {
     <div>
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={styles.formContainer}>
           <PasswordInput name="password" onChange={onChangePassword} value={password}/>
           <Input type="text" placeholder="Введите код из письма" onChange={onChangeToken} value={token}/>
           <p className={styles.centered}>
