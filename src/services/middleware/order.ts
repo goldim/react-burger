@@ -5,6 +5,7 @@ import { IServerOrder, IServerOrderReply } from '../types/order';
 import { HTTPS_BASE_URL, WS_BASE_URL } from '../constants';
 import { makeOrderFailed, makeOrderGenerator, makeOrderSuccess } from '../actions/burger-constructor';
 import { clearOrders, newOrderCame, startFetchingOrders, updateTotals } from '../actions/order';
+import { WS_CONNECTION_START } from '../constants/websocket';
 
 const MAKING_ORDER_URL = `${HTTPS_BASE_URL}/api/orders`;
 
@@ -66,22 +67,23 @@ const onData = (data: IServerOrderReply, dispatch: AppDispatch) => {
 }
 
 const createSocket = function(url: string, dispatch: AppDispatch){
-    let socket = new WebSocket(url);
+    dispatch({type: WS_CONNECTION_START, url});
+    // let socket = new WebSocket(url);
     
-    socket.onopen = event => {};
-    socket.onerror = event => {};
-    socket.onclose = event => {
-        dispatch(clearOrders());
-    };
+    // socket.onopen = event => {};
+    // socket.onerror = event => {};
+    // socket.onclose = event => {
+    //     dispatch(clearOrders());
+    // };
 
-    socket.onmessage = event => {
-        const { data } = event;
-        const parsedData = JSON.parse(data);
-        const { success, ...restData } = parsedData;
-        if (success){
-            onData(restData, dispatch);
-        }
-    }
+    // socket.onmessage = event => {
+    //     const { data } = event;
+    //     const parsedData = JSON.parse(data);
+    //     const { success, ...restData } = parsedData;
+    //     if (success){
+    //         onData(restData, dispatch);
+    //     }
+    // }
 }
 
 export const fetchAllOrders = () => async (dispatch: AppDispatch)  => {

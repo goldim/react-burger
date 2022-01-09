@@ -1,18 +1,41 @@
+import { Middleware, MiddlewareAPI } from "redux";
 import { TWebsocketActions } from "../actions/websocket";
-import { TRootState } from "../types";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE, WS_SEND_MESSAGE } from "../constants/websocket";
+import { AppDispatch, TRootState } from "../types";
 
-export const websocket = (wsUrl: string, wsActions: any) => {
-    return (store: TRootState) => {
+// type TWebsocketActions = {
+//     wsInit: WS_CONNECTION_START,
+//     wsSendMessage: WS_SEND_MESSAGE,
+//     onOpen: WS_CONNECTION_SUCCESS,
+//     onClose: WS_CONNECTION_CLOSED,
+//     onError: WS_CONNECTION_ERROR,
+//     onMessage: WS_GET_MESSAGE
+// }
+
+const wsActions = {
+    wsInit: WS_CONNECTION_START,
+    wsSendMessage: WS_SEND_MESSAGE,
+    onOpen: WS_CONNECTION_SUCCESS,
+    onClose: WS_CONNECTION_CLOSED,
+    onError: WS_CONNECTION_ERROR,
+    onMessage: WS_GET_MESSAGE
+};
+
+export const websocket = (): Middleware => {
+    return (store: MiddlewareAPI<AppDispatch, TRootState>) => {
         let socket: WebSocket | null = null;
 
-        return (next: any) => (action: TWebsocketActions) => {
-            const { dispatch, getState } = store as any;
-            const { type, payload } = action as any;
+        return next => (action: any) => {
+            const { dispatch, getState } = store;
+            const { type, payload } = action;
             const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-            const { user } = getState().user;
-            if (type === wsInit && user) {
-                socket = new WebSocket(`${wsUrl}?token=${user.token}`);
+            const accessToken = getState().authReducer.accessToken;
+            if (type === wsInit && accessToken) {
+                socket = new WebSocket(`${payload.url}?token=${accessToken}`);
+            } else if (type === wsInit) {
+                socket = new WebSocket(`${payload.url}`);
             }
+
             if (socket) {
                 socket.onopen = event => {
                     dispatch({ type: onOpen, payload: event });
@@ -35,7 +58,7 @@ export const websocket = (wsUrl: string, wsActions: any) => {
                 };
 
                 if (type === wsSendMessage) {
-                    const message = { ...payload, token: user.token };
+                    const message = { ...payload, token: accessToken };
                     socket.send(JSON.stringify(message));
                 }
             }
