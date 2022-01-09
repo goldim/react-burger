@@ -46,7 +46,7 @@ export interface IWsConnectionClosedAction {
 
 export const wsConnectionClosed = (): IWsConnectionClosedAction => {
     return {
-        type: WS_CONNECTION_CLOSED
+        type: WS_CONNECTION_CLOSED,
     };
 };
 
