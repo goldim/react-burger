@@ -4,10 +4,10 @@ import constructorStyles from './burger-constructor.module.css'
 import ChosenIngredient, { TIngredientType } from './chosen-ingredient'
 
 import { useDrag, useDrop } from 'react-dnd'
-import { ADD_BUN, ADD_INGREDIENT, MOVE_INGREDIENT } from '../../services/constants/burger-constructor'
 import { FC, useRef } from 'react'
 import { IBurgerIngredientItemProps } from '../burger-ingredients/burger-ingredient-item'
 import { useDispatch, useSelector } from '../../services/hooks'
+import { addBun, addIngredient, moveIngredient } from '../../services/actions/burger-constructor'
 
 interface IIngredientListProps {
     ingredients: TDataItems
@@ -51,9 +51,9 @@ const IngredientList: FC<IIngredientListProps> = ({ingredients}) => {
 
     const onDropHandler = (item: IBurgerIngredientItemProps) => {
         if (item.isBun){
-            dispatch({id: item.id, type: ADD_BUN});
+            dispatch(addBun(item.id));
         } else {
-            dispatch({id: item.id, type: ADD_INGREDIENT});
+            dispatch(addIngredient(item.id));
         }
     }
 
@@ -112,7 +112,7 @@ const DraggableIngredient: FC<IDraggableIngredientProps> = ({id, data}) => {
     const [, drop] = useDrop({
         accept: "ingredientInBurger",
         drop(item: IBurgerIngredientItemProps) {
-            dispatch({type: MOVE_INGREDIENT, whatIndex: item.id, whereIndex: id});
+            dispatch(moveIngredient(parseInt(item.id), id));
         }
     });
 

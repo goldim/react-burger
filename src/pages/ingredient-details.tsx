@@ -1,7 +1,7 @@
 import { useLayoutEffect } from "react";
 import { Navigate, useParams } from "react-router";
 import IngredientDetails from "../components/ingredient-details"
-import { CHANGE_CURRENT_INGREDIENT } from "../services/constants/burger-ingredients";
+import { changeCurrentIngredient } from "../services/actions/burger-ingredients";
 import { useDispatch, useSelector } from "../services/hooks";
 import { IDataItem } from "../services/types/data-item-format";
 
@@ -11,11 +11,8 @@ const IngredientDetailsPage = () => {
     const { ingredients, currentIngredient } = useSelector(store => store.ingredientsReducer);
 
     useLayoutEffect(() => {
-        if (ingredients.length){
-            dispatch({
-                id,
-                type: CHANGE_CURRENT_INGREDIENT
-            });
+        if (ingredients.length && id){
+            dispatch(changeCurrentIngredient(id));
         }
     }, [ingredients, dispatch, id]);
 

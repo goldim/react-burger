@@ -1,16 +1,16 @@
-import { LOGIN, LOGOUT, REGISTER, RESET_PASSWORD, SAVE_PASSWORD, UPDATE_PROFILE, LOAD_PROFILE_FAILED } from '../constants/auth';
 import { changeUserRequest, getUserRequest, loginRequest, logoutRequest, registerRequest, resetPasswordRequest, sendRecoveryCodeRequest } from '../api';
 import Cookies from 'js-cookie';
 import { AppDispatch } from '../types';
+import { loadProfileFailed, loginGenerator, logoutGenerator, registerGenerator, resetPasswordGenerator, savePasswordGenerator, updateProfileGenerator } from '../actions/auth';
 
 const resetPasswordInternal = async (email: string, dispatch: AppDispatch) => {
     await sendRecoveryCodeRequest(email);
-    dispatch({ type: RESET_PASSWORD });
+    dispatch(resetPasswordGenerator());
 }
 
 const resetPasswordInternal2 = async (password: string, token: string, dispatch: AppDispatch) => {
     await resetPasswordRequest(password, token);
-    dispatch({ type: SAVE_PASSWORD });
+    dispatch(savePasswordGenerator());
 }
 
 export const resetPassword = (email: string) => async (dispatch: AppDispatch)  => {
@@ -23,7 +23,7 @@ export const savePassword = (password: string, token: string) => async (dispatch
 
 const registerNewUserInternal = async (name: string, password: string, email: string, dispatch: AppDispatch) => {
     const data = await registerRequest(name, password, email);
-    dispatch({ type: REGISTER, data });
+    dispatch(registerGenerator(data));
 }
 
 export const registerNewUser = (name: string, password: string, email: string) => async (dispatch: AppDispatch) => {
@@ -35,7 +35,7 @@ const logoutInternal = async (dispatch: AppDispatch) => {
     
     Cookies.remove("accessToken");
     localStorage.removeItem("refreshToken");
-    dispatch({ type: LOGOUT });
+    dispatch(logoutGenerator());
 }
 
 const handleErrors = async (func: () => Promise<void>) => {
@@ -55,7 +55,7 @@ const loginInternal = async (email: string, password: string, dispatch: AppDispa
 
     Cookies.set("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
-    dispatch({ type: LOGIN, data });
+    dispatch(loginGenerator(data));
 }
 
 export const login = (email: string, password: string) => async (dispatch: AppDispatch)  => {
@@ -64,7 +64,7 @@ export const login = (email: string, password: string) => async (dispatch: AppDi
 
 const updateProfileInternal = async (name: string, password: string, email: string, dispatch: AppDispatch) => {
     const user = await changeUserRequest(name, password, email);
-    dispatch({ type: UPDATE_PROFILE, user });
+    dispatch(updateProfileGenerator(user));
 }
 
 export const updateProfile = (name: string, password: string, email: string) => async (dispatch: AppDispatch)  => {
@@ -77,7 +77,7 @@ export const updateProfile = (name: string, password: string, email: string) => 
 
 const getUser = async (dispatch: AppDispatch) => {
     const data = await getUserRequest();
-    dispatch({ type: UPDATE_PROFILE, ...data });
+    dispatch(updateProfileGenerator({...data}));
 }
 
 export const getProfile = () => async (dispatch: AppDispatch)  => {
@@ -85,6 +85,6 @@ export const getProfile = () => async (dispatch: AppDispatch)  => {
         await getUser(dispatch);
     } catch (ex){
         console.log("profile failed", (ex as Error).message);
-        dispatch({ type: LOAD_PROFILE_FAILED});
+        dispatch(loadProfileFailed());
     }
 }

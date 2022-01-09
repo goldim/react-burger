@@ -29,7 +29,7 @@ export interface ILoginAction {
     data: TAuthData
 }
 
-export const login = (data: TAuthData): ILoginAction => ({
+export const loginGenerator = (data: TAuthData): ILoginAction => ({
     type: LOGIN,
     data
 })
@@ -38,7 +38,7 @@ export interface ILogoutAction {
     readonly type: typeof LOGOUT;
 }
 
-export const logout = (): ILogoutAction => ({
+export const logoutGenerator = (): ILogoutAction => ({
     type: LOGOUT
 })
 
@@ -46,7 +46,7 @@ export interface IResetPasswordAction {
     readonly type: typeof RESET_PASSWORD;
 }
 
-export const resetPassword = (): IResetPasswordAction => ({
+export const resetPasswordGenerator = (): IResetPasswordAction => ({
     type: RESET_PASSWORD
 })
 
@@ -54,7 +54,7 @@ export interface ISavePasswordAction {
     readonly type: typeof SAVE_PASSWORD;
 }
 
-export const savePassword = (): ISavePasswordAction => ({
+export const savePasswordGenerator = (): ISavePasswordAction => ({
     type: SAVE_PASSWORD
 })
 
@@ -63,7 +63,7 @@ export interface IRegisterAction {
     data: TUserDataWithTokens
 }
 
-export const register = (data: TUserDataWithTokens): IRegisterAction => ({
+export const registerGenerator = (data: TUserDataWithTokens): IRegisterAction => ({
     type: REGISTER,
     data
 })
@@ -73,7 +73,7 @@ export interface IUpdateProfileAction {
     user: TUserData
 }
 
-export const updateProfile = (user: TUserData): IUpdateProfileAction => ({
+export const updateProfileGenerator = (user: TUserData): IUpdateProfileAction => ({
     type: UPDATE_PROFILE,
     user
 })

@@ -55,16 +55,18 @@ export interface IMakeOrderAction {
     readonly type: typeof MAKE_ORDER;
 }
 
-export const makeOrder = (): IMakeOrderAction => ({
+export const makeOrderGenerator = (): IMakeOrderAction => ({
     type: MAKE_ORDER
 });
 
 export interface IMakeOrderFailedAction {
-    readonly type: typeof MAKE_ORDER_FAILED;
+    readonly type: typeof MAKE_ORDER_FAILED,
+    message: string
 }
 
-export const makeOrderFailed = (): IMakeOrderFailedAction => ({
-    type: MAKE_ORDER_FAILED
+export const makeOrderFailed = (message: string): IMakeOrderFailedAction => ({
+    type: MAKE_ORDER_FAILED,
+    message
 });
 
 export interface IMakeOrderSuccessAction {

@@ -5,13 +5,12 @@ import Modal from '../modal';
 import IngredientDetails from '../ingredient-details';
 
 import * as dictionary from '../../utils/dictionary.json'
-import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients';
 import { FC, ReactNode, useEffect, useRef } from 'react';
 
-import { ADD_CATEGORY_ID } from '../../services/constants/burger-ingredients';
 import { IDataItem, TDataItems } from '../../services/types/data-item-format';
 import { AppDispatch } from '../../services/types';
 import { useDispatch, useSelector } from '../../services/hooks';
+import { addCategoryId, changeCurrentCategoryByDistance, clearCurrentIngredient } from '../../services/actions/burger-ingredients';
 
 type TDictionary = {
     [type: string]: any
@@ -46,10 +45,7 @@ const getCategoryDescriptions = (ingredients: TDataItems): TCategoryDescriptions
 
 const onIngredientsRendered = (descriptions: TCategoryDescriptions, dispatch: AppDispatch) => {
     descriptions.forEach(desc => {
-        dispatch({
-            type: ADD_CATEGORY_ID,
-            id: desc.title
-        });
+        dispatch(addCategoryId(desc.title));
     });
 };
 
@@ -61,7 +57,7 @@ const BurgerIngredients = () => {
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => {
         window.history.replaceState(null, "", "/constructor");
-        dispatch({type: CLEAR_CURRENT_INGREDIENT})
+        dispatch(clearCurrentIngredient())
     }
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
@@ -93,10 +89,7 @@ const CategoriesContainer: FC<ICategoriesContainerProps> = ({children}) => {
     useEffect(() => {
         function handleNavigation(e: Event) {
             if (scrollableList && scrollableList.current){
-                dispatch({
-                    type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
-                    distance: scrollableList.current.getBoundingClientRect().y
-                });
+                dispatch(changeCurrentCategoryByDistance(scrollableList.current.getBoundingClientRect().y));
             }
         }
         if (scrollableList && scrollableList.current){

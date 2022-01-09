@@ -10,7 +10,7 @@ interface IStartFetchingOrdersAction {
     readonly type: typeof START_FETCHING_ORDERS
 };
 
-export const startFetchingOrders = (id: string): IStartFetchingOrdersAction => ({
+export const startFetchingOrders = (): IStartFetchingOrdersAction => ({
     type: START_FETCHING_ORDERS,
 })
 

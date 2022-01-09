@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CHANGE_CURRENT_INGREDIENT } from '../../services/constants/burger-ingredients'
+import { changeCurrentIngredient } from '../../services/actions/burger-ingredients';
 import { useDispatch } from '../../services/hooks';
 
 import BurgerIngredientItem from './burger-ingredient-item'
@@ -16,10 +16,7 @@ const Ingredient: FC<IIngredientProps> = ({id, name, image, price, isBun = false
     const dispatch = useDispatch();
 
     const showIngredientsDetails = () => {
-        dispatch({
-            id,
-            type: CHANGE_CURRENT_INGREDIENT
-        });
+        dispatch(changeCurrentIngredient(id));
     }
 
     return (
