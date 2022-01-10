@@ -1,14 +1,14 @@
 import { Button, EmailInput, Logo } from '../utils/yandex-components';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/middleware/auth';
 
-import "./styles.css";
+import styles from "./common.module.css";
+import { useDispatch, useSelector } from '../services/hooks';
 
 const ForgotPasswordPage = () => {
   const reduxDispatch = useDispatch();
-  const resetSuccess = useSelector((store: any) => store.authReducer.resetSuccess);
+  const resetSuccess = useSelector(store => store.authReducer.resetSuccess);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const ForgotPasswordPage = () => {
     <div>
         <p><Link to="/"><Logo/></Link></p>
         <p>Восстановление пароля</p>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={styles.formContainer}>
           <EmailInput name="email" value={email} onChange={onChangeEmail}/>
-          <p className="centered"><Button type="primary" size="medium">Восстановить</Button></p>
+          <p className={styles.centered}><Button type="primary" size="medium">Восстановить</Button></p>
         </form>
-        <p className="centered">Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        <p className={styles.centered}>Вспомнили пароль? <Link to="/login">Войти</Link></p>
     </div>
   );
 }

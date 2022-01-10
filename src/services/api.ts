@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
+import { HTTPS_BASE_URL } from './constants';
 
-const ENDPOINT_URL = 'https://norma.nomoreparties.space/api/';
+const ENDPOINT_URL = `${HTTPS_BASE_URL}/api/`;
 const GET_USER_URL = ENDPOINT_URL + 'auth/user';
 
 type THeaders = Record<string, string>;

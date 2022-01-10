@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/auth';
 
-import "./styles.css"
+import styles from './common.module.css';
 
 const LoginPage = () => {
   const {signIn} = useAuth();
@@ -28,27 +28,20 @@ const LoginPage = () => {
   }
 
   return (
-    <>
-      {
-        (
-          <div>
-            <p><Link to="/"><Logo/></Link></p>
-            <p>Вход</p>
-            <form onSubmit={onSubmit}>
-              <EmailInput name="email" value={email} onChange={onChangeEmail}/>
-              <PasswordInput name="password" value={password} onChange={onChangePassword}/>
-              <Button type="primary" size="medium">
-                Войти
-              </Button>
-            </form>
-            <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
-            <p>Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link></p>
-          </div>
-          )
-      }
-      </>
-    )
-  ;
+    <div>
+      <p><Link to="/"><Logo/></Link></p>
+      <p>Вход</p>
+      <form onSubmit={onSubmit} className={styles.formContainer}>
+        <EmailInput name="email" value={email} onChange={onChangeEmail}/>
+        <PasswordInput name="password" value={password} onChange={onChangePassword}/>
+        <Button type="primary" size="medium">
+          Войти
+        </Button>
+      </form>
+      <p>Вы - новый пользователь? <Link to="/register">Зарегистрироваться</Link></p>
+      <p>Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link></p>
+    </div>
+  );
 }
 
 export default LoginPage;

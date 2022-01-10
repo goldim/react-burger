@@ -1,21 +1,18 @@
 import { useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router";
 import IngredientDetails from "../components/ingredient-details"
-import { CHANGE_CURRENT_INGREDIENT } from "../services/actions/burger-ingredients";
-import { IDataItem } from "../utils/data-item-format";
+import { changeCurrentIngredient } from "../services/actions/burger-ingredients";
+import { useDispatch, useSelector } from "../services/hooks";
+import { IDataItem } from "../services/types/data-item-format";
 
 const IngredientDetailsPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { ingredients, currentIngredient } = useSelector((store: any) => store.ingredientsReducer);
+    const { ingredients, currentIngredient } = useSelector(store => store.ingredientsReducer);
 
     useLayoutEffect(() => {
-        if (ingredients.length){
-            dispatch({
-                id,
-                type: CHANGE_CURRENT_INGREDIENT
-            });
+        if (ingredients.length && id){
+            dispatch(changeCurrentIngredient(id));
         }
     }, [ingredients, dispatch, id]);
 

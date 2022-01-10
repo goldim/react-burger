@@ -7,7 +7,7 @@ import Page404 from '../../pages/not-found';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ProfilePage from '../../pages/profile';
 
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { ReduxStore } from '../../services/storage'
 import ResetPasswordPage from '../../pages/reset-password';
 import ProtectedRoute from '../protected-route';
@@ -17,7 +17,12 @@ import AppHeader from '../app-header';
 import ProtectedFromAuthedRoute from '../protected-from-authed';
 import { ProvideAuth } from '../../services/auth';
 import { FC, ReactNode, useLayoutEffect } from 'react';
-import { getIngredients } from '../../services/middleware';
+import { getIngredients } from '../../services/middleware/ingredients';
+import { useDispatch } from '../../services/hooks';
+import FeedPage from '../../pages/feed';
+import OrdersPage from '../../pages/orders';
+import OrderPage from '../../pages/order';
+import ProfileSettingsPage from '../../pages/profile-settings';
 
 interface ILoadIngredientsProps {
     children: ReactNode
@@ -49,7 +54,15 @@ function App() {
                         <Route path="register" element={<ProtectedFromAuthedRoute><RegisterPage/></ProtectedFromAuthedRoute>} />
                         <Route path="login" element={<ProtectedFromAuthedRoute><LoginPage/></ProtectedFromAuthedRoute>} />
                         <Route path="logout" element={<ProtectedRoute><LogoutPage/></ProtectedRoute>} />
-                        <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+                        <Route path="feed" element={<FeedPage/>}/>
+                        <Route path="/feed/:id" element={<OrderPage/>} />
+                        <Route path="profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}>
+                            <Route path="" element={<ProtectedRoute><ProfileSettingsPage/></ProtectedRoute>}/>
+                            <Route path="settings" element={<ProtectedRoute><ProfileSettingsPage/></ProtectedRoute>}/>
+                            <Route path="orders" element={<ProtectedRoute><OrdersPage/></ProtectedRoute>}>
+                                <Route path=":id" element={<ProtectedRoute><OrderPage/></ProtectedRoute>} />
+                            </Route>
+                        </Route>
                         <Route path="forgot-password" element={<ProtectedFromAuthedRoute><ForgotPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="reset-password" element={<ProtectedFromAuthedRoute><ResetPasswordPage/></ProtectedFromAuthedRoute>} />
                         <Route path="*" element={<Page404/>} />

@@ -1,3 +1,5 @@
+import { IDataItem, TDataItems } from '../types/data-item-format';
+import { TBurgerIngredientsActions } from '../actions/burger-ingredients';
 import { 
     CHANGE_CURRENT_INGREDIENT,
     LOAD_INGREDIENTS,
@@ -7,22 +9,47 @@ import {
     CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
     ADD_CATEGORY_ID,
     CHANGE_CURRENT_CATEGORY_BY_ID
-} from '../actions/burger-ingredients';
+} from '../constants/burger-ingredients';
 
-const initialState = {
+type TCurrentIngredient = IDataItem;
+
+type TBurgerIngredientsState = {
+    ingredients: TDataItems,
+    currentIngredient: TCurrentIngredient,
+    currentCategory: undefined | string,
+    categoryIds: string[],
+    isLoading: boolean,
+    loadingFailed: boolean
+}
+
+const initialState: TBurgerIngredientsState = {
     ingredients: [],
-    currentIngredient: {},
+    currentIngredient: {
+        _id: "",
+        name: "",
+        type: "",
+        proteins: 0,
+        fat: 0,
+        carbohydrates: 0,
+        calories: 0,
+        price: 0,
+        image: "",
+        image_mobile: "",
+        image_large: "",
+        __v: 0,
+    },
     currentCategory: undefined,
     categoryIds: [],
     isLoading: false,
     loadingFailed: false
 }
 
-const getCategoryByDistance = (ids, distance) => {
+const getCategoryByDistance = (ids: string[], distance: number) => {
     let min = 99999;
     let current;
-    ids.forEach(id => {
-        const d = Math.abs(distance - document.getElementById(id).getBoundingClientRect().y);
+    const doc: any = document;
+    ids.forEach((id: string) => {
+        const d = Math.abs(distance - doc.getElementById(id).getBoundingClientRect().y);
         if (d < min){
             min = d;
             current = id;
@@ -31,7 +58,7 @@ const getCategoryByDistance = (ids, distance) => {
     return current;
 }
 
-export const BurgerIngredientsReducer = (state = initialState, action) => {
+export const BurgerIngredientsReducer = (state: TBurgerIngredientsState = initialState, action: TBurgerIngredientsActions) => {
     switch (action.type){
         case LOAD_INGREDIENTS:
             return {
@@ -63,7 +90,7 @@ export const BurgerIngredientsReducer = (state = initialState, action) => {
         case CLEAR_CURRENT_INGREDIENT:
             return {
                 ...state,
-                currentIngredient: {}
+                currentIngredient: {...initialState.currentIngredient}
             };
         case ADD_CATEGORY_ID: {
             if (state.categoryIds.includes(action.id)){

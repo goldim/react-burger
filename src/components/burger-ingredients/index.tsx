@@ -4,20 +4,26 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import Modal from '../modal';
 import IngredientDetails from '../ingredient-details';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import * as dictionary from '../../utils/dictionary.json'
-import { CHANGE_CURRENT_CATEGORY_BY_DISTANCE, CLEAR_CURRENT_INGREDIENT } from '../../services/actions/burger-ingredients';
-import { Dispatch, FC, ReactNode, useEffect, useRef } from 'react';
+import { FC, ReactNode, useEffect, useRef } from 'react';
 
-import { ADD_CATEGORY_ID } from '../../services/actions/burger-ingredients';
-import { IDataItem, TDataItems } from '../../utils/data-item-format';
+import { IDataItem, TDataItems } from '../../services/types/data-item-format';
+import { AppDispatch } from '../../services/types';
+import { useDispatch, useSelector } from '../../services/hooks';
+import { addCategoryId, changeCurrentCategoryByDistance, clearCurrentIngredient } from '../../services/actions/burger-ingredients';
 
 type TDictionary = {
     [type: string]: any
 };
 
-const getCategoryDescriptions = (ingredients: TDataItems) => {
+interface ICategoryDescription {
+    code: string,
+    title: string
+}
+
+type TCategoryDescriptions = ReadonlyArray<ICategoryDescription>;
+
+const getCategoryDescriptions = (ingredients: TDataItems): TCategoryDescriptions => {
     const categories = Array.from(new Set(ingredients.map((ingr: IDataItem) => ingr.type)).values());
     const dict = (dictionary as TDictionary).default;
 
@@ -37,24 +43,21 @@ const getCategoryDescriptions = (ingredients: TDataItems) => {
     return result;
 }
 
-const onIngredientsRendered = (descriptions: any[], dispatch: Dispatch<any>) => {
+const onIngredientsRendered = (descriptions: TCategoryDescriptions, dispatch: AppDispatch) => {
     descriptions.forEach(desc => {
-        dispatch({
-            type: ADD_CATEGORY_ID,
-            id: desc.title
-        });
+        dispatch(addCategoryId(desc.title));
     });
 };
 
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
-    const newIngredients = useSelector((store: any) => store.ingredientsReducer.ingredients);
-    const current = useSelector((store: any) => store.ingredientsReducer.currentIngredient);
+    const dispatch = useDispatch() as  AppDispatch;
+    const newIngredients = useSelector(store => store.ingredientsReducer.ingredients);
+    const current = useSelector(store => store.ingredientsReducer.currentIngredient);
     const categoryDescriptions = getCategoryDescriptions(newIngredients);
     const getCategoryTitles = () => categoryDescriptions.map(cat => cat.title);
     const onCloseItem = () => {
         window.history.replaceState(null, "", "/constructor");
-        dispatch({type: CLEAR_CURRENT_INGREDIENT})
+        dispatch(clearCurrentIngredient())
     }
     useEffect(()=> { onIngredientsRendered(categoryDescriptions, dispatch)}, [categoryDescriptions, dispatch]);
 
@@ -86,10 +89,7 @@ const CategoriesContainer: FC<ICategoriesContainerProps> = ({children}) => {
     useEffect(() => {
         function handleNavigation(e: Event) {
             if (scrollableList && scrollableList.current){
-                dispatch({
-                    type: CHANGE_CURRENT_CATEGORY_BY_DISTANCE,
-                    distance: scrollableList.current.getBoundingClientRect().y
-                });
+                dispatch(changeCurrentCategoryByDistance(scrollableList.current.getBoundingClientRect().y));
             }
         }
         if (scrollableList && scrollableList.current){

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { REMOVE_INGREDIENT } from '../../services/actions/burger-constructor'
+import { removeIngredient } from '../../services/actions/burger-constructor';
+import { useDispatch } from '../../services/hooks';
 
 import { ConstructorElement, DragIcon } from '../../utils/yandex-components'
 import styles from './burger-constructor.module.css'
@@ -40,7 +40,7 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({id, name, type, price, im
     const dispatch = useDispatch();
 
     const onRemoveItem = () =>{
-        dispatch({index: id, type: REMOVE_INGREDIENT});
+        dispatch(removeIngredient(id));
     }
 
     return (

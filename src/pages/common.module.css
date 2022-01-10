@@ -1,0 +1,19 @@
+.formContainer{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.feedTitle {
+    text-align: left
+}
+
+.feedContainer {
+    margin-top: 40px;
+}

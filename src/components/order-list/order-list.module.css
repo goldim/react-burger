@@ -1,0 +1,13 @@
+.name {
+    margin-bottom: 32px;
+}
+
+.ordersContainer {
+    width: 500px;
+}
+
+.ordersList {
+    overflow-y: auto;
+    max-height: 700px;
+    height: 100%;
+}
