@@ -4,7 +4,8 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE,
-    WS_SEND_MESSAGE
+    WS_SEND_MESSAGE,
+    WS_CLOSE
 } from '../constants/websocket';
 import { IServerOrderReply } from '../types/order';
 import { INewOrderCameAction, IStartFetchingOrdersAction } from './order';
@@ -85,6 +86,16 @@ export const wsSendMessage = (message: string) => {
     };
 };
 
+export interface IWsCloseAction {
+    readonly type: typeof WS_CLOSE
+}
+
+export const wsClose = () => {
+    return {
+        type: WS_CLOSE
+    };
+};
+
 export type TWebsocketActions = 
     | IWsConnectionStartAction
     | IWsConnectionSuccessAction
@@ -92,4 +103,5 @@ export type TWebsocketActions =
     | IWsConnectionClosedAction
     | IWsGetMessageAction
     | IWsSendMessageAction
+    | IWsCloseAction
     ;

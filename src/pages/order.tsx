@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import Order from "../components/order";
+import { wsClose } from "../services/actions/websocket";
 import { useDispatch, useSelector } from "../services/hooks";
 import { fetchAllOrders } from "../services/middleware/order";
 
@@ -11,6 +12,7 @@ const OrderPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllOrders());
+        return () => { dispatch(wsClose()) }
     }, [dispatch]);
 
     const parsedId = parseInt(id ? id: "");

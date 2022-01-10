@@ -1,6 +1,6 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { TWebsocketActions } from "../actions/websocket";
-import { WS_CONNECTION_START, WS_SEND_MESSAGE } from "../constants/websocket";
+import { WS_CLOSE, WS_CONNECTION_START, WS_SEND_MESSAGE } from "../constants/websocket";
 import { AppDispatch, TRootState } from "../types";
 
 export const websocket = (): Middleware => {
@@ -39,6 +39,10 @@ export const websocket = (): Middleware => {
                 const message = action.payload;
                 if (socket)
                     socket.send(message);
+            } else if (action.type === WS_CLOSE) {
+                if (socket){
+                    socket.close();
+                }
             }
            
             next(action);

@@ -5,6 +5,7 @@ import { fetchOrdersByUser } from "../services/middleware/order";
 
 import "./common.module.css"
 import profileStyles from "./profile.module.css"
+import { wsClose } from "../services/actions/websocket";
 
 const OrdersPage = () => {
   const { orders } = useSelector(store => store.order);
@@ -17,6 +18,7 @@ const OrdersPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrdersByUser());
+    return () => { dispatch(wsClose()) }
   }, [dispatch]);
 
   return (<div className={profileStyles.twoColumns}><OrderList items={sortedOrdersById}/></div>);

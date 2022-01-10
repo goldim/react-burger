@@ -7,6 +7,7 @@ import { STATUS } from "../services/types/order";
 
 import styles from "./common.module.css"
 import profileStyles from "./profile.module.css"
+import { wsClose } from "../services/actions/websocket";
 
 const FeedPage = () => {
   const { orders: items, todayTotal, total} = useSelector(store => store.order);
@@ -14,6 +15,7 @@ const FeedPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllOrders());
+    return () => { dispatch(wsClose()) }
   }, [dispatch]);
 
   const getNIdsByStatus = (status: STATUS, count: number) => {
