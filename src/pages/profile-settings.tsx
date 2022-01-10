@@ -64,8 +64,10 @@ const ProfileSettingsPage = () => {
                 <Input type="text" placeholder="Имя" icon="EditIcon" onChange={onChangeName} value={name}/>
                 <Input type="email" placeholder="e-mail" icon="EditIcon" onChange={onChangeEmail} value={email}/>
                 <Input type="password" placeholder="Пароль" icon="EditIcon" onChange={onChangePassword} value={password}/>
-                <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
-                <Button type="primary" size="medium">Сохранить</Button>
+                <span>
+                  <Button type="secondary" size="medium" onClick={onCancel}>Отмена</Button>
+                  <Button type="primary" size="medium">Сохранить</Button>
+                </span>
             </form>
             <div>
                 <p className="text text_color_inactive">В этом разделе вы можете изменить ваши персональные данные</p>
