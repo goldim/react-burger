@@ -1,68 +1,46 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { TWebsocketActions } from "../actions/websocket";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE, WS_SEND_MESSAGE } from "../constants/websocket";
+import { WS_CONNECTION_START, WS_SEND_MESSAGE } from "../constants/websocket";
 import { AppDispatch, TRootState } from "../types";
-
-// type TWebsocketActions = {
-//     wsInit: WS_CONNECTION_START,
-//     wsSendMessage: WS_SEND_MESSAGE,
-//     onOpen: WS_CONNECTION_SUCCESS,
-//     onClose: WS_CONNECTION_CLOSED,
-//     onError: WS_CONNECTION_ERROR,
-//     onMessage: WS_GET_MESSAGE
-// }
-
-const wsActions = {
-    wsInit: WS_CONNECTION_START,
-    wsSendMessage: WS_SEND_MESSAGE,
-    onOpen: WS_CONNECTION_SUCCESS,
-    onClose: WS_CONNECTION_CLOSED,
-    onError: WS_CONNECTION_ERROR,
-    onMessage: WS_GET_MESSAGE
-};
 
 export const websocket = (): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, TRootState>) => {
         let socket: WebSocket | null = null;
 
-        return next => (action: any) => {
-            const { dispatch, getState } = store;
-            const { type, payload } = action;
-            const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-            const accessToken = getState().authReducer.accessToken;
-            if (type === wsInit && accessToken) {
-                socket = new WebSocket(`${payload.url}?token=${accessToken}`);
-            } else if (type === wsInit) {
-                socket = new WebSocket(`${payload.url}`);
-            }
+        return next => (action: TWebsocketActions) => {
+            const { dispatch } = store;
+            if (action.type === WS_CONNECTION_START) {
+                socket = new WebSocket(`${action.url}`);
+                if (socket) {
+                    socket.onopen = event => {
+                        dispatch(action.actions.onOpen(event));
+                    };
 
-            if (socket) {
-                socket.onopen = event => {
-                    dispatch({ type: onOpen, payload: event });
-                };
+                    socket.onerror = event => {
+                        if (action.actions.onError)
+                            dispatch(action.actions.onError(event));
+                    };
 
-                socket.onerror = event => {
-                    dispatch({ type: onError, payload: event });
-                };
-
-                socket.onmessage = event => {
-                    const { data } = event;
-                    const parsedData = JSON.parse(data);
-                    const { success, ...restParsedData } = parsedData;
-
-                    dispatch({ type: onMessage, payload: restParsedData });
-                };
-
-                socket.onclose = event => {
-                    dispatch({ type: onClose, payload: event });
-                };
-
-                if (type === wsSendMessage) {
-                    const message = { ...payload, token: accessToken };
-                    socket.send(JSON.stringify(message));
+                    socket.onmessage = event => {
+                        const { data } = event;
+                        const parsedData = JSON.parse(data);
+                        const { success, ...restParsedData } = parsedData;
+    
+                        dispatch(action.actions.onMessage(restParsedData));
+                    };
+    
+                    
+                    socket.onclose = event => {
+                        if (action.actions.onClose)
+                            dispatch(action.actions.onClose(event));
+                    };
                 }
+            } else if (action.type === WS_SEND_MESSAGE) {
+                const message = action.payload;
+                if (socket)
+                    socket.send(message);
             }
-
+           
             next(action);
         };
     };

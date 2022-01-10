@@ -6,16 +6,27 @@ import {
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE
 } from '../constants/websocket';
+import { IServerOrderReply } from '../types/order';
+import { INewOrderCameAction, IStartFetchingOrdersAction } from './order';
+
+export type TActions = {
+    onOpen: ((payload: Event) => IWsConnectionStartAction) | (() => IStartFetchingOrdersAction),
+    onClose?: ((payload: Event) => IWsConnectionClosedAction),
+    onError?: ((payload: Event) => IWsConnectionErrorAction),
+    onMessage: (payload: IServerOrderReply) => INewOrderCameAction
+};
 
 export interface IWsConnectionStartAction {
     readonly type: typeof WS_CONNECTION_START,
-    url: string
+    url: string,
+    actions: TActions
 }
 
-export const wsConnectionStart = (url: string): IWsConnectionStartAction => {
+export const wsConnectionStart = (url: string, actions: TActions): IWsConnectionStartAction => {
     return {
         type: WS_CONNECTION_START,
-        url
+        url,
+        actions
     };
 };
 
@@ -62,6 +73,11 @@ export const wsGetMessage = (message: string): IWsGetMessageAction => {
     };
 };
 
+export interface IWsSendMessageAction {
+    readonly type: typeof WS_SEND_MESSAGE,
+    payload: string
+}
+
 export const wsSendMessage = (message: string) => {
     return {
         type: WS_SEND_MESSAGE,
@@ -75,4 +91,5 @@ export type TWebsocketActions =
     | IWsConnectionErrorAction
     | IWsConnectionClosedAction
     | IWsGetMessageAction
+    | IWsSendMessageAction
     ;

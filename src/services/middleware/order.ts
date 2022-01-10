@@ -1,11 +1,10 @@
 import { TDataItems } from '../types/data-item-format';
 import { AppDispatch } from '../types';
 import Cookies from 'js-cookie';
-import { IServerOrder, IServerOrderReply } from '../types/order';
 import { HTTPS_BASE_URL, WS_BASE_URL } from '../constants';
 import { makeOrderFailed, makeOrderGenerator, makeOrderSuccess } from '../actions/burger-constructor';
-import { clearOrders, newOrderCame, startFetchingOrders, updateTotals } from '../actions/order';
-import { WS_CONNECTION_START } from '../constants/websocket';
+import { clearOrders, newOrderCame, startFetchingOrders } from '../actions/order';
+import { wsConnectionStart } from '../actions/websocket';
 
 const MAKING_ORDER_URL = `${HTTPS_BASE_URL}/api/orders`;
 
@@ -49,41 +48,10 @@ const FETCH_ALL_ORDERS_URL = `${WS_BASE_URL}/orders/all`;
 const FETCH_ORDERS_FOR_USER_URL = `${WS_BASE_URL}/orders`;
 
 const startFetching = async (dispatch: AppDispatch, url: string) => {
-    dispatch(startFetchingOrders());
-    createSocket(url, dispatch);
-}
-
-const onData = (data: IServerOrderReply, dispatch: AppDispatch) => {
-    data.orders.forEach((order: IServerOrder) => {
-        dispatch(newOrderCame({
-            id: order.number,
-            fullname: order.name,
-            status: order.status,
-            createdAt: order.createdAt,
-            ingredientIds: order.ingredients
-        }));
-    });
-    dispatch(updateTotals(data.total, data.totalToday));
-}
-
-const createSocket = function(url: string, dispatch: AppDispatch){
-    dispatch({type: WS_CONNECTION_START, url});
-    // let socket = new WebSocket(url);
-    
-    // socket.onopen = event => {};
-    // socket.onerror = event => {};
-    // socket.onclose = event => {
-    //     dispatch(clearOrders());
-    // };
-
-    // socket.onmessage = event => {
-    //     const { data } = event;
-    //     const parsedData = JSON.parse(data);
-    //     const { success, ...restData } = parsedData;
-    //     if (success){
-    //         onData(restData, dispatch);
-    //     }
-    // }
+    dispatch(wsConnectionStart(url, {
+        onOpen: startFetchingOrders,
+        onMessage: newOrderCame
+    }));
 }
 
 export const fetchAllOrders = () => async (dispatch: AppDispatch)  => {

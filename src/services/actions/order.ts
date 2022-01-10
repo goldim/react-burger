@@ -4,9 +4,9 @@ import {
     UPDATE_TOTALS,
     CLEAR_ORDERS
 } from '../constants/order';
-import { IOrder } from '../types/order';
+import { IServerOrderReply } from '../types/order';
 
-interface IStartFetchingOrdersAction {
+export interface IStartFetchingOrdersAction {
     readonly type: typeof START_FETCHING_ORDERS
 };
 
@@ -14,14 +14,14 @@ export const startFetchingOrders = (): IStartFetchingOrdersAction => ({
     type: START_FETCHING_ORDERS,
 })
 
-interface INewOrderCameAction {
+export interface INewOrderCameAction {
     readonly type: typeof NEW_ORDER_CAME,
-    order: IOrder
+    payload: IServerOrderReply
 };
 
-export const newOrderCame = (order: IOrder): INewOrderCameAction => ({
+export const newOrderCame = (payload: IServerOrderReply): INewOrderCameAction => ({
     type: NEW_ORDER_CAME,
-    order
+    payload
 })
 
 interface IUpdateTotalsAction {
