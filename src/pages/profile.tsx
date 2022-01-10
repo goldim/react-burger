@@ -31,10 +31,12 @@ const ProfileLink: FC<IProfileLinkProps> = ({children, to}) => {
 }
 
 const ProfilePage = () => (
-  <div className={profileStyles.twoColumns}>
-    <NavList/>
-    <Outlet/>
-  </div>
+  <>
+    <div className={profileStyles.profileContainer}>
+      <section><NavList/></section>
+      <section><Outlet/></section>
+    </div>
+  </>
 )
 
 

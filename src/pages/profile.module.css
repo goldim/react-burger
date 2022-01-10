@@ -13,9 +13,16 @@
 }
 
 .navListContainer {
-    margin-right: 30px;
+    width: 400px;
 }
 
 .navLink {
     text-decoration: none;
+}
+
+.profileContainer {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }

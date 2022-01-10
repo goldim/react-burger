@@ -6,7 +6,6 @@ import OrderStatusBoard from "../components/order-status-board";
 import { STATUS } from "../services/types/order";
 
 import styles from "./common.module.css"
-import profileStyles from "./profile.module.css"
 import { wsClose } from "../services/actions/websocket";
 
 const FeedPage = () => {
@@ -31,13 +30,13 @@ const FeedPage = () => {
   const pendingOrderIds = getNIdsByStatus(STATUS.PENDING, DISPLAY_COUNT);
 
   return (
-    <div className={profileStyles.twoColumns}>
+    <>
       <section className={styles.feedContainer}>
         <Title/>
         <OrderList items={items}/>
       </section>
       <OrderStatusBoard doneOrderIds={doneOrderIds} pendingOrderIds={pendingOrderIds} total={total} todayTotal={todayTotal}/>
-    </div>
+    </>
   )
 };
 
