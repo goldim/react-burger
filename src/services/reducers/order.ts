@@ -5,17 +5,17 @@ import {
     UPDATE_TOTALS,
     CLEAR_ORDERS
 } from '../constants/order';
-import { IOrder, IServerOrder, TOrders } from '../types/order';
+import { IOrder, IServerOrder, IServerOrderReply, TOrders } from '../types/order';
 
 type TOrderState = {
     total: number,
-    todayTotal: number,
+    totalToday: number,
     orders: TOrders
 }
 
 const initialState: TOrderState = {
     total: 0,
-    todayTotal: 0,
+    totalToday: 0,
     orders: []
 };
 
@@ -27,13 +27,7 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
             };
 
         case NEW_ORDER_CAME:
-            const data = action.payload as {
-                orders: IServerOrder[],
-                total: number,
-                totalToday: number
-            };
-
-            const newOrders: IOrder[] = [];
+            const data = action.payload as IServerOrderReply;
 
             data.orders.forEach((order: IServerOrder) => {
                 const hasOrder = state.orders.some(stateOrder => {
@@ -44,10 +38,9 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
                     let stateOrder = state.orders.find(stOrder => stOrder.id === order.number)
                     if (stateOrder && stateOrder.status !== order.status){
                         stateOrder.status = order.status;
-                        newOrders.push(stateOrder);
                     }
                 } else {
-                    newOrders.push({
+                    state.orders.push({
                         id: order.number,
                         fullname: order.name,
                         status: order.status,
@@ -55,16 +48,15 @@ export const OrderReducer = (state: TOrderState = initialState, action: TOrderAc
                         ingredientIds: order.ingredients
                     });
                 }
-
             });
 
-            return {...state, orders: [...state.orders, ...newOrders], total: data.total, todayTotal: data.totalToday};
+            return {...state, total: data.total, totalToday: data.totalToday};
 
         case UPDATE_TOTALS:
             return {
                 ...state,
                 total: action.total,
-                todayTotal: action.todayTotal
+                totalToday: action.totalToday
             };
 
         case CLEAR_ORDERS:
