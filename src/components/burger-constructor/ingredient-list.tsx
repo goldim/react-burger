@@ -75,7 +75,7 @@ const IngredientList: FC<IIngredientListProps> = ({ingredients}) => {
     }
 
     return (
-        <ul className={constructorStyles.ingredientList} ref={dropTarget}>
+        <ul className={constructorStyles.ingredientList} ref={dropTarget} data-cy="ingredientList">
             { isNotEmpty() && hasBun ? renderTopItemLocked(0, {...ingredients[0]}) : ""}
             { isNotEmpty() ? renderScrollablePart(startIndex, endIndex) : "" }
             { isNotEmpty() && hasBun ? renderBottomItemLocked(ingredients.length - 1, {...ingredients[0]}) : "" }
