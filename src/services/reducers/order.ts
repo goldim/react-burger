@@ -5,7 +5,7 @@ import {
     UPDATE_TOTALS,
     CLEAR_ORDERS
 } from '../constants/order';
-import { IOrder, IServerOrder, IServerOrderReply, TOrders } from '../types/order';
+import { IServerOrder, IServerOrderReply, TOrders } from '../types/order';
 
 type TOrderState = {
     total: number,
