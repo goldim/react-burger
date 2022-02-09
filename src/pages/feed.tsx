@@ -9,7 +9,7 @@ import styles from "./common.module.css"
 import { wsClose } from "../services/actions/websocket";
 
 const FeedPage = () => {
-  const { orders: items, todayTotal, total} = useSelector(store => store.order);
+  const { orders: items, totalToday, total} = useSelector(store => store.order);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -35,7 +35,7 @@ const FeedPage = () => {
         <Title/>
         <OrderList items={items}/>
       </section>
-      <OrderStatusBoard doneOrderIds={doneOrderIds} pendingOrderIds={pendingOrderIds} total={total} todayTotal={todayTotal}/>
+      <OrderStatusBoard doneOrderIds={doneOrderIds} pendingOrderIds={pendingOrderIds} total={total} totalToday={totalToday}/>
     </>
   )
 };

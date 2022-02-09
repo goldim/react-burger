@@ -27,13 +27,13 @@ export const newOrderCame = (payload: IServerOrderReply): INewOrderCameAction =>
 interface IUpdateTotalsAction {
     readonly type: typeof UPDATE_TOTALS,
     total: number,
-    todayTotal: number
+    totalToday: number
 };
 
-export const updateTotals = (total: number, todayTotal: number): IUpdateTotalsAction => ({
+export const updateTotals = (total: number, totalToday: number): IUpdateTotalsAction => ({
     type: UPDATE_TOTALS,
     total,
-    todayTotal
+    totalToday
 })
 
 interface IClearOrdersAction {

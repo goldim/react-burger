@@ -6,7 +6,7 @@ interface IOrderStatusBoardProps {
     doneOrderIds: ReadonlyArray<number>,
     pendingOrderIds: ReadonlyArray<number>,
     total: number,
-    todayTotal: number
+    totalToday: number
 }
 
 const OrderStatusBoard: FC<IOrderStatusBoardProps> = (props) => {
@@ -30,7 +30,7 @@ const OrderStatusBoard: FC<IOrderStatusBoardProps> = (props) => {
             </div>
             <div>
                 <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-                <p className="text text_type_digits-large">{props.todayTotal}</p>
+                <p className="text text_type_digits-large">{props.totalToday}</p>
             </div>
         </section>
     )

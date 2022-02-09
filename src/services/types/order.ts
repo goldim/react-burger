@@ -31,4 +31,4 @@ export interface IServerOrderReply {
     totalToday: number
 };
 
-export type TOrders = ReadonlyArray<IOrder>;
+export type TOrders = IOrder[];
